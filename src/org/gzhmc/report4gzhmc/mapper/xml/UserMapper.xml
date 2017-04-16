@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.User">
+		<id column="cId" property="cId" />
+		<result column="cUserName" property="cUserName" />
+		<result column="cPassword" property="cPassword" />
+		<result column="cRole" property="cRole" />
+		<result column="cCreateTime" property="cCreateTime" />
+	</resultMap>
+	<select id="getAll" resultMap="BaseResultMap">
+		select * from gy_report_user order
+		by cId desc
+	</select>
+	<select id="getMaxcId" resultType="int">
+	select max(cId) from gy_report_user;
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		select
+		cId, cUserName, cPassword, cRole, cCreateTime
+		from gy_report_user
+		where cId = #{cId }
+	</select>
+	<select id="getByUserName" resultMap="BaseResultMap"
+		parameterType="String">
+		select
+		cId, cUserName, cPassword, cRole, cCreateTime
+		from gy_report_user
+		where cUserName = #{cUserName }
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from gy_report_user
+		where cId = #{cId }
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.User">
+		insert into gy_report_user (cId,
+		cUserName, cPassword,
+		cRole, cCreateTime)
+		values (#{cId }, #{cUserName
+		}, #{cPassword },
+		#{cRole }, #{cCreateTime })
+	</insert>
+	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.User">
+		update gy_report_user
+		<set>
+			<if test="cUserName != null">
+				cUserName = #{cUserName },
+			</if>
+			<if test="cPassword != null">
+				cPassword = #{cPassword },
+			</if>
+			<if test="cRole != null">
+				cRole = #{cRole },
+			</if>
+			<if test="cCreateTime != null">
+				cCreateTime = #{cCreateTime },
+			</if>
+		</set>
+		where cId = #{cId }
+	</update>
+	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.User">
+		update gy_report_user
+		set
+		cUserName = #{cUserName },
+		cPassword = #{cPassword },
+		cRole = #{cRole },
+		cCreateTime = #{cCreateTime }
+		where cId = #{cId }
+	</update>
+</mapper>

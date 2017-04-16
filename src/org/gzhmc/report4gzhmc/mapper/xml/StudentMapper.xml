@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.StudentMapper">
+	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.Student">
+		<id column="cUserId" property="cUserId" />
+		<result column="cName" property="cName" />
+		<result column="cStudentNumber" property="cStudentNumber" />
+		<result column="cGradeId" property="cGradeId" />
+		<result column="cPicturePath" property="cPicturePath" />
+		<result column="cIDNumber" property="cIDNumber" />
+	</resultMap>
+
+	<select id="getAll" resultMap="BaseResultMap">
+		select * from gy_report_student
+		order by cUserId desc
+	</select>
+
+	<select id="getById" parameterType="int" resultMap="BaseResultMap">
+		select
+		cUserId, cName, cStudentNumber, cGradeId,cPicturePath,cIDNumber
+		from gy_report_student
+		where cUserId = #{cId }
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from gy_report_student
+		where cUserId = #{cId}
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Student" useGeneratedKeys="true" keyProperty="cUserId">
+		insert into gy_report_student (cUserId, cName, cStudentNumber,
+		cGradeId,cPicturePath,cIDNumber)
+		values (#{cUserId }, #{cName }, #{cStudentNumber },
+		#{cGradeId }, #{cPicturePath }, #{cIDNumber })
+	</insert>
+
+	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Student">
+		update gy_report_student
+		<set>
+			<if test="cName != null">
+				cName = #{cName },
+			</if>
+			<if test="cStudentNumber != null">
+				cStudentNumber = #{cStudentNumber },
+			</if>
+			<if test="cGradeId != null">
+				cGradeId = #{cGradeId },
+			</if>
+			<if test="cPicturePath != null">
+				cPicturePath = #{cPicturePath },
+			</if>
+			<if test="cIDNumber != null">
+				cIDNumber = #{cIDNumber },
+			</if>
+		</set>
+		where cUserId = #{cUserId }
+	</update>
+
+	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.Student">
+		update gy_report_student
+		set cName = #{cName },
+		cStudentNumber = #{cStudentNumber },
+		cGradeId = #{cGradeId },
+		cPicturePath = #{cPicturePath },
+		cIDNumber = #{cIDNumber }
+		where cUserId = #{cUserId }
+	</update>
+</mapper>

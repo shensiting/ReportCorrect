@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.MajorMapper">
+	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.Major">
+		<id column="cId" property="cId" />
+		<result column="cMajorName" property="cMajorName" />
+	</resultMap>
+
+	<select id="getAll" resultMap="BaseResultMap">
+		select * from gy_report_major
+		order by cId desc
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		select
+		cId, cMajorName
+		from gy_report_major
+		where cId = #{cId }
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from gy_report_major
+		where cId = #{cId }
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Major">
+		insert into gy_report_major (cId,
+		cMajorName )
+		values (#{cId }, #{cMajorName })
+	</insert>
+
+	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Major">
+		update gy_report_major
+		<set>
+			<if test="cMajorName != null">
+				cMajorName = #{cMajorName }
+			</if>
+		</set>
+		where cId = #{cId }
+	</update>
+	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.Major">
+		update gy_report_major
+		set
+		cMajorName = #{cMajorName }
+		where cId = #{cId }
+	</update>
+</mapper>

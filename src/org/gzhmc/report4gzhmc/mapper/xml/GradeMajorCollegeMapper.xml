@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.GradeMajorCollegeMapper">
+	<resultMap id="BaseResultMap"
+		type="org.gzhmc.report4gzhmc.model.GradeMajorCollege">
+		<id column="cId" property="cId" />
+		<result column="cYearClass" property="cYearClass" />
+		<result column="cMajorId" property="cMajorId" />
+		<result column="cClass" property="cClass" />
+		<result column="cCollegeId" property="cCollegeId" />
+		<association property="major" javaType="org.gzhmc.report4gzhmc.model.Major">
+			<result column="cMajorName" property="cMajorName" />
+		</association>
+		<collection property="college" javaType="org.gzhmc.report4gzhmc.model.College">
+			<result column="cCollegeName" property="cCollegeName" />
+		</collection>
+	</resultMap>
+
+	<select id="getAll" resultMap="BaseResultMap">
+		select gy_report_grade.cId, cYearClass, cMajorId, cClass,
+		cCollegeId,cMajorName,cCollegeName
+		from gy_report_grade,gy_report_major,gy_report_college where
+		gy_report_major.cId=gy_report_grade.cMajorId and
+		gy_report_college.cId=gy_report_grade.cCollegeId
+	</select>
+
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		select gy_report_grade.cId, cYearClass, cMajorId, cClass,
+		cCollegeId,cMajorName,cCollegeName
+		from gy_report_grade,gy_report_major,gy_report_college where
+		gy_report_major.cId=gy_report_grade.cMajorId and
+		gy_report_college.cId=gy_report_grade.cCollegeId
+		and gy_report_grade.cId=#{cId}
+	</select>
+
+
+</mapper>

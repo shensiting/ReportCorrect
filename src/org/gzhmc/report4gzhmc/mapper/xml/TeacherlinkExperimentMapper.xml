@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.TeacherlinkExperimentMapper">
+	<resultMap id="BaseResultMap"
+		type="org.gzhmc.report4gzhmc.model.TeacherlinkExperiment">
+		<id column="cId" property="cId" />
+		<result column="cTeacherId" property="cTeacherId" />
+		<result column="cExperimentalTestId" property="cExperimentalTestId" />
+		<association property="teacher"
+			javaType="org.gzhmc.report4gzhmc.model.Teacher">
+			<result column="TcTeacherId" property="cTeacherId" />
+			<result column="cName" property="cName" />
+		</association>
+		<collection property="experimentalTest"
+			javaType="org.gzhmc.report4gzhmc.model.ExperimentalTest">
+			<result column="cExperimentName" property="cExperimentName" />
+		</collection>
+	</resultMap>
+
+	<select id="getAll" resultMap="BaseResultMap">
+		SELECT
+		gy_report_teacher_experimental.cExperimentalTestId,gy_report_teacher_experimental.cId,
+		gy_report_teacher_experimental.cTeacherId,gy_report_experimental_test.cExperimentName,
+		gy_report_teacher.cName,gy_report_teacher.cTeacherId TcTeacherId
+		from
+		gy_report_teacher_experimental,gy_report_experimental_test,gy_report_teacher
+		WHERE
+		gy_report_teacher_experimental.cExperimentalTestId=gy_report_experimental_test.cId
+		and
+		gy_report_teacher.cUserId=gy_report_teacher_experimental.cTeacherId
+	</select>
+
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		SELECT
+		gy_report_teacher_experimental.cExperimentalTestId,gy_report_teacher_experimental.cId,
+		gy_report_teacher_experimental.cTeacherId,gy_report_experimental_test.cExperimentName,
+		gy_report_teacher.cName,gy_report_teacher.cTeacherId TcTeacherId
+		from
+		gy_report_teacher_experimental,gy_report_experimental_test,gy_report_teacher
+		WHERE
+		gy_report_teacher_experimental.cExperimentalTestId=gy_report_experimental_test.cId
+		and
+		gy_report_teacher.cUserId=gy_report_teacher_experimental.cTeacherId
+		and
+		gy_report_teacher_experimental.cId=#{cId}
+	</select>
+
+</mapper>

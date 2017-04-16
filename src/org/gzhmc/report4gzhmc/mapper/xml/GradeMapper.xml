@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.GradeMapper">
+	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.Grade">
+		<id column="cId" property="cId" />
+		<result column="cYearClass" property="cYearClass" />
+		<result column="cMajorId" property="cMajorId" />
+		<result column="cClass" property="cClass" />
+		<result column="cCollegeId" property="cCollegeId" />
+	</resultMap>
+	<select id="getAll" resultMap="BaseResultMap" parameterType="int">
+		select * from gy_report_grade
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		select
+		cId, cYearClass, cMajorId, cClass, cCollegeId
+		from gy_report_grade
+		where cId = #{cId}
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from gy_report_grade
+		where cId = #{cId}
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Grade">
+		insert into gy_report_grade (cId, cYearClass, cMajorId,
+		cClass, cCollegeId)
+		values (#{cId}, #{cYearClass}, #{cMajorId},
+		#{cClass}, #{cCollegeId})
+	</insert>
+	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Grade">
+		update gy_report_grade
+		<set>
+			<if test="cYearClass != null">
+				cYearClass = #{cYearClass},
+			</if>
+			<if test="cMajorId != null">
+				cMajorId = #{cMajorId},
+			</if>
+			<if test="cClass != null">
+				cClass = #{cClass},
+			</if>
+			<if test="cCollegeId != null">
+				cCollegeId = #{cCollegeId},
+			</if>
+		</set>
+		where cId = #{cId}
+	</update>
+	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.Grade">
+		update gy_report_grade
+		set cYearClass = #{cYearClass},
+		cMajorId = #{cMajorId},
+		cClass = #{cClass},
+		cCollegeId = #{cCollegeId}
+		where cId = #{cId}
+	</update>
+</mapper>
