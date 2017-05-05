@@ -1,32 +1,37 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<link rel="stylesheet" href="<%=basePath%>manage/css/bootstrap.min.css" />
-<link rel="stylesheet"
-	href="<%=basePath%>manage/css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="<%=basePath%>manage/css/unicorn.login.css" />
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
 <script src="<%=basePath%>manage/js/jquery.min.js"></script>
-<script src="<%=basePath%>manage/js/jquery.ui.custom.js"></script>
-<script src="<%=basePath%>manage/js/bootstrap.min.js"></script>
+
 <script src="<%=basePath%>manage/js/md5.js"></script>
-<!-- Dialog Js -->
-<script src="<%=basePath%>/js/jquery.bootstrap.teninedialog.v3.min.js"></script>
+<link href="<%=basePath%>users/css/H-ui.min.css" rel="stylesheet" />
+<link href="<%=basePath%>users/css/H-ui.login.css" rel="stylesheet" />
+<link href="<%=basePath%>users/css/style.css" rel="stylesheet" />
+<link href="<%=basePath%>users/css/iconfont.css" rel="stylesheet" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>后台登录 - H-ui.admin v2.3</title>
 <script type="text/javascript">
 function login(loginform){//传入表单参数  
 	var number=loginform.number.value;
@@ -37,7 +42,7 @@ function login(loginform){//传入表单参数
     	type : 'get',
 		dataType : 'json',	
 		async: false,
-		url:'<%=basePath%>manage/check.action?number='+number+'&password='+password,
+		url:'<%=basePath%>manage/check.action?number='+number+'&password='+password+'',
 		success:function(data){
             if(data.success){    
             	var path='<%=basePath%>' + data.msg;
@@ -52,7 +57,7 @@ function login(loginform){//传入表单参数
 					}
 				},
 				error : function() {
-					alert("服务器异常，请稍候再试！");					
+					alert("服务器异常，请稍候再试！");
 					//$.teninedialog({
 					//	title : '系统提示',
 					//	content : '服务器异常，请稍候再试！'
@@ -61,45 +66,61 @@ function login(loginform){//传入表单参数
 			});
 		}
 	}
-	
 </script>
 </head>
 <body>
-	<div id="logo" style="padding-top: 7%">
 
-		<h2 align="center" style="color: #FFF">广州医科大学生物技术系</h2>
-		<h2 align="center" style="color: #FFF">学生报告管理系统</h2>
-	</div>
-	<div id="loginbox">
-		<form id="loginform" class="form-vertical" action="" method="post">
-			<p style="color: #616161; font-size: 16px">请输入账号和密码</p>
-			<div class="control-group">
-				<div class="controls">
-					<div class="input-prepend">
-						<span class="add-on"><i class="icon-user"></i></span><input
-							name="number" type="text" placeholder="账号" required="required" value="${ScId }" />
+	<div class="header"></div>
+	<div class="loginWraper">
+		<div id="loginform" class="loginBox">
+			<form id="loginform" class="form form-horizontal" action=""
+				method="post">
+				<div class="row cl">
+					<label class="form-label col-3"><i class="Hui-iconfont">&#xe60d;</i></label>
+					<div class="formControls col-8">
+						<input id="number" name="number" value="${ScId }" placeholder="账户"
+							required="required" class="input-text size-L">
 					</div>
 				</div>
-			</div>
-			<div class="control-group">
-				<div class="controls">
-					<div class="input-prepend">
-						<span class="add-on"><i class="icon-lock"></i></span><input
-							name="password" type="password" placeholder="密码"
-							required="required" value="${ScPasswordd }"  />
+				<div class="row cl">
+					<label class="form-label col-3"><i class="Hui-iconfont">&#xe60e;</i></label>
+					<div class="formControls col-8">
+						<input id="password" name="password" type="password"
+							value="${ScPasswordd }" required="required" placeholder="密码"
+							class="input-text size-L">
 					</div>
 				</div>
-			</div>
-
-			<div class="form-actions">
-				<span class="pull-left"><a href="<%=basePath%>manage/register">还没有账号？注册</a>
-				</span>
-				 <span class="pull-right">
-				  <input type="submit" class="btn btn-inverse" value="登录"
-					onclick="login(this.form)" /></span>
-			</div>
-		</form>
-		
+				<!--   <div class="row cl">
+        <div class="formControls col-8 col-offset-3">
+          <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
+          <img src="images/VerifyCode.aspx.png"> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
+      </div> 
+      <div class="row">
+        <div class="formControls col-8 col-offset-3">
+          <label for="online">
+            <input type="checkbox" name="online" id="online" value="">
+            使我保持登录状态</label>
+        </div>
+      </div>-->
+				<div style="margin-top: 40px" class="row">
+					<div class="formControls col-8 col-offset-3">
+						<input name="" type="submit" class="btn btn-success radius size-L"
+							value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;"
+							onclick="login(this.form)"> &nbsp;&nbsp; &nbsp;&nbsp;
+						&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <input
+							name="" type="reset" class="btn btn-default radius size-L"
+							value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
+	<div class="footer">
+		2016 &copy; Design By <a style="color: #FFFFFF"> Crazy Code </a>
+	</div>
+	<script type="text/javascript"
+		src="<%=basePath%>users/js/jquery.min.js"></script>
+	<script type="text/javascript" src="<%=basePath%>users/js/H-ui.js"></script>
 </body>
 </html>

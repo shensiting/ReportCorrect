@@ -92,7 +92,7 @@ public class UserController extends BaseController {
 			user.setcId(StringUtils.string2int(id));
 			result = userMapper.updateSelective(user);
 		} else {
-			user.setcPassword(cPassword);
+			user.setcPassword(MD5.getMD5("crazy"+cPassword));
 			user.setcCreateTime(new Date());
 			result = userMapper.add(user);
 		}

@@ -18,9 +18,7 @@
 		<mvc:resources location="/WEB-INF/res/users/lib/" mapping="/users/lib/**" />
 	<mvc:resources location="/WEB-INF/res/users/images/" mapping="/users/images/**" />
 	<mvc:resources location="/WEB-INF/res/users/js/" mapping="/users/js/**" />
-	<mvc:resources location="/WEB-INF/res/users/skin/default/" mapping="/users/skin/default/**" />
-	<mvc:resources location="/WEB-INF/res/users/skin/blue/" mapping="/users/skin/blue/**" />
-
+	
 	<mvc:resources location="/WEB-INF/res/users/temp/" mapping="/users/temp/**" />
 	
 	

@@ -4,6 +4,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  <!DOCTYPE HTML>
 <html>
 <head>
@@ -17,6 +18,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="lib/respond.min.js"></script>
 <script type="text/javascript" src="lib/PIE_IE678.js"></script>
 <![endif]-->
+<script src="<%=basePath%>manage/js/jquery.min.js"></script>
+
+<script src="<%=basePath%>manage/js/md5.js"></script>
 <link href="<%=basePath%>users/css/H-ui.min.css" rel="stylesheet"  />
 <link href="<%=basePath%>users/css/H-ui.login.css" rel="stylesheet"  />
 <link href="<%=basePath%>users/css/style.css" rel="stylesheet" />
@@ -26,42 +30,76 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>后台登录 - H-ui.admin v2.3</title>
-<meta name="keywords" content="H-ui.admin v2.3,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
-<meta name="description" content="H-ui.admin v2.3，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+<script type="text/javascript">
+function login(loginform){//传入表单参数  
+	var number=loginform.number.value;
+	var password=md5(loginform.password.value);
+	//var password=md5(md5(loginform.password.value));
+    if(number!=""&&password!=""){  
+    $.ajax({
+    	type : 'get',
+		dataType : 'json',	
+		async: false,
+		url:'<%=basePath%>manage/check.action?number='+number+'&password='+password,
+		success:function(data){
+            if(data.success){    
+            	var path='<%=basePath%>' + data.msg;
+						document.forms[0].action = path;
+						document.forms[0].submit();
+					} else {
+						alert(data.msg);
+						//$.teninedialog({
+						//	title : '系统提示',
+						//	content : data.msg
+						//});
+					}
+				},
+				error : function() {
+					alert("服务器异常，请稍候再试！");					
+					//$.teninedialog({
+					//	title : '系统提示',
+					//	content : '服务器异常，请稍候再试！'
+					//});
+				}
+			});
+		}
+	}
+	
+</script>
 </head>
 <body>
 
 <div class="header"></div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
-    <form class="form form-horizontal" action="index.html" method="post">
+    <form id="loginform" class="form form-horizontal" action="" method="post">
       <div class="row cl">
         <label class="form-label col-3"><i class="Hui-iconfont">&#xe60d;</i></label>
         <div class="formControls col-8">
-          <input id="" name="" type="text" placeholder="账户" class="input-text size-L">
+          <input id="number" name="number" value="${ScId }" placeholder="账户" required="required" class="input-text size-L">
         </div>
       </div>
       <div class="row cl">
         <label class="form-label col-3"><i class="Hui-iconfont">&#xe60e;</i></label>
         <div class="formControls col-8">
-          <input id="" name="" type="password" placeholder="密码" class="input-text size-L">
+          <input id="password" name="password" type="password" value="${ScPasswordd }" required="required" placeholder="密码" class="input-text size-L">
         </div>
       </div>
-      <div class="row cl">
+    <!--   <div class="row cl">
         <div class="formControls col-8 col-offset-3">
           <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
           <img src="images/VerifyCode.aspx.png"> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
-      </div>
+      </div> 
       <div class="row">
         <div class="formControls col-8 col-offset-3">
           <label for="online">
             <input type="checkbox" name="online" id="online" value="">
             使我保持登录状态</label>
         </div>
-      </div>
+      </div>-->
       <div class="row">
         <div class="formControls col-8 col-offset-3">
-          <input name="" type="submit" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+          <input name="" type="submit" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;" onclick="login(this.form)">
           <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
         </div>
       </div>
@@ -71,16 +109,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="footer">Copyright 你的公司名称 by Crazy code</div>
 <script type="text/javascript" src="<%=basePath%>users/js/jquery.min.js"></script> 
 <script type="text/javascript" src="<%=basePath%>users/js/H-ui.js"></script> 
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F080836300300be57b7f34f4b3e97d911' type='text/javascript'%3E%3C/script%3E"));
-</script>
 </body>
 </html>

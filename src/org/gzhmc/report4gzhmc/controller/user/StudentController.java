@@ -76,9 +76,46 @@ public class StudentController extends BaseController {
 	 */
 	@RequestMapping(value = { "/test", "/test.html" })
 	public ModelAndView test(HttpServletRequest request, HttpServletResponse response) {
+		String userid = request.getSession().getAttribute("userid").toString().trim();
+		Student student = studentMapper.getById(StringUtils.string2int(userid));
 		
 		ModelAndView modelAndView = new ModelAndView("student/test");
+		modelAndView.addObject("studentName", student.getcName());
+		return modelAndView;
+	}
+	/**
+	 * 测试2
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = { "/test3", "/test3.html" })
+	public ModelAndView test2(HttpServletRequest request, HttpServletResponse response) {
 		
+		ModelAndView modelAndView = new ModelAndView("student/test3");
+		String userid = request.getSession().getAttribute("userid").toString().trim();
+		Student student = studentMapper.getById(StringUtils.string2int(userid));
+		
+		modelAndView.addObject("studentName", student.getcName());
+		
+		return modelAndView;
+	}
+	
+	/**
+	 * 跳转个人信息页面
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = { "/information", "/information.html" })
+	public ModelAndView informationAction(HttpServletRequest request, HttpServletResponse response) {
+		
+		String userid = request.getSession().getAttribute("userid").toString().trim();
+		StudentGrade student = studentGradeMapper.getById(StringUtils.string2int(userid));
+		ModelAndView modelAndView = new ModelAndView("student/information");
+		modelAndView.addObject("student", student);						
 		return modelAndView;
 	}
 	/**
@@ -95,6 +132,7 @@ public class StudentController extends BaseController {
 		List<ExperimentalTest> experimentalTests = experimentalTestMapper.getAll();
 		ModelAndView modelAndView = new ModelAndView("student/studentIndex");
 		modelAndView.addObject("studentName", student.getcName());
+		modelAndView.addObject("studentNum", student.getcStudentNumber());
 		modelAndView.addObject("experimentalTests", experimentalTests);
 		if (null != request.getParameter("process")) {
 			modelAndView.addObject("process", request.getParameter("process"));
@@ -304,7 +342,6 @@ public class StudentController extends BaseController {
 		String userid = request.getSession().getAttribute("userid").toString().trim();
 		StudentGrade student = studentGradeMapper.getById(StringUtils.string2int(userid));
 		ModelAndView modelAndView = new ModelAndView("student/uploadPicture");
-
 		modelAndView.addObject("student", student);
 
 		return modelAndView;
