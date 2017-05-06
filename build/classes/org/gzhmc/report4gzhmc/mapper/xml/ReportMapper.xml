@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.ReportMapper">
+	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.Report">
+		<id column="cId" property="cId" />
+		<result column="cReportNum" property="cReportNum" />
+		<result column="cScoreId" property="cScoreId" />
+		<result column="cStudentId" property="cStudentId" />
+		<result column="cStatus" property="cStatus" />
+		<result column="cPath" property="cPath" />
+		<result column="cCreateTime" property="cCreateTime" />
+		<result column="cPdfPath" property="cPdfPath" />
+		<result column="cProcess" property="cProcess" />
+		<result column="cQRcode" property="cQRcode" />
+		<result column="cTeacherId" property="cTeacherId" />
+		<result column="cExperimentTextId" property="cExperimentTextId" />
+	</resultMap>
+
+	<select id="getCountByexperimrntAndstudent" resultType="int"
+		parameterType="org.gzhmc.report4gzhmc.model.Report">
+		select COUNT(*) from gy_report_report where
+		cStudentId =
+		#{cStudentId } and
+		cExperimentTextId = #{cExperimentTextId }
+	</select>
+	<select id="getByexperimrntAndstudentId" resultMap="BaseResultMap"
+		parameterType="org.gzhmc.report4gzhmc.model.Report">
+		select * from gy_report_report where
+		cStudentId =
+		#{cStudentId } and
+		cExperimentTextId = #{cExperimentTextId }
+	</select>
+	<select id="getAll" resultMap="BaseResultMap">
+		select * from gy_report_report
+		order by cId desc
+	</select>
+	<select id="getByStudentId" resultMap="BaseResultMap"
+		parameterType="int">
+		select * from gy_report_report where cStudentId =
+		#{cStudentId }
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		select
+		*
+		from gy_report_report
+		where cId = #{cId }
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from gy_report_report
+		where cId = #{cId }
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Report" useGeneratedKeys="true" keyProperty="cId">
+		insert into gy_report_report
+		(cReportNum,cScoreId,cStudentId,cStatus,
+		cPath,cCreateTime,cPdfPath,cProcess,cQRcode,cTeacherId,cExperimentTextId)
+		values ( #{cReportNum }, #{cScoreId },
+		#{cStudentId },
+		#{cStatus }, #{cPath }, #{cCreateTime
+		}, #{cPdfPath }, #{cProcess },
+		#{cQRcode }, #{cTeacherId }, #{cExperimentTextId })
+	</insert>
+
+	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Report">
+		update gy_report_report
+		<set>
+			<if test="cReportNum != null">
+				cReportNum = #{cReportNum },
+			</if>
+
+			<if test="cTeacherId != null">
+				cTeacherId = #{cTeacherId },
+			</if>
+
+			<if test="cScoreId != null">
+				cScoreId = #{cScoreId },
+			</if>
+			<if test="cStudentId != null">
+				cStudentId = #{cStudentId },
+			</if>
+			<if test="cStatus != null">
+				cStatus = #{cStatus },
+			</if>
+			<if test="cPath != null">
+				cPath = #{cPath },
+			</if>
+			<if test="cCreateTime != null">
+				cCreateTime = #{cCreateTime },
+			</if>
+			<if test="cPdfPath != null">
+				cPdfPath = #{cPdfPath },
+			</if>
+			<if test="cProcess != null">
+				cProcess = #{cProcess },
+			</if>
+			<if test="cQRcode != null">
+				cQRcode = #{cQRcode },
+			</if>
+			<if test="cExperimentTextId != null">
+				cExperimentTextId = #{cExperimentTextId },
+			</if>
+
+		</set>
+		where cId = #{cId }
+	</update>
+	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.Report">
+		update gy_report_report
+		set
+		cReportNum = #{cReportNum },
+		cScoreId = #{cScoreId },
+		cStudentId =
+		#{cStudentId },
+		cStatus = #{cStatus },
+		cPath = #{cPath },
+		cCreateTime =
+		#{cCreateTime },
+		cPdfPath = #{cPdfPath },
+		cProcess = #{cProcess },
+		cQRcode = #{cQRcode },
+		cTeacherId = #{cTeacherId },
+		cExperimentTextId =
+		#{cExperimentTextId }
+		where cId = #{cId }
+	</update>
+</mapper>

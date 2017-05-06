@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.ResitMapper" >
+  <resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.Resit" >
+    <id column="cId" property="cId"  />
+    <result column="cStudentId" property="cStudentId"  />
+    <result column="cExperiment" property="cExperiment"  />
+    <result column="cReportId" property="cReportId"  />
+  </resultMap>
+  <select id="getAll" resultMap="BaseResultMap" parameterType="int" >
+    select 
+    cId, cStudentId, cExperiment, cReportId
+    from gy_report_resit    
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="int" >
+    delete from gy_report_resit
+    where cId = #{cId }
+  </delete>
+  <insert id="insert" parameterType="org.gzhmc.report4gzhmc.model.Resit" >
+    insert into gy_report_resit (cId, cStudentId, cExperiment, 
+      cReportId)
+    values (#{cId }, #{cStudentId }, #{cExperiment }, 
+      #{cReportId })
+  </insert>
+  <insert id="insertSelective" parameterType="org.gzhmc.report4gzhmc.model.Resit" >
+    insert into gy_report_resit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        cId,
+      </if>
+      <if test="cStudentId != null" >
+        cStudentId,
+      </if>
+      <if test="cExperiment != null" >
+        cExperiment,
+      </if>
+      <if test="cReportId != null" >
+        cReportId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId },
+      </if>
+      <if test="cStudentId != null" >
+        #{cStudentId },
+      </if>
+      <if test="cExperiment != null" >
+        #{cExperiment },
+      </if>
+      <if test="cReportId != null" >
+        #{cReportId },
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.gzhmc.report4gzhmc.model.Resit" >
+    update gy_report_resit
+    <set >
+      <if test="cStudentId != null" >
+        cStudentId = #{cStudentId },
+      </if>
+      <if test="cExperiment != null" >
+        cExperiment = #{cExperiment },
+      </if>
+      <if test="cReportId != null" >
+        cReportId = #{cReportId },
+      </if>
+    </set>
+    where cId = #{cId }
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.gzhmc.report4gzhmc.model.Resit" >
+    update gy_report_resit
+    set cStudentId = #{cStudentId },
+      cExperiment = #{cExperiment },
+      cReportId = #{cReportId }
+    where cId = #{cId }
+  </update>
+   <update id="updateByStudentIdAndExperimentId" parameterType="org.gzhmc.report4gzhmc.model.Resit" >
+    update gy_report_resit
+    set cReportId = #{cReportId }
+    where cStudentId = #{cStudentId } and cExperiment = #{cExperiment } and  cReportId = 0
+  </update>
+</mapper>

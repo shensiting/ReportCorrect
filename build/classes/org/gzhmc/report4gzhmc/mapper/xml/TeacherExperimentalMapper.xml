@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.TeacherExperimentalMapper">
+	<resultMap id="BaseResultMap"
+		type="org.gzhmc.report4gzhmc.model.TeacherExperimental">
+		<id column="cId" property="cId" />
+		<result column="cTeacherId" property="cTeacherId" />
+		<result column="cExperimentalTestId" property="cExperimentalTestId" />
+	</resultMap>
+
+	<select id="getAll" resultMap="BaseResultMap">
+		select * from
+		gy_report_teacher_experimental order by cId desc
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		select
+		cId, cTeacherId, cExperimentalTestId
+		from
+		gy_report_teacher_experimental
+		where cId = #{cId }
+	</select>
+	<select id="getByTeacherId" resultMap="BaseResultMap" parameterType="int">
+		select
+		cId, cTeacherId, cExperimentalTestId
+		from
+		gy_report_teacher_experimental
+		where cTeacherId = #{cTeacherId }
+	</select>
+	<select id="getCountByTeacherId" resultType="int" parameterType="int">
+		select
+		count(cTeacherId)
+		from
+		gy_report_teacher_experimental
+		where cTeacherId = #{cTeacherId }
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from
+		gy_report_teacher_experimental
+		where cId = #{cId }
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.TeacherExperimental">
+		insert into
+		gy_report_teacher_experimental (cId, cTeacherId, cExperimentalTestId
+		)
+		values (#{cId }, #{cTeacherId }, #{cExperimentalTestId }
+		)
+	</insert>
+
+	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.TeacherExperimental">
+		update gy_report_teacher_experimental
+		<set>
+			<if test="cTeacherId != null">
+				cTeacherId = #{cTeacherId },
+			</if>
+			<if test="cExperimentalTestId != null">
+				cExperimentalTestId = #{cExperimentalTestId },
+			</if>
+		</set>
+		where cId = #{cId }
+	</update>
+	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.TeacherExperimental">
+		update
+		gy_report_teacher_experimental
+		set cTeacherId = #{cTeacherId },
+		cExperimentalTestId = #{cExperimentalTestId }
+		where cId = #{cId }
+	</update>
+</mapper>
