@@ -171,7 +171,6 @@ public class StudentController extends BaseController {
 	 * @return
 	 * @throws IOException
 	 */
-	@SuppressWarnings("unused")
 	@RequestMapping(value = { "/uploadreport.action" })
 	public ModelAndView uploadReportAction(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "file", required = false) MultipartFile uploadFile,

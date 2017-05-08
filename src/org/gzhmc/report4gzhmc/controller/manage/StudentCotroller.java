@@ -92,8 +92,8 @@ public class StudentCotroller extends BaseController {
 			user.setcCreateTime(new Date());
 			user.setcId(student.getcUserId());
 			user.setcPassword(MD5.getMD5("crazy123456"));
-			user.setcRole(2);
-			user.setcUserName(Studentname);
+			user.setcRole(3);
+			user.setcUserName(Studentnum);
 			userMapper.add(user);			
 		}
 		if (result == 1) {

@@ -31,22 +31,22 @@
 		<form action="" method="post" class="form form-horizontal"
 			id="form-article-add">
 			<div class="row cl">
-				<label class="form-label col-1"><span class="c-red">*</span>密码：</label>
+				<label class="form-label col-3"><span class="c-red">*</span>密码：</label>
 				<div class="formControls col-6">
 					<input type="password" required="required" class="input-text"
 						placeholder="" name="password">
 				</div>
 			</div>
 			<div class="row cl">
-				<label class="form-label col-1">确认密码：</label>
+				<label class="form-label col-3"><span class="c-red">*</span>确认密码：</label>
 				<div class="formControls col-6">
 					<input type="password" required="required" class="input-text"
 						placeholder="" name="repassword">
 				</div>
 			</div>
 			<div class="row cl">
-				<div class="col-10 col-offset-2">
-					<button onClick="article_save_submit();"
+				<div class="col-10 col-offset-3">
+					<button onclick="passwordChange(this.form)"
 						class="btn btn-primary radius" type="submit">
 						<i class="Hui-iconfont">&#xe632;</i> 保存并提交
 					</button>
@@ -61,6 +61,45 @@
 function member_edit(title,url,id,w,h){
 	layer_show(title,url,w,h);
 }
+
+//校验密码：只能输入6-20个字母、数字、下划线   
+function isPasswd(passwordString){   
+var patrn=/^(\w){6,20}$/;   
+return patrn.exec(passwordString);
+}   
+
+function passwordChange(registeform){
+	 var password=registeform.password.value;
+   var  repassword=registeform.repassword.value;
+	if(!isPasswd(password)||!isPasswd(repassword)){
+		alert("密码只能为6-20个字母、数字、下划线。   ");	
+	}
+	else if(password!=repassword){
+		alert("两次密码不一致，请确认后输入。 ");	
+	}
+	else{
+		$.ajax({
+			type : 'get',
+			dataType : 'json',
+			async: false,
+			url:'<%=basePath%>student/passwordChange.action?password='+password,
+			success : function(data) {
+				if (data.success) {		
+					alert(data.msg);
+			
+					} else {
+						alert(data.msg);
+					}
+				},
+				error : function() {
+					alert("服务器异常，请稍候再试！");
+				}
+
+			});
+
+		}
+
+	}
 </script>
 </body>
 </html>

@@ -66,11 +66,11 @@
 			class="dropDown_A">更多 <i class="Hui-iconfont">&#xe6d5;</i></a>
 			<ul class="dropDown-menu radius box-shadow">
 				<li><a href="javascript:;"
-					onclick="article_add('个人信息','<%=basePath%>student/information')">个人信息</a></li>
+					onclick="member_edit('个人信息','<%=basePath%>student/information','4','','510')">个人信息</a></li>
 				<li>
 				
 				<a href="javascript:;"
-					onclick="member_edit('修改密码','<%=basePath%>student/information','4','','510')">修改密码</a></li>
+					onclick="member_edit('修改密码','<%=basePath%>student/test3','4','480','350')" style="text-decoration:none">修改密码</a></li>
 				<li><a href="<%=basePath%>manage/exit">退出</a></li>
 			</ul></li>
 		<li id="Hui-msg"><a href="#" title="消息"><span
@@ -162,39 +162,17 @@
 		</div>
 	</div>
 	</section>
-
+<script type="text/javascript" src="<%=basePath %>users/lib/laypage/1.2/laypage.js"></script> 
+<script type="text/javascript" src="<%=basePath %>users/lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="<%=basePath %>users/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
 	<script type="text/javascript">
-		/*资讯-添加*/
-		function article_add(title, url) {
-			var index = layer.open({
-				type : 2,
-				title : title,
-				content : url
-			});
-			layer.full(index);
-		}
-		/*图片-添加*/
-		function picture_add(title, url) {
-			var index = layer.open({
-				type : 2,
-				title : title,
-				content : url
-			});
-			layer.full(index);
-		}
-		/*产品-添加*/
-		function product_add(title, url) {
-			var index = layer.open({
-				type : 2,
-				title : title,
-				content : url
-			});
-			layer.full(index);
-		}
-		/*用户-添加*/
-		function member_add(title, url, w, h) {
-			layer_show(title, url, w, h);
-		}
+	
+	/*用户-编辑*/
+	function member_edit(title,url,id,w,h){
+		layer_show(title,url,w,h);
+	}
+	
+	
 	</script>
 	<script type="text/javascript">
 		var _hmt = _hmt || [];

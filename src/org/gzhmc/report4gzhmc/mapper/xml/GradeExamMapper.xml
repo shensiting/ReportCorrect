@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.GradeExamMapper" >
+  <resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.GradeExam" >
+    <id column="cId" property="cId" jdbcType="INTEGER" />
+    <result column="cGradeId" property="cGradeId" jdbcType="INTEGER" />
+    <result column="cExperimentId" property="cExperimentId" jdbcType="INTEGER" />
+    <result column="cCreateTime" property="cCreateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cId, cGradeId, cExperimentId, cCreateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from gy_report_grade_exam
+    where cId = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gy_report_grade_exam
+    where cId = #{cId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.gzhmc.report4gzhmc.model.GradeExam" >
+    insert into gy_report_grade_exam (cId, cGradeId, cExperimentId, 
+      cCreateTime)
+    values (#{cId,jdbcType=INTEGER}, #{cGradeId,jdbcType=INTEGER}, #{cExperimentId,jdbcType=INTEGER}, 
+      #{cCreateTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="org.gzhmc.report4gzhmc.model.GradeExam" >
+    insert into gy_report_grade_exam
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        cId,
+      </if>
+      <if test="cGradeId != null" >
+        cGradeId,
+      </if>
+      <if test="cExperimentId != null" >
+        cExperimentId,
+      </if>
+      <if test="cCreateTime != null" >
+        cCreateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cGradeId != null" >
+        #{cGradeId,jdbcType=INTEGER},
+      </if>
+      <if test="cExperimentId != null" >
+        #{cExperimentId,jdbcType=INTEGER},
+      </if>
+      <if test="cCreateTime != null" >
+        #{cCreateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.gzhmc.report4gzhmc.model.GradeExam" >
+    update gy_report_grade_exam
+    <set >
+      <if test="cGradeId != null" >
+        cGradeId = #{cGradeId,jdbcType=INTEGER},
+      </if>
+      <if test="cExperimentId != null" >
+        cExperimentId = #{cExperimentId,jdbcType=INTEGER},
+      </if>
+      <if test="cCreateTime != null" >
+        cCreateTime = #{cCreateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where cId = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.gzhmc.report4gzhmc.model.GradeExam" >
+    update gy_report_grade_exam
+    set cGradeId = #{cGradeId,jdbcType=INTEGER},
+      cExperimentId = #{cExperimentId,jdbcType=INTEGER},
+      cCreateTime = #{cCreateTime,jdbcType=DATE}
+    where cId = #{cId,jdbcType=INTEGER}
+  </update>
+</mapper>

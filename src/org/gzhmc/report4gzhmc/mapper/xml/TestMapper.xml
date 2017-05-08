@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.TestMapper" >
+  <resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.Test" >
+    <id column="cId" property="cId" jdbcType="INTEGER" />
+    <result column="cTestName" property="cTestName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cId, cTestName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from gy_report_test
+    where cId = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gy_report_test
+    where cId = #{cId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.gzhmc.report4gzhmc.model.Test" >
+    insert into gy_report_test (cId, cTestName)
+    values (#{cId,jdbcType=INTEGER}, #{cTestName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.gzhmc.report4gzhmc.model.Test" >
+    insert into gy_report_test
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        cId,
+      </if>
+      <if test="cTestName != null" >
+        cTestName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cTestName != null" >
+        #{cTestName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.gzhmc.report4gzhmc.model.Test" >
+    update gy_report_test
+    <set >
+      <if test="cTestName != null" >
+        cTestName = #{cTestName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cId = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.gzhmc.report4gzhmc.model.Test" >
+    update gy_report_test
+    set cTestName = #{cTestName,jdbcType=VARCHAR}
+    where cId = #{cId,jdbcType=INTEGER}
+  </update>
+</mapper>

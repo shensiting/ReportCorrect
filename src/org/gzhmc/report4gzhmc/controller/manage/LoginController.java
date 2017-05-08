@@ -117,7 +117,7 @@ public class LoginController extends BaseController {
 					}
 				} else {
 					session.setAttribute("userid", user.getcId());					
-					json.setMsg("student/uploadPicture");
+					json.setMsg("student/test");
 				}
 			} else {
 				json.setSuccess(false);
