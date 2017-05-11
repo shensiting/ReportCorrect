@@ -1,186 +1,184 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../common/lib.jsp"%>
+<%@ include file="../common/userslib.jsp"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%
-   // String id = (String)session.getAttribute("user");
-  //  if (null==id || id.equals("")) {
-  //      out.print("<script type='javascript'>alert('请先登录系统！');window.location ='"+ basePath+"login.jsp';</script>");
-   // }
-%>
-<!DOCTYPE HTML>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>首页</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link href="<%=basePath_userslib%>users/css/skin.css" rel="stylesheet"
+	type="text/css" />
+<LINK rel="Bookmark" href="/favicon.ico">
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="<%=basePath_userslib%>users/lib/html5.js"></script>
+<script type="text/javascript" src="<%=basePath_userslib%>users/lib/respond.min.js"></script>
+<script type="text/javascript" src="<%=basePath_userslib%>users/lib/PIE_IE678.js"></script>
+<![endif]-->
 
-<script type="text/javascript">
-	//返回id数组
-	function getSelectedId() {
-		//获取所有name为checkboxid的 CheckBox
-		var checkBoxs = document.getElementsByName("checkboxid");
-		var idStr = "";
-		//遍历所有CheckBox，当CheckBox为选中时将这行数据的id值拼接到idStr中
-		for (var i = 0; i < checkBoxs.length; i++) {
-			if (checkBoxs[i].checked) {
-				idStr += checkBoxs[i].value + ",";
-			}
-		}
-		//去掉最后一个字符（“，”）
-		idStr = idStr.substring(0, idStr.length - 1);
-		if (idStr == "") {
-			var obj = new Array();
-			return obj;
-		}
-		//将idStr按“，”分割成字符串数组
-		var ids = idStr.split(",");
-		return ids;
-	}
-	//修改并新增函数
-	function editFunc(){
-		var ids = getSelectedId();
-		if (ids.length != 1 ) {
-			$.teninedialog({
-				title : '系统提示',
-				content : '请选择一条记录!'
-			});
-			return;
-		}else{
-			//取得当前记录id
-			var id= ids[0];
-			//跳转到页面
-			window.location.href='<%=basePath%>manage/addCollege.html?id='+id;
-		}
-	}
-	
-	//删除函数
-	function deleteFunc() {
-		var ids = getSelectedId();
-		if (ids.length == 0) {
-			$.teninedialog({
-				title : '系统提示',
-				content : '请选择一条记录!'
-			});
-			return;
-		}
-		$.teninedialog({
-			title : '系统提示',
-			content : '确认所选' + ids.length + '条记录?',
-			showCloseButton : true,
-			otherButtons : [ "确定" ],
-			otherButtonStyles : [ 'btn-primary' ],
-			clickButton : function(sender, modal, index) {
-				//只有一个确定按钮，这里进行删除操作
-				//通过ajax向后台请求
-				$.ajax({
-					type : 'get',
-					dataType : 'json',
-					url : '<%=basePath%>manage/delCollege.action?ids=' + ids,
-					success : function(data) {
-						if (data.success) {
-							//删除成功，刷新页面
 
-						} else {
-							$.teninedialog({
-								title : '系统提示',
-								content : data.msg
-							});
-						}
-						//刷新页面
-						location.reload();
-					},
-					error : function() {
-						$.teninedialog({
-							title : '系统提示',
-							content : '服务器异常，请稍候再试！'
-						});
-					}
-				});
-				//刷新当前页
-
-				/* //关闭对话框
-				$(this).closeDialog(modal); */
-			}
-		});
-
-	}
-</script>
+<!--[if IE 6]>
+<script type="text/javascript" src="<%=basePath_userslib%>users/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>实验报告管理系统</title>
 </head>
 <body>
-	<div id="header">
-		<h1>
-			<img alt="" src="<%=basePath%>images/gzykdx.png"
-				style="width:100%; height: 100%">
-		</h1>
-	</div>
-	<!-- 右上角用户按钮 -->
-	<%@include file="../common/user-nav.jsp"%>
-	<!-- 左侧导航栏 -->
-	<div id="sidebar">
-		<ul>
-			<li class="active submenu open"><a href="#"><i
-					class="icon icon-th-list"></i> <span>基本信息管理</span> <span
-					class="label">3</span></a>
-				<ul>
-                    <li><a href="<%=basePath%>manage/indexCollege">学院管理</a></li>
-					<li><a href="<%=basePath%>manage/indexMajor">专业管理</a></li>
-					<li><a href="<%=basePath%>manage/indexGrade">班级管理</a></li>
-				</ul></li>
+	<header class="Hui-header cl"> <a class="Hui-logo l"
+		title="H-ui.admin v2.3" href="/">广州医科大学</a> <a class="Hui-logo-m l"
+		href="/" title="H-ui.admin">基础学院</a> <span class="Hui-subtitle l">实验报告管理系统</span>
+	<nav class="mainnav cl" id="Hui-nav">
+	<ul>
+		<li class="dropDown dropDown_click"><a href="javascript:;"
+			class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i
+				class="Hui-iconfont">&#xe6d5;</i></a>
+			<ul class="dropDown-menu radius box-shadow">
+				<li><a href="javascript:;"
+					onclick="article_add('添加资讯','article-add.html')"><i
+						class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
+				<li><a href="javascript:;"
+					onclick="picture_add('添加资讯','picture-add.html')"><i
+						class="Hui-iconfont">&#xe613;</i> 图片</a></li>
+				<li><a href="javascript:;"
+					onclick="product_add('添加资讯','product-add.html')"><i
+						class="Hui-iconfont">&#xe620;</i> 产品</a></li>
+				<li><a href="javascript:;"
+					onclick="member_add('添加用户','member-add.html','','510')"><i
+						class="Hui-iconfont">&#xe60d;</i> 用户</a></li>
+			</ul></li>
+	</ul>
+	</nav>
+	<ul class="Hui-userbar">
+		<li>${studentName}</li>
+		<li class="dropDown dropDown_hover"><a href="#"
+			class="dropDown_A">更多 <i class="Hui-iconfont">&#xe6d5;</i></a>
+			<ul class="dropDown-menu radius box-shadow">
+				<li>				
+				<a href="javascript:;"
+					onclick="member_edit('修改密码','<%=basePath%>student/test3','4','480','350')" style="text-decoration:none">修改密码</a></li>
+				<li><a href="<%=basePath%>manage/exit">退出</a></li>
+			</ul></li>
+		<li id="Hui-msg"><a href="#" title="消息"><span
+				class="badge badge-danger">1</span><i class="Hui-iconfont"
+				style="font-size: 18px">&#xe68a;</i></a></li>
 
-			<li class="submenu"><a href="#"><i class="icon icon-pencil"></i>
-					<span>实验信息管理</span> <span class="label">2</span></a>
-				<ul>
-					<li><a href="<%=basePath%>manage/indexExperiment.html">实验管理</a></li>
-					<li><a href="<%=basePath%>manage/indexTeacherExperiment.html">考核管理</a></li>
-				</ul></li>
-			<li class="submenu"><a href="#"><i class="icon icon-file"></i>
-					<span>用户信息管理</span> <span class="label">3</span></a>
-				<ul>
-					<li><a href="<%=basePath%>manage/indexStudent">学生信息管理</a></li>
-					<li><a href="<%=basePath%>manage/indexTeacher">教师信息管理</a></li>
-					<li><a href="<%=basePath%>manage/indexUser.html">登陆信息管理</a></li>
-				</ul></li>
-		</ul>
-	</div>
-	<!-- 左侧导航栏 -->
+	</ul>
+	<a aria-hidden="false" class="Hui-nav-toggle" href="#"></a> </header>
+	<aside class="Hui-aside"> <input runat="server"
+		id="divScrollValue" type="hidden" value="" />
+	<div class="menu_dropdown bk_2">
+		<dl id="menu-article">
+			<dt>
+				<i class="Hui-iconfont">&#xe616;</i>基本信息管理<i
+					class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+			</dt>
+			<dd>
+				<ul>							
+					<li><a _href="<%=basePath%>manage/indexCollege""
+						href="javascript:void(0)">学院管理</a></li>
+					<li><a _href="<%=basePath%>manage/indexMajor"
+						href="javascript:void(0)">专业管理</a></li>
+					<li><a _href="<%=basePath%>manage/indexGrade"
+						href="javascript:void(0)">班级管理</a></li>
 
-	<div id="content">
-		<div id="content-header">
-			<h1>
-				<a>广医学生报告后台管理系统</a>
-			</h1>
+				</ul>
+			</dd>
+		</dl>
+		<dl id="menu-picture">
+			<dt>
+				<i class="Hui-iconfont">&#xe61a;</i> 实验信息管理<i
+					class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+			</dt>
+			<dd>
+				<ul>
+					<li><a _href="<%=basePath%>student/uploadPicture" href="javascript:void(0)">实验分类管理</a></li>
+					<li><a _href="<%=basePath%>student/uploadPicture" href="javascript:void(0)">实验管理</a></li>
+				
+					<li><a _href="<%=basePath%>student/uploadPicture" href="javascript:void(0)">教师班级管理</a></li>
+					<li><a _href="<%=basePath%>student/uploadPicture" href="javascript:void(0)">实验班级管理</a></li>
+				
+				</ul>
+			</dd>
+		</dl>
+
+		<dl id="menu-tongji">
+			<dt>
+				<i class="Hui-iconfont">&#xe60d;</i>用户信息管理<i
+					class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+			</dt>
+			<dd>
+				<ul>
+					<li><a _href="<%=basePath%>manage/indexStudent"
+						href="javascript:void(0)">学生信息管理</a></li>
+											<li><a _href="<%=basePath%>manage/indexTeacher"
+						href="javascript:void(0)">教师信息管理</a></li>
+											<li><a _href="<%=basePath%>manage/indexUser.html"
+						href="javascript:void(0)">登陆信息管理</a></li>
+				</ul>
+			</dd>
+		</dl>
+
+		<dl id="menu-comments">
+			<dt>
+				<i class="Hui-iconfont">&#xe622;</i>论坛消息管理<i
+					class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+			</dt>
+			<dd>
+				<ul>
+					<li><a _href="http://h-ui.duoshuo.com/admin/"
+						href="javascript:;">评论列表</a></li>
+					<li><a _href="feedback-list.html" href="javascript:void(0)">意见反馈</a></li>
+				</ul>
+			</dd>
+		</dl>
+
+	</div>
+	</aside>
+	<div class="dislpayArrow">
+		<a class="pngfix" href="javascript:void(0);"
+			onClick="displaynavbar(this)"></a>
+	</div>
+	<section class="Hui-article-box">
+	<div id="Hui-tabNav" class="Hui-tabNav">
+		<div class="Hui-tabNav-wp">
+			<ul id="min_title_list" class="acrossTab cl">
+				<li class="active"><span title="报告管理"
+					data-href="">报告管理</span><em></em></li>
+			</ul>
 		</div>
-		<div id="breadcrumb">
-			<a href="<%=basePath%>manage/index" title="主页" class="tip-bottom"><i
-				class="icon-home"></i> 首页</a>
-		</div>
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<h1 align="center">
-						<a>欢迎来到学生报告管理系统</a>
-					</h1>
-					<br>
-					<br>
-					<h5 align="center">广州医科大学生物技术专业创办于2005年，目前已经发展成为教学特色鲜明，师资力量雄厚，
-						实践基础扎实，实习基地完善的医学院四年制新学科。</h5>
-					<h5 align="center">本专业着力培养具有医学基础知识和生物技术专业理论知识与实践技能，
-						能在高等医药院校或科研机构从事教学或研究工作，</h5>
-					<h5 align="center">在医疗、制药、食品等生物高新技术领域从事开发应用、研究监测、生产和管理等工作的高素质实用型人才。</h5>
-				    <br>
-				</div>
-			</div>
-			<!-- footer -->
-			<%@include file="../common/footer.jsp"%>
+		<div class="Hui-tabNav-more btn-group">
+			<a id="js-tabNav-prev" class="btn radius btn-default size-S"
+				href="javascript:;"><i class="Hui-iconfont">&#xe6d4;</i></a><a
+				id="js-tabNav-next" class="btn radius btn-default size-S"
+				href="javascript:;"><i class="Hui-iconfont">&#xe6d7;</i></a>
 		</div>
 	</div>
+	<div id="iframe_box" class="Hui-article">
+		<div class="show_iframe">
+			<div style="display: none" class="loading"></div>
+			<iframe scrolling="yes" frameborder="0" src="<%=basePath%>manage/test"></iframe>
+		</div>
+	</div>
+	</section>
+	<script type="text/javascript">
+	
+	/*用户-编辑*/
+	function member_edit(title,url,id,w,h){
+		layer_show(title,url,w,h);
+	}
+
+		</script>
 </body>
 </html>

@@ -367,7 +367,7 @@ public class StudentController extends BaseController {
 			json.setMsg("对不起，密码修改失败。");
 		} else {
 			json.setSuccess(true);
-			json.setMsg("修改成功，请重新登陆。");
+			json.setMsg("密码修改成功。");
 		}
 		writeResultJson(response, json);
 	}

@@ -11,6 +11,7 @@ import org.gzhmc.common.util.StringUtils;
 import org.gzhmc.report4gzhmc.mapper.CollegeMapper;
 import org.gzhmc.report4gzhmc.model.College;
 import org.gzhmc.report4gzhmc.model.ResultJson;
+import org.gzhmc.report4gzhmc.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,38 @@ public class CollegeController extends BaseController {
 	@Autowired
 	CollegeMapper collegeMapper;
 
+	/**
+	 * 测试
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = { "/test", "/test.html" })
+	public ModelAndView test(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		
+		ModelAndView modelAndView = new ModelAndView("manage/test");
+		
+		return modelAndView;
+	}
+	
+	/**
+	 * 测试2
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = { "/test2", "/test2.html" })
+	public ModelAndView test2(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		
+		ModelAndView modelAndView = new ModelAndView("manage/test2");
+		
+		return modelAndView;
+	}
+	
 	// 显示所有学院信息
 	@RequestMapping(value = { "/indexCollege", "/indexCollege.html" })
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
@@ -71,7 +104,7 @@ public class CollegeController extends BaseController {
 		}
 		if (result == 1) {
 			// 重定向转到管理学院的页面
-			return new ModelAndView("redirect:/manage/indexCollege.html");
+			return new ModelAndView("manage/addCollege");
 		} else {
 			throw new WebException();
 		}

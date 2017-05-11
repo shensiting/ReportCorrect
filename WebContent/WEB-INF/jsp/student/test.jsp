@@ -23,14 +23,14 @@
 <LINK rel="Bookmark" href="/favicon.ico">
 <LINK rel="Shortcut Icon" href="/favicon.ico" />
 <!--[if lt IE 9]>
-<script type="text/javascript" src="lib/html5.js"></script>
-<script type="text/javascript" src="lib/respond.min.js"></script>
-<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<script type="text/javascript" src="<%=basePath_userslib%>users/lib/html5.js"></script>
+<script type="text/javascript" src="<%=basePath_userslib%>users/lib/respond.min.js"></script>
+<script type="text/javascript" src="<%=basePath_userslib%>users/lib/PIE_IE678.js"></script>
 <![endif]-->
 
 
 <!--[if IE 6]>
-<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script type="text/javascript" src="<%=basePath_userslib%>users/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>实验报告管理系统</title>
@@ -70,7 +70,7 @@
 				<li>
 				
 				<a href="javascript:;"
-					onclick="member_edit('修改密码','<%=basePath%>student/test3','4','480','350')" style="text-decoration:none">修改密码</a></li>
+					onclick="member_edit('修改密码','<%=basePath%>student/passwordChange','4','480','350')" style="text-decoration:none">修改密码</a></li>
 				<li><a href="<%=basePath%>manage/exit">退出</a></li>
 			</ul></li>
 		<li id="Hui-msg"><a href="#" title="消息"><span
@@ -162,32 +162,13 @@
 		</div>
 	</div>
 	</section>
-<script type="text/javascript" src="<%=basePath %>users/lib/laypage/1.2/laypage.js"></script> 
-<script type="text/javascript" src="<%=basePath %>users/lib/My97DatePicker/WdatePicker.js"></script> 
-<script type="text/javascript" src="<%=basePath %>users/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
 	<script type="text/javascript">
 	
 	/*用户-编辑*/
 	function member_edit(title,url,id,w,h){
 		layer_show(title,url,w,h);
 	}
-	
-	
-	</script>
-	<script type="text/javascript">
-		var _hmt = _hmt || [];
-		(function() {
-			var hm = document.createElement("script");
-			hm.src = "//hm.baidu.com/hm.js?080836300300be57b7f34f4b3e97d911";
-			var s = document.getElementsByTagName("script")[0];
-			s.parentNode.insertBefore(hm, s)
-		})();
-		var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://"
-				: " http://");
-		document
-				.write(unescape("%3Cscript src='"
-						+ _bdhmProtocol
-						+ "hm.baidu.com/h.js%3F080836300300be57b7f34f4b3e97d911' type='text/javascript'%3E%3C/script%3E"));
-	</script>
+
+		</script>
 </body>
 </html>
