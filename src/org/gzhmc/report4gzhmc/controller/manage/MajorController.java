@@ -53,10 +53,11 @@ public class MajorController extends BaseController {
 	// 根据id是否存在判断是否为增加或修改信息，进行增加或修改
 	@RequestMapping(value = { "/addMajor.action" })
 	@Transactional
-	public ModelAndView addMajorAction(HttpServletRequest request, HttpServletResponse response) throws WebException {
+	public void addMajorAction(HttpServletRequest request, HttpServletResponse response) throws WebException {
 		// 获取表单中的值，如果id值为空，则表示新增，否则表示根据此id来修改
 		String id = request.getParameter("id");
 		String Majorname = request.getParameter("Majorname");
+		ResultJson json = new ResultJson();
 		Major major = new Major();
 		major.setcMajorName(Majorname);
 		int result;
@@ -68,10 +69,13 @@ public class MajorController extends BaseController {
 		}
 		if (result == 1) {
 			// 重定向转到管理专业的页面
-			return new ModelAndView("redirect:/manage/indexMajor");
+			json.setSuccess(true);
+			json.setMsg("操作成功，请返回原页面刷新查看");
+			
 		} else {
 			throw new WebException();
 		}
+		writeResultJson(response, json);
 	}
 
 	// 根据id删除信息

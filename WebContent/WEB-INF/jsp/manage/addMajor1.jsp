@@ -13,7 +13,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>增加/修改学院</title>
+<title>增加/修改专业</title>
 
 <script type="text/javascript">
 	
@@ -28,7 +28,6 @@
 	</div>
 	<!-- 右上角用户按钮 -->
 	<%@include file="../common/user-nav.jsp"%>
-
 	<!-- 左侧导航栏 -->
 	<div id="sidebar">
 		<ul>
@@ -36,7 +35,7 @@
 					class="icon icon-th-list"></i> <span>基本信息管理</span> <span
 					class="label">3</span></a>
 				<ul>
-				<li><a href="<%=basePath%>manage/indexCollege">学院管理</a></li>
+                    <li><a href="<%=basePath%>manage/indexCollege">学院管理</a></li>
 					<li><a href="<%=basePath%>manage/indexMajor">专业管理</a></li>
 					<li><a href="<%=basePath%>manage/indexGrade">班级管理</a></li>
 				</ul></li>
@@ -66,8 +65,9 @@
 		</div>
 		<div id="breadcrumb">
 			<a href="<%=basePath%>manage/index" title="主页" class="tip-bottom"><i class="icon-home"></i>
-				首页</a> <a href="#" class="current">学院管理</a><a href="#" class="current">增加/修改学院</a>
+				首页</a> <a href="#" class="current">专业管理</a>
 		</div>
+
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span12">
@@ -75,19 +75,19 @@
 						<div class="widget-title">
 							<span class="icon"> <i class="icon-align-justify"></i>
 							</span>
-							<h5>增加/修改学院</h5>
+							<h5>增加/修改专业</h5>
 						</div>
 						<div class="widget-content nopadding">
 							<form class="form-horizontal" method="post"
-								action="<%=basePath %>manage/addCollege.action"
+								action="<%=basePath%>manage/addMajor.action"
 								name="basic_validate" id="basic_validate">
 								<div class="control-group">
-									<label class="control-label" style="font-size: 20px">学院名称</label>
+									<label class="control-label" style="font-size: 20px">专业名称</label>
 									<div class="controls">
-										<!-- 隐藏值 学院id -->
-										<input type="hidden" name="id" value="${college.cId }" /> <input
-											type="text" name="collegename"
-											value="${college.cCollegeName }" style="height: 33px" required="required" />
+										<!-- 隐藏值 专业id -->
+										<input type="hidden" name="id" required=""
+											value="${major.cId }" /> <input type="text" name="Majorname"
+											value="${major.cMajorName }" style="height: 33px" required="required"  />
 									</div>
 								</div>
 								<div class="control-group">
@@ -95,7 +95,7 @@
 									<div class="controls">
 										<input type="submit" value="保存" class="btn btn-primary" /> <input
 											type="button" value="取消"
-											onclick="location='<%=basePath%>manage/indexCollege'"
+											onclick="location='<%=basePath%>manage/indexMajor'"
 											class="btn btn-primary" style="margin-left: 10px" />
 									</div>
 								</div>
@@ -105,6 +105,10 @@
 				</div>
 			</div>
 		</div>
+		<!-- footer -->
+		<%@include file="../common/footer.jsp"%>
 	</div>
+	</div>
+
 </body>
 </html>

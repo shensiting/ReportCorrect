@@ -168,7 +168,7 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display: none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="<%=basePath%>manage/test"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="<%=basePath%>manage/indexMajor"></iframe>
 		</div>
 	</div>
 	</section>

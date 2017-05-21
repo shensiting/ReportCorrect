@@ -86,8 +86,6 @@
 								title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 						</tr>
 					</c:forEach>
-
-
 				</tbody>
 			</table>
 		</div>

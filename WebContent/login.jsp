@@ -49,19 +49,11 @@ function login(loginform){//传入表单参数
 						document.forms[0].action = path;
 						document.forms[0].submit();
 					} else {
-						alert(data.msg);
-						//$.teninedialog({
-						//	title : '系统提示',
-						//	content : data.msg
-						//});
+						alert(data.msg);						
 					}
 				},
 				error : function() {
-					alert("服务器异常，请稍候再试！");
-					//$.teninedialog({
-					//	title : '系统提示',
-					//	content : '服务器异常，请稍候再试！'
-					//});
+					alert("服务器异常，请稍候再试！");				
 				}
 			});
 		}
