@@ -47,7 +47,7 @@ public class ExperimentalTestMapperTest {
 	@Test
 	public void testGetAll() {
 		List<ExperimentalTest> experimentalTests=experimentalTestMapper.getAll();
-		System.out.println(experimentalTests.size());
+		System.out.println(experimentalTests.get(0).getcClassify()+experimentalTests.get(0).getTest().getcTestName());
 	}
 
 }

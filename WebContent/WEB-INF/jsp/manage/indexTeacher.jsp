@@ -1,265 +1,312 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="../common/lib.jsp"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<!DOCTYPE HTML>
+<%@ include file="../common/userslib.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>教师信息管理</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
+<meta charset="utf-8">
 
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+<!--[if lt IE 9]>
+<script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/respond.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/PIE_IE678.js"></script>
+<![endif]-->
+
+
+<!--[if IE 6]>
+<script type="text/javascript" src="<%=basePath%>users/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>教师管理</title>
 <script type="text/javascript">
-	//返回id数组
-	function getSelectedId() {
-		//获取所有name为checkboxid的 CheckBox
-		var checkBoxs = document.getElementsByName("checkboxid");
-		var idStr = "";
-		//遍历所有CheckBox，当CheckBox为选中时将这行数据的id值拼接到idStr中
-		for (var i = 0; i < checkBoxs.length; i++) {
-			if (checkBoxs[i].checked) {
-				idStr += checkBoxs[i].value + ",";
+//修改函数
+
+function showAddInput(){
+	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
+/*添加*/
+function sumit(teacherform) {
+	var cUserId = teacherform.id.value;
+	 var cTeacherId =teacherform.teachernum.value;
+	 var cName = teacherform.teachername.value;
+	 var cCollegeId = teacherform.colgid.value;
+	$.ajax({
+		type : 'get',
+		dataType : 'json',
+		async: false,
+		url : '<%=basePath %>manage/addTeacher.action?id=' + cUserId+'&teachername='+cName+'&teachernum='+cTeacherId+'&ccollege='+cCollegeId+'',
+		success : function(data) {
+			if (data.success) {
+				alert(data.msg);
+				
+			} else {
+				
+				layer.msg('操作失败，请重新操作', {
+					icon : 6,
+					time : 5000
+				});		
 			}
+			
+		},error : function() {
+			layer.msg('操作失败，请重新操作', {
+				icon : 6,
+				time : 4000
+			});	
+			layer.msg('服务器异常，请稍候再试！', {
+				icon : 6,
+				time : 4000
+			});	
 		}
-		//去掉最后一个字符（“，”）
-		idStr = idStr.substring(0, idStr.length - 1);
-		if (idStr == "") {
-			var obj = new Array();
-			return obj;
-		}
-		//将idStr按“，”分割成字符串数组
-		var ids = idStr.split(",");
-		return ids;
-	}
-	//修改并新增函数
-	function editFunc(){
-		var ids = getSelectedId();
-		if (ids.length != 1 ) {
-			$.teninedialog({
-				title : '系统提示',
-				content : '请选择一条记录!'
 			});
-			return;
-		}else{
-			//取得当前记录id
-			var id= ids[0];
-			//跳转到页面
-			window.location.href='<%=basePath%>manage/addTeacher?id='+id;
+		
+}
+
+</script>
+</head>
+<body>
+	<nav class="breadcrumb"> <i class="Hui-iconfont">&#xe67f;</i> 首页
+	<span class="c-gray en">&gt;</span> 教师管理 <a
+		class="btn btn-success radius r mr-20"
+		style="line-height: 1.6em; margin-top: 3px"
+		href="javascript:location.replace(location.href);" title="刷新"><i
+		class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="pd-20">
+			<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l">
+			 <a href="javascript:;" onclick="deleteFunc()"
+				class="btn btn-danger radius"> <i class="Hui-iconfont">&#xe6e2;</i>批量删除
+			</a> 
+			<a class="btn btn-primary radius"
+				onclick="article_add('添加资讯','article-add.html')" href="javascript:;"><i
+					class="Hui-iconfont">&#xe600;</i>批量导入</a>
+			<a
+				class="btn btn-success radius"
+				onclick="showAddInput()" href="javascript:;"><i
+					class="Hui-iconfont">&#xe600;</i>单个添加</a>
+			</span> <span class="r">共有数据：<strong>${teacherColleges.size() }</strong>条
+			</span>
+		</div>
+		<div style="display: none;" id="addinfo" class="pd-20">
+			<form class="form-horizontal" method="post" action=""
+				name="basic_validate" id="basic_validate">
+				<div class="row cl">
+					<label class="form-label col-1">教师工号：</label>
+					<div class="formControls col-2">
+
+						<input type="hidden" id="id" name="id" value="" /> <input
+							type="text" class="input-text" value="" style="width: 250px"
+							placeholder="输入教师工号" required="required" id="teachernum"
+							name="teachernum">
+					</div>
+
+					<label class="form-label col-2">教师姓名：</label>
+					<div class="formControls col-2">
+
+						<input
+							type="text" class="input-text" value="" style="width: 250px"
+							placeholder="输入教师姓名" required="required" id="teachername"
+							name="teachername">
+					</div>
+
+					<label class="form-label col-2">所属学院：</label> 
+					<div class="formControls col-2">
+						<span class="select-box"> <select name="colgid"
+							id="colgid" class="select" size="1" datatype="*" nullmsg="请选择隶属学院！">
+								<c:forEach var="item" items="${colleges}">
+								<option value="${item.cId}">${item.cCollegeName}</option>
+							</c:forEach>
+							</select></span>
+					</div>					
+					<button style="width: 100px"  type="submit" class="btn btn-primary radius" onclick="sumit(this.form)"
+					id="" name="">提交</button>
+				</div>
+				
+			</form>
+		</div>
+		<div class="mt-20">
+			<table
+				class="table table-border table-bordered table-bg table-hover table-sort">
+				<thead>
+					<tr class="text-c">
+						<th width="25"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"></th>
+						<th width="100">ID</th>
+						<th>教师工号</th>
+						<th>教师姓名</th>
+						<th>隶属学院</th>
+						<th>隶属学院ID</th>
+						<th width="35px">编辑</th>
+						<th width="35px">删除</th>			
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="item" items="${teacherColleges}">
+						<tr class="editor">
+							<td style="text-align: center;"><input name="checkboxid"
+								type="checkbox" value="${item.getcUserId()}" /></td>
+							<td id="cUserId">${item.getcUserId()}</td>
+							<td id="cTeacherId">${item.getcTeacherId()}</td>
+							<td id="cName">${item.getcName()}</td>
+							<td>${item.getCollege().getcCollegeName()}</td>
+							<td  id="cCollegeId"> ${item.getcCollegeId()}</td>
+							<td class="f-14 td-manage"><a style="text-decoration: none" class="ml-5" id="edit"
+								href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+								</td><td>
+								<a style="text-decoration: none" class="ml-5"
+								onClick="article_del(this,'${item.getcUserId()}')" href="javascript:;"
+								title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script type="text/javascript"
+		src="<%=basePath%>users/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>users/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript">
+		$('.table-sort').dataTable({
+			"aaSorting" : [ [ 1, "desc" ] ],//默认第几个排序
+			"bStateSave" : true,//状态保存
+			"aoColumnDefs" : [
+			//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+			{
+				"orderable" : false,
+				"aTargets" : [ 0, 3 ]
+			} // 制定列不参与排序
+			]
+		});
+
+		//返回id数组
+		function getSelectedId() {
+			//获取所有name为checkboxid的 CheckBox
+			var checkBoxs = document.getElementsByName("checkboxid");
+			var idStr = "";
+			//遍历所有CheckBox，当CheckBox为选中时将这行数据的id值拼接到idStr中
+			for (var i = 0; i < checkBoxs.length; i++) {
+				if (checkBoxs[i].checked) {
+					idStr += checkBoxs[i].value + ",";
+				}
+			}
+			//去掉最后一个字符（“，”）
+			idStr = idStr.substring(0, idStr.length - 1);
+			if (idStr == "") {
+				var obj = new Array();
+				return obj;
+			}
+			//将idStr按“，”分割成字符串数组
+			var ids = idStr.split(",");
+			return ids;
 		}
-	}
-	
-	//删除函数
-	function deleteFunc() {
-		var ids = getSelectedId();
-		if (ids.length == 0) {
-			$.teninedialog({
-				title : '系统提示',
-				content : '请选择一条记录!'
+		
+		
+		//编辑
+		$(function() {
+			$(".editor").each(function(){
+			var tmp=$(this).children().eq(6);
+			var btn=tmp.children();
+			btn.bind("click",function(){				
+				document.getElementById("id").value=btn.parent().parent().children("td").get(1).innerHTML;
+				document.getElementById("teachernum").value=btn.parent().parent().children("td").get(2).innerHTML;
+				document.getElementById("teachername").value=btn.parent().parent().children("td").get(3).innerHTML;
+				document.getElementById("colgid").value =btn.parent().parent().children("td").get(5).innerHTML.trim();
+				document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;	
 			});
-			return;
+			});
+		});
+		
+		
+		//删除函数
+		function deleteFunc() {
+			var ids = getSelectedId();
+			if (ids.length == 0) {
+				layer.msg('请选择一条记录！', {
+					icon : 6,
+					time : 1000
+				});			
+				return;
+			}
+			layer.confirm(
+					'确认所选' + ids.length + '条记录?',
+					{
+						btn : [ '是的', '放弃' ],
+						shade : false
+					},function(sender, modal, index) {
+					//只有一个确定按钮，这里进行删除操作
+					//通过ajax向后台请求
+					$.ajax({
+						type : 'get',
+						dataType : 'json',
+						url : '<%=basePath%>manage/delTeacher.action?ids=' + ids,
+						success : function(data) {
+							if (data.success) {
+								//删除成功，刷新页面
+								layer.msg('删除成功', {
+									icon : 6,
+									time : 4000
+								});	
+							} else {
+								var str=data.msg;
+								layer.msg(str, {
+									icon : 6,
+									time : 1000
+								});		
+							}
+							//刷新页面
+							location.reload();
+						},error : function() {
+							alert("服务器异常，请稍候再试！");
+						}
+							});
+					});
 		}
-		$.teninedialog({
-			title : '系统提示',
-			content : '确认所选' + ids.length + '条记录?',
-			showCloseButton : true,
-			otherButtons : [ "确定" ],
-			otherButtonStyles : [ 'btn-primary' ],
-			clickButton : function(sender, modal, index) {
+		/*资讯-添加*/
+		function article_add(title, url, w, h) {
+			layer_show(title,url,w,h)
+		}
+		
+		/*资讯-删除*/
+		function article_del(obj, id) {
+			layer.confirm('确认要删除吗？', function(sender, modal, index) {
 				//只有一个确定按钮，这里进行删除操作
 				//通过ajax向后台请求
 				$.ajax({
 					type : 'get',
 					dataType : 'json',
-					url : '<%=basePath%>manage/delTeacher.action?ids='
-							+ ids,
+					url : '<%=basePath%>manage/delTeacher.action?ids=' + id,
 					success : function(data) {
 						if (data.success) {
-							//删除成功，刷新页面
-
+							
 						} else {
-							$.teninedialog({
-								title : '系统提示',
-								content : data.msg
-							});
+							var str=data.msg;
+							layer.msg(str, {
+								icon : 6,
+								time : 1000
+							});		
 						}
 						//刷新页面
 						location.reload();
-					},
-					error : function() {
-						$.teninedialog({
-							title : '系统提示',
-							content : '服务器异常，请稍候再试！'
-						});
+					},error : function() {
+						alert("服务器异常，请稍候再试！");
 					}
-				});
-				//刷新当前页
-
-				/* //关闭对话框
-				$(this).closeDialog(modal); */
-			}
-		});
-
-	}
-	//验证函数
-	function verify(teacherid,name) {
-	
-		$.teninedialog({
-			title : '系统提示',
-			content : '确认'+name+'教师通过验证?',
-			showCloseButton : true,
-			otherButtons : [ "确定" ],
-			otherButtonStyles : [ 'btn-primary' ],
-			clickButton : function(sender, modal, index) {
-				$.ajax({
-					type : 'get',
-					dataType : 'json',
-					url : '<%=basePath%>manage/verify.action?id='
-							+ teacherid,
-					success : function(data) {
-						if (data.success) {
-							//删除成功，刷新页面
-
-						} else {
-							$.teninedialog({
-								title : '系统提示',
-								content : data.msg
-							});
-						}
-						//刷新页面
-						location.reload();
-					},
-					error : function() {
-						$.teninedialog({
-							title : '系统提示',
-							content : '服务器异常，请稍候再试！'
 						});
-					}
 				});
-				//刷新当前页
-
-				/* //关闭对话框
-				$(this).closeDialog(modal); */
-			}
-		});
-
-	}
-</script>
-</head>
-<body>
-	<div id="header">
-		<h1>
-			<img alt="" src="<%=basePath%>images/gzykdx.png"
-				style="width: 100%; height: 100%">
-		</h1>
-	</div>
-	<!-- 右上角用户按钮 -->
-	<%@include file="../common/user-nav.jsp"%>
-	<!-- 左侧导航栏 -->
-	<div id="sidebar">
-		<ul>
-			<li class="submenu"><a href="#"><i
-					class="icon icon-th-list"></i> <span>基本信息管理</span> <span
-					class="label">3</span></a>
-				<ul>
-                    <li><a href="<%=basePath%>manage/indexCollege">学院管理</a></li>
-					<li><a href="<%=basePath%>manage/indexMajor">专业管理</a></li>
-					<li><a href="<%=basePath%>manage/indexGrade">班级管理</a></li>
-				</ul></li>
-
-			<li class="submenu"><a href="#"><i class="icon icon-pencil"></i>
-					<span>实验信息管理</span> <span class="label">2</span></a>
-				<ul>
-					<li><a href="<%=basePath%>manage/indexExperiment.html">实验管理</a></li>
-					<li><a href="<%=basePath%>manage/indexTeacherExperiment.html">考核管理</a></li>
-				</ul></li>
-			<li class="active submenu open"><a href="#"><i class="icon icon-file"></i>
-					<span>用户信息管理</span> <span class="label">3</span></a>
-				<ul>
-					<li><a href="<%=basePath%>manage/indexStudent">学生信息管理</a></li>
-					<li><a href="<%=basePath%>manage/indexTeacher">教师信息管理</a></li>
-					<li><a href="<%=basePath%>manage/indexUser.html">登陆信息管理</a></li>
-				</ul></li>
-		</ul>
-	</div>
-	<!-- 左侧导航栏 -->
-
-	<div id="content">
-		<div id="content-header">
-			<h1>
-				<a>广医学生报告后台管理系统</a>
-			</h1>
-		</div>
-		<div id="breadcrumb">
-			<a href="<%=basePath%>manage/index" title="主页" class="tip-bottom"><i class="icon-home"></i>
-				首页</a> <a href="#" class="current">教师信息管理</a>
-		</div>
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span12">
-					<div class="btn-group">
-						<a class="btn btn-sm tip-bottom" title="新增"
-							href="<%=basePath%>manage/addTeacher"><i
-							class="icon-plus"></i></a> <a class="btn btn-sm tip-bottom"
-							title="修改" onclick="editFunc()"><i class="icon-edit"></i></a> <a
-							class="btn btn-sm tip-bottom" title="删除" onclick="deleteFunc()"><i
-							class="icon-remove"></i> </a>
-					</div>
-					<div class="widget-box">
-						<div class="widget-title">
-							<h5>教师信息列表</h5>
-						</div>
-						<div class="widget-content nopadding">
-							<!-- ---------------------------------Table------------------------------------------------------- -->
-							<table class="table table-bordered data-table  with-check ">
-								<!-- table table-bordered table-striped with-check -->
-								<thead>
-									<tr>
-										<th class="center"><input type="checkbox"
-											id="title-table-checkbox" name="title-table-checkbox" /></th>
-										<th>教师工号</th>
-										<th>教师姓名</th>
-										<th>隶属学院</th>
-										<th>验证状态</th>
-										
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="item" items="${teacherColleges}">
-										<tr>
-											<td><input name="checkboxid" type="checkbox"
-												value="${item.getcUserId()}" /></td>
-											<td>${item.getcTeacherId()}</td>
-											<td>${item.getcName()}</td>
-											<td>${item.getCollege().getcCollegeName()}</td>
-											<td>
-											<c:choose>
-											<c:when test="${item.getcVerify()=='1'}">
-											已验证
-											</c:when>
-											<c:otherwise>
-											<input class="btn btn-primary" type="button" value="未验证" onclick="verify('${item.getcUserId()}','${item.getcName()}')" />											
-											</c:otherwise>
-											</c:choose>
-											
-											</td>
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- footer -->
-			<%@include file="../common/footer.jsp"%>
-		</div>
-	</div>
+		}
+		
+	</script>
 </body>
 </html>

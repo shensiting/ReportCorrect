@@ -1,13 +1,18 @@
 package org.gzhmc.report4gzhmc.controller.user;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,30 +20,41 @@ import javax.servlet.http.HttpServletResponse;
 import org.gzhmc.common.base.BaseController;
 import org.gzhmc.common.util.DateUtils;
 import org.gzhmc.common.util.JacobUtil;
+import org.gzhmc.common.util.JsonUtils;
 import org.gzhmc.common.util.MD5;
 import org.gzhmc.common.util.StringUtils;
 import org.gzhmc.common.util.UploadFileUtil;
+import org.gzhmc.report4gzhmc.mapper.ExperimentMapper;
 import org.gzhmc.report4gzhmc.mapper.ExperimentalTestMapper;
+import org.gzhmc.report4gzhmc.mapper.GradeExamMapper;
 import org.gzhmc.report4gzhmc.mapper.ReportMapper;
 import org.gzhmc.report4gzhmc.mapper.ReportRelativeMapper;
 import org.gzhmc.report4gzhmc.mapper.ResitMapper;
 import org.gzhmc.report4gzhmc.mapper.StudentGradeMapper;
 import org.gzhmc.report4gzhmc.mapper.StudentMapper;
+import org.gzhmc.report4gzhmc.mapper.TestMapper;
 import org.gzhmc.report4gzhmc.mapper.UserMapper;
+import org.gzhmc.report4gzhmc.model.Experiment;
 import org.gzhmc.report4gzhmc.model.ExperimentalTest;
+import org.gzhmc.report4gzhmc.model.GradeExam;
 import org.gzhmc.report4gzhmc.model.Report;
 import org.gzhmc.report4gzhmc.model.ReportRelative;
 import org.gzhmc.report4gzhmc.model.Resit;
 import org.gzhmc.report4gzhmc.model.ResultJson;
 import org.gzhmc.report4gzhmc.model.Student;
 import org.gzhmc.report4gzhmc.model.StudentGrade;
+import org.gzhmc.report4gzhmc.model.Test;
 import org.gzhmc.report4gzhmc.model.User;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import atg.taglib.json.util.JSONArray;
 
 /**
  * 学生界面管理
@@ -63,45 +79,91 @@ public class StudentController extends BaseController {
 	ReportRelativeMapper reportRelativeMappper;
 	@Autowired
 	ExperimentalTestMapper experimentalTestMapper;
+	@Autowired
+	TestMapper testMapper;
+	@Autowired
+	ExperimentMapper experimentMapper;
+	@Autowired
+	GradeExamMapper gradeExamMapper;
+	
+	
 	// 表示批改为1，未批改为0
 	public static int CHECKED = 1;
 	public static int NOCHECK = 0;
-
+	
 	/**
-	 * 测试
+	 * 报告编辑
 	 * 
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = { "/test", "/test.html" })
-	public ModelAndView test(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = { "/reportEdit", "/reportEdit.html" })
+	public ModelAndView reportEdit(HttpServletRequest request, HttpServletResponse response) {
+		int reportId=StringUtils.string2int(request.getParameter("id"));
+		Report report=reportMapper.getById(reportId);	
+		ModelAndView modelAndView = new ModelAndView("student/reportEdit");
 		String userid = request.getSession().getAttribute("userid").toString().trim();
-		Student student = studentMapper.getById(StringUtils.string2int(userid));
-		
-		ModelAndView modelAndView = new ModelAndView("student/test");
-		modelAndView.addObject("studentName", student.getcName());
+		Student student = studentMapper.getById(Integer.parseInt(userid));
+		List<GradeExam> gradeExams=gradeExamMapper.getByGradeId(student.getcGradeId());
+		//List<Test> tests=testMapper.getAll();
+	    modelAndView.addObject("tests",gradeExams);
+		modelAndView.addObject("report", report);
 		return modelAndView;
 	}
 	/**
-	 * 测试2
+	 * 报告查看
 	 * 
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = { "/test3", "/test3.html" })
-	public ModelAndView test2(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = { "/reportShow", "/reportShow.html" })
+	public ModelAndView reportShow(HttpServletRequest request, HttpServletResponse response) {
+		int reportId=StringUtils.string2int(request.getParameter("id"));
+		Report report=reportMapper.getById(reportId);
 		
-		ModelAndView modelAndView = new ModelAndView("student/test3");
+		ModelAndView modelAndView = new ModelAndView("student/reportShow");
+		modelAndView.addObject("report", report.getcPath());
+		return modelAndView;
+	}
+	/**
+	 * 学生首页
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = { "/index", "/index.html" })
+	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		String userid = request.getSession().getAttribute("userid").toString().trim();
 		Student student = studentMapper.getById(StringUtils.string2int(userid));
 		
+		ModelAndView modelAndView = new ModelAndView("student/index");
 		modelAndView.addObject("studentName", student.getcName());
-		
 		return modelAndView;
 	}
 	
+	
+	/**
+	 * 报告提交页面
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = { "/uploadReport", "/uploadReport.html" })
+	public ModelAndView uploadReport(HttpServletRequest request, HttpServletResponse response) {
+		
+		ModelAndView modelAndView = new ModelAndView("student/uploadReport");
+		String userid = request.getSession().getAttribute("userid").toString().trim();
+		Student student = studentMapper.getById(Integer.parseInt(userid));
+		List<GradeExam> gradeExams=gradeExamMapper.getByGradeId(student.getcGradeId());
+		//List<Test> tests=testMapper.getAll();
+	    modelAndView.addObject("tests",gradeExams);
+		return modelAndView;
+	}
+
 	/**
 	 * 跳转个人信息页面
 	 * 
@@ -139,11 +201,104 @@ public class StudentController extends BaseController {
 		}
 		return modelAndView;
 	}
+	/**
+	 * 上传实验报告action
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = { "/uploadExperiment", "/uploadExperiment.action" })
+	public ModelAndView uploadExperiment(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String experiment = request.getParameter("content");
+		String process = request.getParameter("process");
+		int eId = Integer.parseInt(request.getParameter("test"));
+		int userid = Integer.parseInt(request.getSession().getAttribute("userid").toString().trim());
+		Student student = studentMapper.getById(userid);
+		PrintWriter out = response.getWriter();
+		Report reportMes = new Report();
+		reportMes.setcExperimentTextId(eId);
+		reportMes.setcStudentId(userid);		
+		ModelAndView modelAndView = new ModelAndView("student/uploadReport");
+		int count1 = reportMapper.getCountByexperimrntAndstudent(reportMes);
+		List<Report> reports = reportMapper.getByexperimrntAndstudentId(reportMes);
+		modelAndView.addObject("process", process);
+		int result;
+		out.flush();
+		if (count1 != 0 && !isAllowUpload(reports)) {			
+			out.write("<script>alert('此实验已经通过考核，请选择正确的实验提交。')</script>");
+		}
+		// 判断文件大小是否合格
+		//else if (experiment.length() > 10000) {
+		//	out.write("<script>alert('上传文件超过最大限制，请重新上传。')</script>");
+		//}
+		
+		// 判断实验过程是否是在字数限制范围内
+		else if (process.length() > 50||process.length()<=10) {
+			out.write("<script>alert('报告过程字数不合格，请修改后上传')</script>");
+		} else if (student.getcPicturePath().isEmpty()) {
+
+			out.write("<script>alert('在上传文档之前请先上传照片，以便生成证书。')</script>");
+		} else {
+			// 判断表格中是否存在数据
+			if (count1 != 0) {
+				// 判断是补考还是第一次考试
+				Report report2 = getReport(reports);
+				// 表中存在插入的数据则更新数据
+				if (report2 != null) {
+					report2.setcCreateTime(new Date());
+					report2.setcProcess(process);
+					// 存储上传的文档数据
+					report2.setcPath(experiment);
+					result = reportMapper.update(report2);
+				} else {
+					// 若为第一次补考，则新建数据，在补考表中更新数据
+					Report report = new Report();
+					report.setcCreateTime(new Date());
+					report.setcPath(experiment);
+					report.setcProcess(process);
+					report.setcExperimentTextId(eId);
+					report.setcStatu(NOCHECK);
+					report.setcStudentId(userid);
+					report.setcReportNum(DateUtils.getreportnum());
+					// System.out.println(report.getcReportNum());
+					result = reportMapper.add(report);
+					Resit resit = new Resit();
+					resit.setcExperiment(eId);
+					resit.setcStudentId(userid);
+					resit.setcReportId(report.getcId());
+					result = resitMapper.updateByStudentIdAndExperimentId(resit);
+				}
+			} else {
+				// 第一次考试
+				Report report = new Report();
+				report.setcCreateTime(new Date());
+				report.setcPath(experiment);
+				report.setcProcess(process);
+				report.setcExperimentTextId(eId);
+				report.setcStatu(NOCHECK);
+				report.setcStudentId(userid);
+				report.setcReportNum(DateUtils.getreportnum());
+				// System.out.println(report.getcReportNum());
+				result = reportMapper.add(report);
+			}
+			if (result != 0) {
+				out.write("<script>alert('上传成功。')</script>");
+			} else {
+				out.write("<script>alert('服务器异常，请稍后再试。')</script>");
+			}
+		}
+		List<GradeExam> gradeExams=gradeExamMapper.getByGradeId(student.getcGradeId());
+		
+	    modelAndView.addObject("tests",gradeExams);
+		return modelAndView;
+
+	}
 
 	// 返回补考的数据
 	private Report getReport(List<Report> reports) {
 		for (Report r : reports) {
-			if (r.getcStatus() == NOCHECK) {
+			if (r.getcStatu() == NOCHECK) {
 				return r;
 			}
 		}
@@ -159,6 +314,9 @@ public class StudentController extends BaseController {
 		}
 		return true;
 	}
+	
+	
+	
 
 	/**
 	 * 上传文档和实验过程
@@ -170,7 +328,7 @@ public class StudentController extends BaseController {
 	 * @param experiment
 	 * @return
 	 * @throws IOException
-	 */
+	 
 	@RequestMapping(value = { "/uploadreport.action" })
 	public ModelAndView uploadReportAction(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "file", required = false) MultipartFile uploadFile,
@@ -282,8 +440,13 @@ public class StudentController extends BaseController {
 		modelAndView.addObject("experimentalTests", experimentalTests);
 		modelAndView.addObject("studentName", studentGrade.getcName());
 		return modelAndView;
-	}
-
+	}*/
+	/**
+	 * 管理所有报告
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = { "/reportManage", "reportManage.html" })
 	public ModelAndView reportManage(HttpServletRequest request, HttpServletResponse response) {
 		String userid = request.getSession().getAttribute("userid").toString().trim();
@@ -291,21 +454,21 @@ public class StudentController extends BaseController {
 		List<ReportRelative> reportRelatives = reportRelativeMappper
 				.getReportLinkExperimentByStuId(student.getcUserId());
 		// System.out.println(reportRelatives.size());
-		ModelAndView modelAndView = new ModelAndView("student/reportManage");
-		modelAndView.addObject("studentName", student.getcName());
+		ModelAndView modelAndView = new ModelAndView("student/reportManage");		
 		modelAndView.addObject("reportRelatives", reportRelatives);
 		return modelAndView;
 	}
 
-	@RequestMapping("/reportShow")
-	public ModelAndView reportShow(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String rid = request.getParameter("rid");
-		Report report = reportMapper.getById(StringUtils.string2int(rid));
-		ModelAndView modelAndView = new ModelAndView("student/reportShow");
-		modelAndView.addObject("wordpath", report.getcPath());
-		return modelAndView;
-
-	}
+	//旧版查看文档代码
+//	@RequestMapping("/reportShow")
+//	public ModelAndView reportShow(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//		String rid = request.getParameter("rid");
+//		Report report = reportMapper.getById(StringUtils.string2int(rid));
+//		ModelAndView modelAndView = new ModelAndView("student/reportShow");
+//		modelAndView.addObject("wordpath", report.getcPath());
+//		return modelAndView;
+//
+//	}
 
 	/**
 	 * 跳转密码修改页面
@@ -317,9 +480,9 @@ public class StudentController extends BaseController {
 	@RequestMapping(value = { "/passwordChange", "passwordChange.html" })
 	public ModelAndView passwordChange(HttpServletRequest request, HttpServletResponse response) {
 		String userid = request.getSession().getAttribute("userid").toString().trim();
-		Student student = studentMapper.getById(StringUtils.string2int(userid));
+		
 
-		return new ModelAndView("student/passwordChange").addObject("studentName", student.getcName());
+		return new ModelAndView("student/passwordChange");
 	}
 
 	@RequestMapping("scoreInquery")
@@ -386,8 +549,7 @@ public class StudentController extends BaseController {
 	 */
 	@RequestMapping(value = { "/uploadPicture.action" })
 	public ModelAndView uploadPhoto(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(value = "file", required = false) MultipartFile uploadFile,
-			@RequestParam(value = "idcard", required = false) String idcard) throws IOException {
+			@RequestParam(value = "file", required = false) MultipartFile uploadFile) throws IOException {
 		response.setContentType("text/html;charset=utf-8");
 		String userid = request.getSession().getAttribute("userid").toString().trim();
 		StudentGrade studentGrade = studentGradeMapper.getById(StringUtils.string2int(userid));
@@ -396,9 +558,10 @@ public class StudentController extends BaseController {
 		String name = uploadFile.getOriginalFilename().substring(uploadFile.getOriginalFilename().lastIndexOf("."),
 				uploadFile.getOriginalFilename().length());
 		out.flush();
-		if (!StringUtils.isIdcard(idcard)) {
-			out.write("<script>alert('身份证号格式错误，请重新上传。')</script>");
-		} else if (uploadFile.getSize() > maxSize) {
+		//if (!StringUtils.isIdcard(idcard)) {
+		//	out.write("<script>alert('身份证号格式错误，请重新上传。')</script>");
+		//} else 
+		if (uploadFile.getSize() > maxSize) {
 			out.write("<script>alert('上传文件超过5mb，请重新上传。')</script>");
 
 		} else if (!".jpg".equals(name) && !".jpeg".equals(name) && !".JPG".equals(name) && !".JEPG".equals(name)) {
@@ -443,8 +606,8 @@ public class StudentController extends BaseController {
 					Student student = studentMapper.getById(StringUtils.string2int(userid));
 					student.setcPicturePath(path2 + filename);
 					//加密后存储
-					idcard=MD5.convertMD5(idcard);
-					student.setcIDNumber(idcard);
+					//idcard=MD5.convertMD5(idcard);
+					//student.setcIDNumber(idcard);
 					int result = studentMapper.updateSelective(student);
 					if (result != 0) {
 

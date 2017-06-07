@@ -46,42 +46,28 @@ public class StudentCotroller extends BaseController {
 	@RequestMapping(value = { "/indexStudent", "/indexStudent.html" })
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) {
 		List<StudentGrade> studentGrades = studentGradeMapper.getAll();
+		List<GradeMajorCollege> gradeMajorColleges = gradeMajorCollegeMapper.getAll();
 		ModelAndView modelAndView = new ModelAndView("manage/indexStudent");
 		modelAndView.addObject("studentGrades", studentGrades);
+		modelAndView.addObject("gradeMajorColleges", gradeMajorColleges);
 		return modelAndView;
 	}
 
-	// 跳转到增加或修改信息的页面
-	@RequestMapping(value = { "/addStudent.html", "/addStudent" })
-	@Transactional
-	public ModelAndView addGrade(HttpServletRequest request, HttpServletResponse response) {
-		String id = request.getParameter("id");
-		StudentGrade studentGrade = null;
-		if (StringUtils.isNotEmpty(id)) {
-			studentGrade = studentGradeMapper.getById(StringUtils.string2int(id));
-		}
-		List<GradeMajorCollege> gradeMajorColleges = gradeMajorCollegeMapper.getAll();
-		request.setAttribute("gradeMajorColleges", gradeMajorColleges);
-		ModelAndView modelAndView = new ModelAndView("manage/addStudent");
-		modelAndView.addObject("studentGrade", studentGrade);
-		return modelAndView;
-	}
-
+	
 	// 根据id是否存在判断是否为增加或修改信息，进行增加或修改
 	@RequestMapping(value = { "/addStudent.action" })
 	@Transactional
-	public ModelAndView addCollegeAction(HttpServletRequest request, HttpServletResponse response) throws WebException {
+	public void addCollegeAction(HttpServletRequest request, HttpServletResponse response) throws WebException {
 		// 获取表单中的值，如果id值为空，则表示新增，否则表示根据此id来修改
 		String id = request.getParameter("id");
 		String Studentnum = request.getParameter("Studentnum");
 		String Studentname = request.getParameter("Studentname");
-		String IDnum = request.getParameter("IDnum");
-		String cYearClass = request.getParameter("cYearClass").trim();
+		String cYearClass = request.getParameter("cGradeId").trim();
 		Student student = new Student();
-		student.setcGradeId(StringUtils.string2int(cYearClass));
-		student.setcIDNumber(MD5.convertMD5(IDnum));
+		student.setcGradeId(StringUtils.string2int(cYearClass));		
 		student.setcName(Studentname);
 		student.setcStudentNumber(Studentnum);
+		ResultJson json = new ResultJson();
 		int result;
 		if (StringUtils.isNotEmpty(id)) {
 			student.setcUserId(StringUtils.string2int(id));
@@ -98,10 +84,12 @@ public class StudentCotroller extends BaseController {
 		}
 		if (result == 1) {
 			// 重定向转到管理学生的页面
-			return new ModelAndView("redirect:/manage/indexStudent.html");
+			json.setSuccess(true);
+			
 		} else {
 			throw new WebException();
 		}
+		writeResultJson(response, json);
 	}
 
 	// 根据id删除信息
@@ -112,11 +100,12 @@ public class StudentCotroller extends BaseController {
 		String ids = request.getParameter("ids");
 		ResultJson json = new ResultJson();
 		String[] idString = ids.split(",");
-		int result;
+		int result1,result2;
 		if (idString != null && idString.length > 0) {
 			for (int i = 0; i < idString.length; i++) {
-				result = studentMapper.delete(StringUtils.string2int(idString[i]));
-				if (result != 1) {
+				result1 = studentMapper.delete(StringUtils.string2int(idString[i]));
+				result2=userMapper.delete(StringUtils.string2int(idString[i]));
+				if (result1 != 1&&result2!=1) {
 					json.setSuccess(false);
 					json.setMsg("删除失败!");
 					break;

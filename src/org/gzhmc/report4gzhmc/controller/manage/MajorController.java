@@ -70,7 +70,7 @@ public class MajorController extends BaseController {
 		if (result == 1) {
 			// 重定向转到管理专业的页面
 			json.setSuccess(true);
-			json.setMsg("操作成功，请返回原页面刷新查看");
+			json.setMsg("操作成功!");
 			
 		} else {
 			throw new WebException();
@@ -78,6 +78,13 @@ public class MajorController extends BaseController {
 		writeResultJson(response, json);
 	}
 
+	//判断本表关联其他表的数据是否存在，若存在则不允许删除
+	private boolean qualify(int cMajorId) {
+		if(majorMapper.getByGradeMajorId(cMajorId)==0)
+	        return true;
+		else
+			return false;
+	}
 	// 根据id删除信息
 	@RequestMapping(value = { "/delMajor.action" })
 	@Transactional // 增删改操作一定要添加事务回滚
@@ -89,10 +96,16 @@ public class MajorController extends BaseController {
 		int result;
 		if (idString != null && idString.length > 0) {
 			for (int i = 0; i < idString.length; i++) {
-				result = majorMapper.delete(StringUtils.string2int(idString[i]));
-				if (result != 1) {
+				if (qualify(StringUtils.string2int(idString[i]))) {
+					result = majorMapper.delete(StringUtils.string2int(idString[i]));
+					if (result != 1) {
+						json.setSuccess(false);
+						json.setMsg("删除失败!");
+						break;
+					}
+				} else {
 					json.setSuccess(false);
-					json.setMsg("删除失败!");
+					json.setMsg("删除的专业关联其他数据，不允许删除!");
 					break;
 				}
 			}

@@ -11,7 +11,6 @@ import org.gzhmc.common.util.StringUtils;
 import org.gzhmc.report4gzhmc.mapper.CollegeMapper;
 import org.gzhmc.report4gzhmc.model.College;
 import org.gzhmc.report4gzhmc.model.ResultJson;
-import org.gzhmc.report4gzhmc.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,12 +88,13 @@ public class CollegeController extends BaseController {
 	// 根据id是否存在判断是否为增加或修改信息，进行增加或修改
 	@RequestMapping(value = { "/addCollege.action" })
 	@Transactional
-	public ModelAndView addCollegeAction(HttpServletRequest request, HttpServletResponse response) throws WebException {
+	public void addCollegeAction(HttpServletRequest request, HttpServletResponse response) throws WebException {
 		// 获取表单中的值，如果id值为空，则表示新增，否则表示根据此id来修改
 		String id = request.getParameter("id");
-		String collegeName = request.getParameter("collegename");
+		String collegeName = request.getParameter("collegeName");
 		College college = new College();
 		college.setcCollegeName(collegeName);
+		ResultJson json = new ResultJson();
 		int result;
 		if (StringUtils.isNotEmpty(id)) {
 			college.setcId(StringUtils.string2int(id));
@@ -104,12 +104,22 @@ public class CollegeController extends BaseController {
 		}
 		if (result == 1) {
 			// 重定向转到管理学院的页面
-			return new ModelAndView("manage/addCollege");
-		} else {
+			json.setSuccess(true);
+			json.setMsg("操作成功!");
+			} else {
 			throw new WebException();
 		}
+		writeResultJson(response, json);
 	}
 
+	//判断本表关联其他表的数据是否存在，若存在则不允许删除
+	private boolean qualify(int cCollegeId) {
+		if(collegeMapper.getByGradeCollegeId(cCollegeId)==0&&collegeMapper.getByTeacherCollegeId(cCollegeId)==0)
+	        return true;
+		else
+			return false;
+	}
+	
 	// 根据id删除信息
 	@RequestMapping(value = { "/delCollege.action" })
 	@Transactional // 增删改操作一定要添加事务回滚
@@ -119,12 +129,19 @@ public class CollegeController extends BaseController {
 		ResultJson json = new ResultJson();
 		String[] idString = ids.split(",");
 		int result;
+		json.setSuccess(true);
 		if (idString != null && idString.length > 0) {
 			for (int i = 0; i < idString.length; i++) {
-				result = collegeMapper.delete(StringUtils.string2int(idString[i]));
-				if (result != 1) {
+				if (qualify(StringUtils.string2int(idString[i]))) {
+					result = collegeMapper.delete(StringUtils.string2int(idString[i]));
+					if (result != 1) {
+						json.setSuccess(false);
+						json.setMsg("删除失败!");
+						break;
+					}
+				}else{
 					json.setSuccess(false);
-					json.setMsg("删除失败!");
+					json.setMsg("删除的学院关联其他数据，不允许删除!");
 					break;
 				}
 			}

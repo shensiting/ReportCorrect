@@ -94,7 +94,7 @@ public class SetpdfCertificate {
 			document.open();
 			// 插入开头证书名字
 			Paragraph p0 = new Paragraph(30);
-			Chunk c0 = new Chunk("" + reportRelative.getExperimentalTest().getcExperimentName() + " \n 良 好 证 书",
+			Chunk c0 = new Chunk("" + reportRelative.getExperimental().getcExperimentName() + " \n 良 好 证 书",
 					front3);
 			p0.add(c0);
 			p0.setAlignment(1);
@@ -114,8 +114,8 @@ public class SetpdfCertificate {
 			// 插入成绩等
 			Paragraph p1 = new Paragraph(30);
 			Chunk c1 = new Chunk("" + reportRelative.getStudent().getcName() + " 于 "
-					+ reportRelative.getExperimentalTest().getcExperimentTime() + " 参加 生物技术实践能力考试（"
-					+ reportRelative.getExperimentalTest().getcExperimentName() + "），成绩合格（理论 " + theory + "，实验操作 "
+					+ reportRelative.getExperimental().getcExperimentTime() + " 参加 生物技术实践能力考试（"
+					+ reportRelative.getExperimental().getcExperimentName() + "），成绩合格（理论 " + theory + "，实验操作 "
 					+ operation + "，实验结果 " + labresult + "，综评 " + conclusion2 + "），特发此证。", front1);
 			p1.add(c1);
 			document.add(p1);
@@ -137,7 +137,7 @@ public class SetpdfCertificate {
 			// 英文证书名字
 			Paragraph p4 = new Paragraph(30);
 			Chunk c4 = new Chunk(
-					"" + reportRelative.getExperimentalTest().getcExperimentEnglishName() + "\nEXAMINATION CERTIFICATE",
+					"" + reportRelative.getExperimental().getcExperimentEnglishName() + "\nEXAMINATION CERTIFICATE",
 					new Font(Font.TIMES_NEW_ROMAN, 18));
 			p4.add(c4);
 			p4.setAlignment(1);
@@ -145,8 +145,7 @@ public class SetpdfCertificate {
 
 			Paragraph p6 = new Paragraph(30);
 			Chunk c6 = new Chunk(
-					"Rank：Basic \nGrade: " + conclusion + " \nIDNumber: " + reportRelative.getStudent().getcIDNumber()
-							+ "\nCertificate Number: " + reportRelative.getcReportNum() + "",
+					"Rank：Basic \nGrade: " + conclusion + "\nCertificate Number: " + reportRelative.getcReportNum() + "",
 					new Font(Font.TIMES_NEW_ROMAN, 15));
 			p6.setAlignment(1);
 			p6.add(c6);

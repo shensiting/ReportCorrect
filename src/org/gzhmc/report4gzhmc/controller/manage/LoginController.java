@@ -1,13 +1,16 @@
 package org.gzhmc.report4gzhmc.controller.manage;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.gzhmc.common.base.BaseController;
+import org.gzhmc.common.util.CaptchaUtil;
 import org.gzhmc.common.util.StringUtils;
 import org.gzhmc.report4gzhmc.mapper.CollegeMapper;
 import org.gzhmc.report4gzhmc.mapper.GradeMajorCollegeMapper;
@@ -80,6 +83,44 @@ public class LoginController extends BaseController {
 		return modelAndView;
 	}
 
+	/** 
+     * 验证码验证 
+     *  
+     * @param session 
+     * @param code 
+     */  
+    private void checkCode(HttpSession session, String code) {  
+        String codeSession = (String) session.getAttribute("code");  
+        if (!StringUtils.isNotEmpty(codeSession)) {  
+           System.out.println("没有生成验证码信息");  
+            
+        }  
+        if (StringUtils.isNotEmpty(code)) {  
+        	System.out.println("未填写验证码信息");  
+           
+        }  
+        if (codeSession.equalsIgnoreCase(code)) {  
+            // 验证码通过  
+        } else {  
+        	System.out.println("验证码错误");  
+            
+        }  
+    }  
+	
+    @RequestMapping("/check")  
+    public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {  
+        // 通知浏览器不要缓存  
+        response.setHeader("Expires", "-1");  
+        response.setHeader("Cache-Control", "no-cache");  
+        response.setHeader("Pragma", "-1");  
+        CaptchaUtil util = CaptchaUtil.Instance();  
+        // 将验证码输入到session中，用来验证  
+        String code = util.getString();  
+        request.getSession().setAttribute("code", code);  
+        // 输出打web页面  
+        ImageIO.write(util.getImage(), "jpg", response.getOutputStream());  
+    }  
+    
 	/**
 	 * 登陆验证信息
 	 * 
@@ -89,43 +130,50 @@ public class LoginController extends BaseController {
 	@RequestMapping(value = { "/check.action" })
 	public void logins(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
+		String codeSession = (String) session.getAttribute("code"); 
 		session.setAttribute("userid", " ");
 		session.setMaxInactiveInterval(618000);
+		String code=request.getParameter("code").trim();
 		String number = request.getParameter("number").trim();
 		String password = request.getParameter("password").trim();
 		//System.out.println(password);
 		ResultJson json = new ResultJson();
 		User user = userMapper.getByUserName(number);
-		//System.out.println(user.getcId());
-		if (null != user) {
-			if (user.getcPassword().equals(password)) {
-				json.setSuccess(true);
-				if (user.getcRole() == MANAGE_ROLE) {
-					session.setAttribute("userid", user.getcId());
-					json.setMsg("manage/index");
-				} else if (user.getcRole() == TEACHER_ROLE) {
-					// 判断老师账号是否通过验证
-					Teacher teacher = teacherMapper.getByTeacherId(number);
-					if (teacher != null) {
-						if (teacher.getcVerify() == TEACHER_VERIFY) {
+		//判断验证码是否正确
+		if (code.equals(codeSession)) {
+			if (null != user) {
+				if (user.getcPassword().equals(password)) {
+					json.setSuccess(true);
+					if (user.getcRole() == MANAGE_ROLE) {
+						session.setAttribute("userid", user.getcId());
+						json.setMsg("manage/index");
+					} else if (user.getcRole() == TEACHER_ROLE) {
+						// 判断老师账号是否通过验证
+						Teacher teacher = teacherMapper.getByTeacherId(number);
+						if (teacher != null) {
+							// if (teacher.getcVerify() == TEACHER_VERIFY) {
 							session.setAttribute("userid", user.getcId());
-							json.setMsg("teacher/teacherIndex");
-						} else {
-							json.setSuccess(false);
-							json.setMsg("对不起，您的账号还未通过验证，请等验证完毕后再登录。\n验证时间一般为一个工作日，谢谢合作。");
+							json.setMsg("teacher/test");
+							// } else {
+							// json.setSuccess(false);
+							// json.setMsg("对不起，您的账号还未通过验证，请等验证完毕后再登录。\n验证时间一般为一个工作日，谢谢合作。");
+							// }
 						}
+					} else {
+						session.setAttribute("userid", user.getcId());
+						json.setMsg("student/index");
 					}
 				} else {
-					session.setAttribute("userid", user.getcId());					
-					json.setMsg("student/test");
+					json.setSuccess(false);
+					json.setMsg("账号或密码错误，请确认后输入。");
 				}
 			} else {
 				json.setSuccess(false);
-				json.setMsg("账号或密码错误，请确认后输入。");
+				json.setMsg("账号不存在，请先注册。");
 			}
 		} else {
 			json.setSuccess(false);
-			json.setMsg("账号不存在，请先注册。");
+			json.setMsg("验证码输入错误！");
 		}
 		writeResultJson(response, json);
 	}

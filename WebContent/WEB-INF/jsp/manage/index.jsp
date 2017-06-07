@@ -15,24 +15,21 @@
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport"
-	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link href="<%=basePath_userslib%>users/css/skin.css" rel="stylesheet"
-	type="text/css" />
-<LINK rel="Bookmark" href="/favicon.ico">
-<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<link href="<%=basePath%>users/css/skin.css" rel="stylesheet" type="text/css" />
+<!-- <LINK rel="Bookmark" href="<%=basePath%>users/favicon.ico">
+<LINK rel="Shortcut Icon" href="<%=basePath%>users/favicon.ico" /> -->
 <!--[if lt IE 9]>
-<script type="text/javascript" src="<%=basePath_userslib%>users/lib/html5.js"></script>
-<script type="text/javascript" src="<%=basePath_userslib%>users/lib/respond.min.js"></script>
-<script type="text/javascript" src="<%=basePath_userslib%>users/lib/PIE_IE678.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/respond.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/PIE_IE678.js"></script>
 <![endif]-->
-
-
 <!--[if IE 6]>
-<script type="text/javascript" src="<%=basePath_userslib%>users/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
+
 <title>实验报告管理系统</title>
 </head>
 <body>
@@ -67,7 +64,7 @@
 			<ul class="dropDown-menu radius box-shadow">
 				<li>				
 				<a href="javascript:;"
-					onclick="member_edit('修改密码','<%=basePath%>student/test3','4','480','350')" style="text-decoration:none">修改密码</a></li>
+					onclick="member_edit('修改密码','<%=basePath%>student/passwordChange','4','480','350')" style="text-decoration:none">修改密码</a></li>
 				<li><a href="<%=basePath%>manage/exit">退出</a></li>
 			</ul></li>
 		<li id="Hui-msg"><a href="#" title="消息"><span
@@ -103,12 +100,10 @@
 			</dt>
 			<dd>
 				<ul>
-					<li><a _href="<%=basePath%>student/uploadPicture" href="javascript:void(0)">实验分类管理</a></li>
-					<li><a _href="<%=basePath%>student/uploadPicture" href="javascript:void(0)">实验管理</a></li>
-				
-					<li><a _href="<%=basePath%>student/uploadPicture" href="javascript:void(0)">教师班级管理</a></li>
-					<li><a _href="<%=basePath%>student/uploadPicture" href="javascript:void(0)">实验班级管理</a></li>
-				
+					<li><a _href="<%=basePath%>manage/indexTest" href="javascript:void(0)">实验分类管理</a></li>
+					<li><a _href="<%=basePath%>manage/indexExperiment" href="javascript:void(0)">实验管理</a></li>				
+					<li><a _href="<%=basePath%>manage/indexTeacherGrade" href="javascript:void(0)">教师班级管理</a></li>
+					<li><a _href="<%=basePath%>manage/indexGradeExam" href="javascript:void(0)">实验班级管理</a></li>				
 				</ul>
 			</dd>
 		</dl>
@@ -122,9 +117,9 @@
 				<ul>
 					<li><a _href="<%=basePath%>manage/indexStudent"
 						href="javascript:void(0)">学生信息管理</a></li>
-											<li><a _href="<%=basePath%>manage/indexTeacher"
+					<li><a _href="<%=basePath%>manage/indexTeacher"
 						href="javascript:void(0)">教师信息管理</a></li>
-											<li><a _href="<%=basePath%>manage/indexUser.html"
+					<li><a _href="<%=basePath%>manage/indexUser.html"
 						href="javascript:void(0)">登陆信息管理</a></li>
 				</ul>
 			</dd>
@@ -154,8 +149,8 @@
 	<div id="Hui-tabNav" class="Hui-tabNav">
 		<div class="Hui-tabNav-wp">
 			<ul id="min_title_list" class="acrossTab cl">
-				<li class="active"><span title="报告管理"
-					data-href="">报告管理</span><em></em></li>
+				<li class="active"><span title="学院管理"
+					data-href="">学院管理</span><em></em></li>
 			</ul>
 		</div>
 		<div class="Hui-tabNav-more btn-group">
@@ -168,17 +163,16 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display: none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0" src="<%=basePath%>manage/indexMajor"></iframe>
+			<iframe scrolling="yes" frameborder="0" src="<%=basePath%>manage/indexCollege"></iframe>
 		</div>
 	</div>
 	</section>
-	<script type="text/javascript">
-	
+	<script type="text/javascript">	
 	/*用户-编辑*/
 	function member_edit(title,url,id,w,h){
 		layer_show(title,url,w,h);
 	}
-
-		</script>
+	</script>
+		
 </body>
 </html>

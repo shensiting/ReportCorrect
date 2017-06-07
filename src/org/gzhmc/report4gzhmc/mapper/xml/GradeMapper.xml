@@ -8,6 +8,29 @@
 		<result column="cClass" property="cClass" />
 		<result column="cCollegeId" property="cCollegeId" />
 	</resultMap>
+			
+	<select id="getByStuGradeId" resultType="int" parameterType="int">
+		select
+		count(*)
+		from gy_report_student
+		where cGradeId = #{cGradeId}
+	</select>
+	
+	<select id="getByGraExamGradeId" resultType="int" parameterType="int">
+		select
+		count(*)
+		from gy_report_grade_exam
+		where cGradeId = #{cGradeId}
+	</select>
+	
+	<select id="getByteaGradeGradeId" resultType="int" parameterType="int">
+		select
+		count(*)
+		from gy_report_teacher_grade
+		where cGradeId = #{cGradeId}
+	</select>		
+			
+			
 	<select id="getAll" resultMap="BaseResultMap" parameterType="int">
 		select * from gy_report_grade
 	</select>

@@ -13,8 +13,26 @@ public class ExperimentalTest {
 	private String cExperimentTime;
 
 	private String cExperimentEnglishName;
+	
+	private int cClassify;
+	
+	private Test test;
 
-	private int cStatu;
+	public Test getTest() {
+		return test;
+	}
+
+	public void setTest(Test test) {
+		this.test = test;
+	}
+
+	public int getcClassify() {
+		return cClassify;
+	}
+
+	public void setcClassify(int cClassify) {
+		this.cClassify = cClassify;
+	}
 
 	public int getcId() {
 		return cId;
@@ -48,11 +66,5 @@ public class ExperimentalTest {
 		this.cExperimentEnglishName = cExperimentEnglishName == null ? null : cExperimentEnglishName.trim();
 	}
 
-	public int getcStatu() {
-		return cStatu;
-	}
-
-	public void setcStatu(int cStatu) {
-		this.cStatu = cStatu;
-	}
+	
 }

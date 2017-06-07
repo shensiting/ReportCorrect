@@ -6,7 +6,7 @@
 		<result column="cReportNum" property="cReportNum" />
 		<result column="cScoreId" property="cScoreId" />
 		<result column="cStudentId" property="cStudentId" />
-		<result column="cStatus" property="cStatus" />
+		<result column="cStatu" property="cStatu" />
 		<result column="cPath" property="cPath" />
 		<result column="cCreateTime" property="cCreateTime" />
 		<result column="cPdfPath" property="cPdfPath" />
@@ -25,26 +25,29 @@
 			<result column="cCreateTime" property="cCreateTime" />
 			<result column="cConclution" property="cConclution" />
 		</association>
-		<collection property="experimentalTest" javaType="org.gzhmc.report4gzhmc.model.ExperimentalTest">
+		<collection property="experimental" javaType="org.gzhmc.report4gzhmc.model.Experiment">
 			<result column="cExperimentName" property="cExperimentName" />
 			<result column="cExperimentTime" property="cExperimentTime" />
 			<result column="cExperimentEnglishName" property="cExperimentEnglishName" />
-			 <result column="cStatu" property="cStatu" />
+			 <result column="cClassify" property="cClassify" />
 		</collection>
 		<collection property="student" javaType="org.gzhmc.report4gzhmc.model.Student">
 			<result column="cName" property="cName" />
 			<result column="cStudentNumber" property="cStudentNumber" />
 			<result column="cGradeId" property="cGradeId" />
-			<result column="cPicturePath" property="cPicturePath" />
-			<result column="cIDNumber" property="cIDNumber" />
+			<result column="cPicturePath" property="cPicturePath" />			
+		</collection>		
+		<collection property="gradeExam" javaType="org.gzhmc.report4gzhmc.model.GradeExam">
+			<id column="cId" property="cId" />
+			 <result column="cStatus" property="cStatus"/>  		
 		</collection>		
 	</resultMap>	
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId,stu.cName,stu.cPicturePath,stu.cStudentNumber,
 		sct.cComment,sct.cConclution,sct.cCreateTime,sct.cExperiment,sct.cInserument,sct.cLabresult,sct.cReagen,sct.cSum,sct.cTherory,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,gy_report_scoresheet
 		sct,gy_report_experimental_test el
@@ -52,27 +55,28 @@
 		rt.cStudentId=stu.cUserId and
 		rt.cExperimentTextId=el.cId and
 		rt.cId=#{cId}
-	</select><select id="getAllBystatu" resultMap="BaseResultMap" parameterType="int">
+	</select>
+	<select id="getAllBystatu" resultMap="BaseResultMap" parameterType="int">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId,stu.cName,stu.cPicturePath,stu.cStudentNumber,
 		sct.cComment,sct.cConclution,sct.cCreateTime,sct.cExperiment,sct.cInserument,sct.cLabresult,sct.cReagen,sct.cSum,sct.cTherory,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,gy_report_scoresheet
 		sct,gy_report_experimental_test el
 		where rt.cScoreId=sct.cId and
 		rt.cStudentId=stu.cUserId and
 		rt.cExperimentTextId=el.cId and
-		rt.cStatus=1
+		rt.cStatu=1
 	</select>
 	<select id="getByExperimentId" resultMap="BaseResultMap"
 		parameterType="int">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId, stu.cName,stu.cPicturePath,stu.cStudentNumber,
 		sct.cComment,sct.cConclution,sct.cCreateTime,sct.cExperiment,sct.cInserument,sct.cLabresult,sct.cReagen,sct.cSum,sct.cTherory,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,gy_report_scoresheet
 		sct,gy_report_experimental_test el
@@ -81,11 +85,25 @@
 		rt.cExperimentTextId=el.cId and
 		rt.cExperimentTextId=#{cExperimentTextId}
 	</select>
+	<select id="getByGradeId" resultMap="BaseResultMap" parameterType="int">
+		select
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cReportNum,rt.cScoreId,rt.cStatu,
+		stu.cGradeId, stu.cName,stu.cPicturePath,stu.cStudentNumber,
+		el.cExperimentName,ge.cStatus
+		from
+		gy_report_report rt,gy_report_student stu,gy_report_experimental_test el
+		,gy_report_grade_exam ge where
+		rt.cStudentId=stu.cUserId and
+		rt.cExperimentTextId=el.cId and
+		ge.cExperimentId=el.cId and
+		ge.cGradeId=stu.cGradeId and
+		stu.cGradeId=#{cGradeId}
+	</select>
 	<select id="getExitScoreByExperimentIdandGradeId" resultMap="BaseResultMap">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,		
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId, stu.cName,stu.cPicturePath,stu.cStudentNumber,		
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,
 		gy_report_experimental_test el
@@ -109,13 +127,15 @@
         stu.cGradeId=#{1} and
         rt.cExperimentTextId=#{0} and 
 		rt.cExperimentTextId=el.cId and  
-		rt.cStatus=1
+		rt.cStatu=1
 	</select>	
+	
+	
 	<select id="getExitScoreByExperimentId" resultMap="BaseResultMap">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,		
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId, stu.cName,stu.cPicturePath,stu.cStudentNumber,		
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,
 		gy_report_experimental_test el
@@ -129,10 +149,10 @@
 	</select>	
 	<select id="getByManyId" resultMap="BaseResultMap">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId, stu.cName,stu.cPicturePath,stu.cStudentNumber,
 		sct.cComment,sct.cConclution,sct.cCreateTime,sct.cExperiment,sct.cInserument,sct.cLabresult,sct.cReagen,sct.cSum,sct.cTherory,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,gy_report_scoresheet
 		sct,gy_report_experimental_test el
@@ -147,10 +167,10 @@
 	<select id="getByStudentId" resultMap="BaseResultMap"
 		parameterType="int">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId, stu.cName,stu.cPicturePath,stu.cStudentNumber,
 		sct.cComment,sct.cConclution,sct.cCreateTime,sct.cExperiment,sct.cInserument,sct.cLabresult,sct.cReagen,sct.cSum,sct.cTherory,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,gy_report_scoresheet
 		sct,gy_report_experimental_test el
@@ -161,50 +181,50 @@
 	</select>
 	<select id="getAll" resultMap="BaseResultMap">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId, stu.cName,stu.cPicturePath,stu.cStudentNumber,
 		sct.cComment,sct.cConclution,sct.cCreateTime,sct.cExperiment,sct.cInserument,sct.cLabresult,sct.cReagen,sct.cSum,sct.cTherory,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,gy_report_scoresheet
 		sct,gy_report_experimental_test el order by rt.cId desc
 	</select>
 	<select id="getExitScoreAll" resultMap="BaseResultMap">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId, stu.cName,stu.cPicturePath,stu.cStudentNumber,
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,gy_report_scoresheet
 		sct,gy_report_experimental_test el
 		where
 		rt.cStudentId=stu.cUserId and
 		rt.cExperimentTextId=el.cId and
-		rt.cStatus=0 order by rt.cId desc
+		rt.cStatu=0 order by rt.cId desc
 	</select>
 	<select id="getExitScoreAllByStudentId" resultMap="BaseResultMap"
 		parameterType="int">
 		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		stu.cGradeId,stu.cIDNumber,stu.cName,stu.cPicturePath,stu.cStudentNumber,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		stu.cGradeId, stu.cName,stu.cPicturePath,stu.cStudentNumber,
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,gy_report_scoresheet
 		sct,gy_report_experimental_test el
 		where
 		rt.cStudentId=stu.cUserId and
 		rt.cExperimentTextId=el.cId and
-		rt.cStatus=0 and
+		rt.cStatu=0 and
 		rt.cStudentId=#{cStudentId} 
 	</select>
 	<select id="getReportLinkExperimentByStuId" resultMap="BaseResultMap"
 		parameterType="int">
-		select
-		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cPath,rt.cPdfPath,rt.cProcess,rt.cQRcode,rt.cReportNum,rt.cScoreId,rt.cStatus,rt.cStudentId,rt.cTeacherId,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		select DISTINCT
+		rt.cCreateTime,rt.cExperimentTextId,rt.cId,rt.cReportNum,rt.cScoreId,rt.cStatu,rt.cStudentId,rt.cTeacherId,
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify,ge.cStatus
 		from
 		gy_report_report rt,gy_report_student stu,
-		gy_report_experimental_test el
+		gy_report_experimental_test el,gy_report_grade_exam ge
 		where
 		rt.cStudentId=stu.cUserId and
 		rt.cExperimentTextId=el.cId and
@@ -213,7 +233,7 @@
 	<select id="getExperimentIdandGradeId" resultMap="BaseResultMap">
 		select DISTINCT
 		rt.cExperimentTextId,rt.cId,stu.cGradeId,
-		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cStatu
+		el.cExperimentEnglishName,el.cExperimentName,el.cExperimentTime,el.cClassify
 		from
 		gy_report_report rt,gy_report_student stu,gy_report_scoresheet
 		sct,gy_report_experimental_test el

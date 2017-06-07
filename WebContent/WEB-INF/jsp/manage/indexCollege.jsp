@@ -31,9 +31,42 @@
 <script type="text/javascript" src="<%=basePath%>users/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>实验报告管理系统</title>
+<title>学院管理</title>
 <script type="text/javascript">
-	
+//修改函数
+
+function showAddInput(){
+	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
+/*添加*/
+function sumit(collegeform) {
+	$.ajax({
+		type : 'get',
+		dataType : 'json',
+		async: false,
+		url : '<%=basePath%>manage/addCollege.action?id=' + collegeform.id.value+'&collegeName='+collegeform.collegeName.value+'',
+		success : function(data) {
+			if (data.success) {
+				alert(data.msg);
+				
+			} else {
+				
+				layer.msg('操作失败，请重新操作', {
+					icon : 6,
+					time : 5000
+				});		
+			}
+			
+		},error : function() {
+			
+			layer.msg('服务器异常，请稍候再试！', {
+				icon : 6,
+				time : 4000
+			});	
+		  }
+	   });
+		
+}
+
 </script>
 </head>
 <body>
@@ -44,30 +77,36 @@
 		href="javascript:location.replace(location.href);" title="刷新"><i
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="pd-20">
-			<div class="cl pd-5 bg-1 bk-gray mt-20">
-			<span class="l">
-			 <a href="javascript:;" onclick="deleteFunc()"
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;" onclick="deleteFunc()"
 				class="btn btn-danger radius"> <i class="Hui-iconfont">&#xe6e2;</i>批量删除
-			</a> 
-			<a class="btn btn-primary radius"
-				onclick="article_add('添加资讯','article-add.html')" href="javascript:;"><i
-					class="Hui-iconfont">&#xe600;</i>批量导入</a>
-			<a
-				class="btn btn-success radius"
-				onclick="article_add('学院添加','<%=basePath%>manage/addCollege','450','200','200')" href="javascript:;"><i
-					class="Hui-iconfont">&#xe600;</i>单个添加</a>
+			</a> <a class="btn btn-success radius" onclick="showAddInput()"
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>单个添加</a>
 			</span> <span class="r">共有数据：<strong>${colleges.size() }</strong>条
 			</span>
+		</div>
+		<div style="display: none;" id="addinfo" class="pd-20">
+			<form class="form-horizontal" method="post" action=""
+				name="basic_validate" id="basic_validate">
+				<input type="hidden" id="id" name="id" value="" /> <input
+					type="text" class="input-text" value="" style="width: 250px"
+					placeholder="输入学院" required="required" id="collegeName"
+					name="collegeName"> &nbsp;&nbsp;&nbsp;
+				<button type="submit" class="btn btn-success radius"
+					onclick="sumit(this.form)" id="" name="">提交</button>
+			</form>
 		</div>
 		<div class="mt-20">
 			<table
 				class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"></th>
-						<th width="80">ID</th>
-						<th width="80">学院名称</th>
-						<th width="120">操作</th>
+						<th width="25"><input type="checkbox"
+							id="title-table-checkbox" name="title-table-checkbox"></th>
+						<th width="30px">ID</th>
+						<th width="80%">学院名称</th>
+						<th width="20px">编辑</th>
+						<th width="20px">删除</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -75,13 +114,12 @@
 						<tr class="text-c">
 							<td><input name="checkboxid" type="checkbox"
 								value="${ item.cId}" /></td>
-							<td>${item.cId }</td>
-							<td>${item.cCollegeName }</td>
-							<td class="f-14 td-manage"><a
-								style="text-decoration: none" class="ml-5"
-								onClick="editFunc(${ item.cId})"
-								href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
-								<a style="text-decoration: none" class="ml-5"
+							<td id="cid">${item.cId }</td>
+							<td id="cCollegeName">${item.cCollegeName }</td>
+							<td class="f-14 td-manage"><a style="text-decoration: none"
+								class="ml-5" id="edit" href="javascript:;" title="编辑"><i
+									class="Hui-iconfont">&#xe6df;</i></a></td>
+							<td><a style="text-decoration: none" class="ml-5"
 								onClick="article_del(this,'${ item.cId}')" href="javascript:;"
 								title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 						</tr>
@@ -136,6 +174,18 @@
 			
 		}
 		
+		$(function() {
+			$(".text-c").each(function(){
+			var tmp=$(this).children().eq(3);
+			var btn=tmp.children();
+			btn.bind("click",function(){
+				document.getElementById("id").value=btn.parent().parent().children("td").get(1).innerHTML;
+				document.getElementById("collegeName").value=btn.parent().parent().children("td").get(2).innerHTML;
+				document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;	
+			  });
+			});
+		});
+		
 		//删除函数
 		function deleteFunc() {
 			var ids = getSelectedId();
@@ -166,11 +216,7 @@
 									time : 4000
 								});	
 							} else {
-								var str=data.msg;
-								layer.msg(str, {
-									icon : 6,
-									time : 1000
-								});		
+								alert(data.msg);	
 							}
 							//刷新页面
 							location.reload();
@@ -196,13 +242,9 @@
 					url : '<%=basePath%>manage/delCollege.action?ids=' + id,
 					success : function(data) {
 						if (data.success) {
-							
+							alert("删除成功！");	
 						} else {
-							var str=data.msg;
-							layer.msg(str, {
-								icon : 6,
-								time : 1000
-							});		
+							alert(data.msg);	
 						}
 						//刷新页面
 						location.reload();

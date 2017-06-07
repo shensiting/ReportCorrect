@@ -71,14 +71,14 @@
 		<form action="<%=basePath%>student/uploadPicture.action" method="post"
 			enctype="multipart/form-data" class="form form-horizontal"
 			id="form-article-add">
-			<div class="row cl">
+			<!-- <div class="row cl">
 				<label class="form-label col-1"><span class="c-red">*</span>身份证号：</label>
 				<div class="formControls col-10">
 					<input type="text" class="input-text" value="" placeholder=""
 						id="idcard" name="idcard">
 				</div>
 			</div>
-
+             -->
 			<div class="row cl">
 				<label class="form-label col-1"><span class="c-red">*</span>图片上传：</label>
 				<div class="formControls col-10">

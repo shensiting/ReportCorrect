@@ -23,7 +23,13 @@
 		gy_report_major.cId=gy_report_grade.cMajorId and
 		gy_report_college.cId=gy_report_grade.cCollegeId
 	</select>
-
+   <select id="getByCollegeId" resultMap="BaseResultMap" parameterType="int">
+		select gy_report_grade.cId, cYearClass, cMajorId, cClass,
+		cCollegeId,cMajorName,cCollegeName
+		from gy_report_grade,gy_report_major,gy_report_college where
+		gy_report_major.cId=gy_report_grade.cMajorId and
+		gy_report_college.cId=gy_report_grade.cCollegeId and gy_report_grade.cCollegeId=#{cCollegeId}
+	</select>
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select gy_report_grade.cId, cYearClass, cMajorId, cClass,
 		cCollegeId,cMajorName,cCollegeName

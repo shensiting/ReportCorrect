@@ -38,7 +38,7 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成哪个表和生成实体的类名 -->
-		<table tableName="gy_report_teacher_grade" domainObjectName="TeacherGrade"
+		<table tableName="gy_report_experimental_test" domainObjectName="TeacherGrade"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">

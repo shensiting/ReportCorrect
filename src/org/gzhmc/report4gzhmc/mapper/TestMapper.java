@@ -1,17 +1,11 @@
 package org.gzhmc.report4gzhmc.mapper;
 
+import java.util.List;
+
+import org.gzhmc.common.base.BaseMapper;
 import org.gzhmc.report4gzhmc.model.Test;
 
-public interface TestMapper {
-    int deleteByPrimaryKey(Integer cId);
-
-    int insert(Test record);
-
-    int insertSelective(Test record);
-
-    Test selectByPrimaryKey(Integer cId);
-
-    int updateByPrimaryKeySelective(Test record);
-
-    int updateByPrimaryKey(Test record);
+public interface TestMapper extends BaseMapper<Test>{
+	public int updateByPrimaryKey(Test test);
+	public int getByExamTestId(int cTestId);
 }

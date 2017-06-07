@@ -1,37 +1,51 @@
 package org.gzhmc.report4gzhmc.model;
 
 import java.util.Date;
-
+/**
+ * 教师与班级表格
+ * @author stshen
+ *
+ * 2017年9月25日
+ */
 public class TeacherGrade {
-    private Integer cId;
+    private int cId;
 
-    private Integer cTeacherId;
+    private int cTeacherId;
 
-    private Integer cGradeId;
+    private int cGradeId;
 
     private Date cCreateTime;
+    private int cStatus;
 
-    public Integer getcId() {
+    public int getcStatus() {
+		return cStatus;
+	}
+
+	public void setcStatus(int cStatus) {
+		this.cStatus = cStatus;
+	}
+
+	public int getcId() {
         return cId;
     }
 
-    public void setcId(Integer cId) {
+    public void setcId(int cId) {
         this.cId = cId;
     }
 
-    public Integer getcTeacherId() {
+    public int getcTeacherId() {
         return cTeacherId;
     }
 
-    public void setcTeacherId(Integer cTeacherId) {
+    public void setcTeacherId(int cTeacherId) {
         this.cTeacherId = cTeacherId;
     }
 
-    public Integer getcGradeId() {
+    public int getcGradeId() {
         return cGradeId;
     }
 
-    public void setcGradeId(Integer cGradeId) {
+    public void setcGradeId(int cGradeId) {
         this.cGradeId = cGradeId;
     }
 

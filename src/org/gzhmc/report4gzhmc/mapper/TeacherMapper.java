@@ -5,5 +5,4 @@ import org.gzhmc.report4gzhmc.model.Teacher;
 
 public interface TeacherMapper extends BaseMapper<Teacher>{
 	public Teacher getByTeacherId(String teacherId);
-   
 }

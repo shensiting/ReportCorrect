@@ -5,7 +5,12 @@
 		<id column="cId" property="cId" />
 		<result column="cMajorName" property="cMajorName" />
 	</resultMap>
-
+    <select id="getByGradeMajorId" resultType="int" parameterType="int">
+		select
+		count(*)
+		from gy_report_grade
+		where cMajorId = #{cMajorId}
+	</select>
 	<select id="getAll" resultMap="BaseResultMap">
 		select * from gy_report_major
 		order by cId desc

@@ -12,6 +12,8 @@ public interface ReportRelativeMapper {
 
 	public List<ReportRelative> getExitScoreAll();
 
+	public List<ReportRelative> getByGradeId(int cGradeId);
+	
 	public List<ReportRelative> getByStudentId(int cStudentId);
 
 	public List<ReportRelative> getByExperimentId(int cExperimentTextId);

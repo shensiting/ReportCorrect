@@ -63,5 +63,10 @@ public class CollegeMapperTest {
 		List<College> list = collegeMapper.getAll();
 		System.out.println("list size :" + list.size());
 	}
+	@Test
+	public void testGetByCollegeId() {		
+		System.out.println(collegeMapper.getByGradeCollegeId(10));
+		System.out.println(collegeMapper.getByTeacherCollegeId(10));
+	}
 
 }

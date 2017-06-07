@@ -6,23 +6,23 @@
 		<result column="cName" property="cName" />
 		<result column="cTeacherId" property="cTeacherId" />
 		<result column="cCollegeId" property="cCollegeId" />
-		<result column="cVerify" property="cVerify" />		
 		<association property="college"
 			javaType="org.gzhmc.report4gzhmc.model.College">
+			<id column="cId" property="cId" />
 			<result column="cCollegeName" property="cCollegeName" />
 		</association>
 	</resultMap>
 
 	<select id="getAll" resultMap="BaseResultMap">
 		select
-		teacher.cUserId,teacher.cName,teacher.cTeacherId,teacher.cCollegeId,college.cCollegeName,teacher.cVerify
+		teacher.cUserId,teacher.cName,teacher.cTeacherId,teacher.cCollegeId,college.cCollegeName,college.cId
 		from gy_report_college college,gy_report_teacher teacher
 		where teacher.cCollegeId=college.cId order by cUserId desc
 	</select>
 
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select
-		teacher.cUserId,teacher.cName,teacher.cTeacherId,teacher.cCollegeId,college.cCollegeName,teacher.cVerify
+		teacher.cUserId,teacher.cName,teacher.cTeacherId,teacher.cCollegeId,college.cCollegeName,college.cId
 		from gy_report_college college,gy_report_teacher teacher
 		where teacher.cCollegeId=college.cId and teacher.cUserId = #{cUserId }
 	</select>
@@ -30,7 +30,7 @@
 	<select id="getByTeacherId" resultMap="BaseResultMap"
 		parameterType="String">
 		select
-		teacher.cUserId,teacher.cName,teacher.cTeacherId,teacher.cCollegeId,college.cCollegeName,teacher.cVerify
+		teacher.cUserId,teacher.cName,teacher.cTeacherId,teacher.cCollegeId,college.cCollegeName,college.cId
 		from gy_report_college college,gy_report_teacher teacher
 		where teacher.cCollegeId=college.cId and teacher.cTeacherId=#{cTeacherId}
 	</select>

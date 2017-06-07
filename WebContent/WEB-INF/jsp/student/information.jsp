@@ -52,8 +52,8 @@ text-align: center;
 					<td width="10%">学号：</td>					
 					<td>${student.cStudentNumber}</td>
 					<td class="pch" width="15%" rowspan="4"><img alt=""
-						src="<%=basePath%>/picture${student.getcPicturePath()}"
-						onerror="this.src='<%=basePath%>picture/sl.png'" width="150px"
+						src="<%=basePath%>gzhmc/picture${student.getcPicturePath()}"
+						onerror="this.src='<%=basePath%>gzhmc/picture/sl.png'" width="150px"
 						height="150px"></td>
 				</tr>
 				<tr>

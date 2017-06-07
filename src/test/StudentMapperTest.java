@@ -31,7 +31,7 @@ public class StudentMapperTest {
 		student.setcStudentNumber("1234567890");
 		student.setcGradeId(2);
 		student.setcPicturePath("c:/text/jpl.word");
-		student.setcIDNumber("3");
+		
 
 		int result = studentMapper.add(student);
 		System.out.println("add result :" + result);

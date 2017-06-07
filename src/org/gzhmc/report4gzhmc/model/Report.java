@@ -11,7 +11,7 @@ public class Report {
 	private String cReportNum;
 	private int cScoreId;
 	private int cStudentId;
-	private int cStatus;
+	private int cStatu;
 	private String cPath;
 	private Date cCreateTime;
 	private String cPdfPath;
@@ -58,12 +58,12 @@ public class Report {
 		this.cStudentId = cStudentId;
 	}
 
-	public int getcStatus() {
-		return cStatus;
+	public int getcStatu() {
+		return cStatu;
 	}
 
-	public void setcStatus(int cStatus) {
-		this.cStatus = cStatus;
+	public void setcStatu(int cStatu) {
+		this.cStatu = cStatu;
 	}
 
 	public String getcPath() {

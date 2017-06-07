@@ -3,43 +3,85 @@ package org.gzhmc.report4gzhmc.model;
 import java.util.Date;
 
 public class GradeExam {
-    private Integer cId;
+	private int cId;
+	private int cGradeId;
+	private int cExperimentId;
+	private int cStatus;
+	private Date cCreateTime;
+	private Grade grade;
+	private Major major;
+	private College college;
+	private ExperimentalTest experiment;
 
-    private Integer cGradeId;
+	public int getcStatus() {
+		return cStatus;
+	}
 
-    private Integer cExperimentId;
+	public void setcStatus(int cStatus) {
+		this.cStatus = cStatus;
+	}
 
-    private Date cCreateTime;
+	public Grade getGrade() {
+		return grade;
+	}
 
-    public Integer getcId() {
-        return cId;
-    }
+	public void setGrade(Grade grade) {
+		this.grade = grade;
+	}
 
-    public void setcId(Integer cId) {
-        this.cId = cId;
-    }
+	public Major getMajor() {
+		return major;
+	}
 
-    public Integer getcGradeId() {
-        return cGradeId;
-    }
+	public void setMajor(Major major) {
+		this.major = major;
+	}
 
-    public void setcGradeId(Integer cGradeId) {
-        this.cGradeId = cGradeId;
-    }
+	public College getCollege() {
+		return college;
+	}
 
-    public Integer getcExperimentId() {
-        return cExperimentId;
-    }
+	public void setCollege(College college) {
+		this.college = college;
+	}
 
-    public void setcExperimentId(Integer cExperimentId) {
-        this.cExperimentId = cExperimentId;
-    }
+	public ExperimentalTest getExperiment() {
+		return experiment;
+	}
 
-    public Date getcCreateTime() {
-        return cCreateTime;
-    }
+	public void setExperiment(ExperimentalTest experiment) {
+		this.experiment = experiment;
+	}
 
-    public void setcCreateTime(Date cCreateTime) {
-        this.cCreateTime = cCreateTime;
-    }
+	public int getcId() {
+		return cId;
+	}
+
+	public void setcId(int cId) {
+		this.cId = cId;
+	}
+
+	public int getcGradeId() {
+		return cGradeId;
+	}
+
+	public void setcGradeId(int cGradeId) {
+		this.cGradeId = cGradeId;
+	}
+
+	public int getcExperimentId() {
+		return cExperimentId;
+	}
+
+	public void setcExperimentId(int cExperimentId) {
+		this.cExperimentId = cExperimentId;
+	}
+
+	public Date getcCreateTime() {
+		return cCreateTime;
+	}
+
+	public void setcCreateTime(Date cCreateTime) {
+		this.cCreateTime = cCreateTime;
+	}
 }

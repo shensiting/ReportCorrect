@@ -54,5 +54,6 @@ public class TeacherMapperTest {
 		List<Teacher> list = teacherMapper.getAll();
 		System.out.println("list size :" + list.size() + ":" + list.get(0).getcName());
 	}
-
+	
+	
 }

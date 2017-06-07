@@ -76,32 +76,30 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = { "/addUser.action" })
 	@Transactional
-	public ModelAndView addCollegeAction(HttpServletRequest request, HttpServletResponse response) throws WebException {
+	public void addCollegeAction(HttpServletRequest request, HttpServletResponse response) throws WebException {
 		// 获取表单中的值，如果id值为空，则表示新增，否则表示根据此id来修改
 		String id = request.getParameter("id").trim();
-		String cUserName = request.getParameter("username");
+		String cUserName = request.getParameter("userNum");
 		String cPassword = request.getParameter("password");
 		String cRole = request.getParameter("role").trim();
 		User user = new User();
+		ResultJson json = new ResultJson();
 		user.setcUserName(cUserName);	
 		user.setcRole(StringUtils.string2int(cRole));
-		int result;
+		int result=0;
 		if (StringUtils.isNotEmpty(id)) {
 			//密码默认在首位加“crazy”
 			user.setcPassword(MD5.getMD5("crazy"+cPassword));
 			user.setcId(StringUtils.string2int(id));
 			result = userMapper.updateSelective(user);
-		} else {
-			user.setcPassword(MD5.getMD5("crazy"+cPassword));
-			user.setcCreateTime(new Date());
-			result = userMapper.add(user);
-		}
+		} 
 		if (result == 1) {
 			// 重定向转到管理登录用户的页面
-			return new ModelAndView("redirect:/manage/indexUser.html");
+			json.setSuccess(true);			
 		} else {
 			throw new WebException();
 		}
+		writeResultJson(response, json);
 	}
 
 	/**

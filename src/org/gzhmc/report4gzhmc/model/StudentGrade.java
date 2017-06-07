@@ -5,7 +5,6 @@ public class StudentGrade {
 	private String cName;
 	private String cStudentNumber;
 	private int cGradeId;
-	private String cIDNumber;
 	private String cPicturePath;
 	private Grade grade;
 	private Major major;
@@ -41,14 +40,6 @@ public class StudentGrade {
 
 	public void setcGradeId(int cGradeId) {
 		this.cGradeId = cGradeId;
-	}
-
-	public String getcIDNumber() {
-		return cIDNumber;
-	}
-
-	public void setcIDNumber(String cIDNumber) {
-		this.cIDNumber = cIDNumber;
 	}
 
 	public String getcPicturePath() {

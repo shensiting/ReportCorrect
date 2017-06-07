@@ -70,5 +70,5 @@ public class GradeMapperTest {
 		List<Grade> list = gradeMapper.getAll();
 		System.out.println("list size :" + list.size());
 	}
-
+	
 }

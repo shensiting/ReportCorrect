@@ -16,9 +16,9 @@
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <!--[if lt IE 9]>
-<script type="text/javascript" src="lib/html5.js"></script>
-<script type="text/javascript" src="lib/respond.min.js"></script>
-<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/respond.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/PIE_IE678.js"></script>
 <![endif]-->
 <script src="<%=basePath%>manage/js/jquery.min.js"></script>
 
@@ -31,22 +31,24 @@
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>后台登录 - H-ui.admin v2.3</title>
+<title>学生实验报告登录</title>
 <script type="text/javascript">
 function login(loginform){//传入表单参数  
 	var number=loginform.number.value;
 	var password=md5(loginform.password.value);
+	var code=loginform.code.value;	
 	//var password=md5(md5(loginform.password.value));
-    if(number!=""&&password!=""){  
+    if(number!=""&&password!=""&&code!=""){  
     $.ajax({
     	type : 'get',
 		dataType : 'json',	
 		async: false,
-		url:'<%=basePath%>manage/check.action?number='+number+'&password='+password+'',
+		url:'<%=basePath%>manage/check.action?number='+number+'&password='+password+'&code='+code+'',
 		success:function(data){
             if(data.success){    
             	var path='<%=basePath%>' + data.msg;
 						document.forms[0].action = path;
+						
 						document.forms[0].submit();
 					} else {
 						alert(data.msg);						
@@ -58,7 +60,15 @@ function login(loginform){//传入表单参数
 			});
 		}
 	}
-</script>
+
+
+$(function(){
+	$("#take").on("click",function(){
+		var url = '<%=basePath%>manage/check?number='+Math.random()+'';  
+	    $("#img").attr("src",url);  
+	});
+});
+    </script>
 </head>
 <body>
 
@@ -82,18 +92,18 @@ function login(loginform){//传入表单参数
 							class="input-text size-L">
 					</div>
 				</div>
-				<!--   <div class="row cl">
+				<div class="row cl">
         <div class="formControls col-8 col-offset-3">
-          <input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">
-          <img src="images/VerifyCode.aspx.png"> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>
+          <input name="code" class="input-text size-L" required="required" type="text" placeholder="请输入验证码"  style="width:150px;">
+       <img  id="img" src="<%=basePath%>manage/check" > <a id="take">看不清，换一个</a></div>
       </div> 
-      <div class="row">
-        <div class="formControls col-8 col-offset-3">
+       <!--  <div class="row">
+    <div class="formControls col-8 col-offset-3">
           <label for="online">
             <input type="checkbox" name="online" id="online" value="">
             使我保持登录状态</label>
-        </div>
-      </div>-->
+        </div>  
+      </div>--> 
 				<div style="margin-top: 40px" class="row">
 					<div class="formControls col-8 col-offset-3">
 						<input name="" type="submit" class="btn btn-success radius size-L"

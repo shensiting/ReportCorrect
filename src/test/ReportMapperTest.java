@@ -28,7 +28,7 @@ public class ReportMapperTest {
 		
 		report.setcPath("c:t/er/j.jpg");
 		report.setcScoreId(1);
-		report.setcStatus(2);
+		report.setcStatu(2);
 		report.setcStudentId(3);
 		report.setcPdfPath("c://pdf");
 		report.setcProcess("PCR实验技术与应用");

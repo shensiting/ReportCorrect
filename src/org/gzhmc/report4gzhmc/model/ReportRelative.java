@@ -8,7 +8,7 @@ public class ReportRelative {
 	private int cScoreId;
 	private int cStudentId;
 	private int cTeacherId;
-	private int cStatus;
+	private int cStatu;
 	private String cPath;
 	private Date cCreateTime;
 	private String cPdfPath;
@@ -16,8 +16,25 @@ public class ReportRelative {
 	private String cQRcode;
     private int cExperimentTextId;
 	private ScoreSheet scoreSheet;
-	private ExperimentalTest experimentalTest;
+	private Experiment experimental;
 	private Student student;
+	private GradeExam gradeExam;
+
+	public GradeExam getGradeExam() {
+		return gradeExam;
+	}
+
+	public void setGradeExam(GradeExam gradeExam) {
+		this.gradeExam = gradeExam;
+	}
+
+	public Experiment getExperimental() {
+		return experimental;
+	}
+
+	public void setExperimental(Experiment experimental) {
+		this.experimental = experimental;
+	}
 
 	public String getcId() {
 		return cId;
@@ -44,12 +61,12 @@ public class ReportRelative {
 		this.cStudentId = cStudentId;
 	}
 
-	public int getcStatus() {
-		return cStatus;
+	public int getcStatu() {
+		return cStatu;
 	}
 
-	public void setcStatus(int cStatus) {
-		this.cStatus = cStatus;
+	public void setcStatus(int cStatu) {
+		this.cStatu = cStatu;
 	}
 
 	public String getcPath() {
@@ -100,13 +117,7 @@ public class ReportRelative {
 		this.scoreSheet = scoreSheet;
 	}
 
-	public ExperimentalTest getExperimentalTest() {
-		return experimentalTest;
-	}
 
-	public void setExperimentalTest(ExperimentalTest experimentalTest) {
-		this.experimentalTest = experimentalTest;
-	}
 
 	public Student getStudent() {
 		return student;

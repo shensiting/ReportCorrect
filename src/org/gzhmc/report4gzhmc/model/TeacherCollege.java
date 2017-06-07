@@ -5,15 +5,7 @@ public class TeacherCollege {
 	private String cName;
 	private String cTeacherId;
 	private int cCollegeId;
-	private int cVerify;
-
-	public int getcVerify() {
-		return cVerify;
-	}
-
-	public void setcVerify(int cVerify) {
-		this.cVerify = cVerify;
-	}
+	
 
 	private College college;
 

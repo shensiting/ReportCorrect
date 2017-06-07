@@ -26,8 +26,9 @@ public class ReportRelativeMappperTest {
 	}
 
 	@Test
-	public void testGetByStudentId() {
-		fail("Not yet implemented");
+	public void testGetByGradeId() {
+		List<ReportRelative> relatives=reportRelativeMappper.getByGradeId(1);
+		System.out.println(relatives.get(0).getGradeExam().getcStatus());
 	}
 
 	@Test

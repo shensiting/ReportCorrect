@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.TopicThemeMapper" >
+  <resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.TopicTheme" >
+    <id column="cId" property="cId" jdbcType="INTEGER" />
+    <result column="cTitle" property="cTitle" jdbcType="VARCHAR" />
+    <result column="cLaunchId" property="cLaunchId" jdbcType="INTEGER" />
+    <result column="cCreateTime" property="cCreateTime" jdbcType="DATE" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.gzhmc.report4gzhmc.model.TopicTheme" extends="BaseResultMap" >
+    <result column="cContent" property="cContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cId, cTitle, cLaunchId, cCreateTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    cContent
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gy_report_topictheme
+    where cId = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gy_report_topictheme
+    where cId = #{cId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
+    insert into gy_report_topictheme (cId, cTitle, cLaunchId, 
+      cCreateTime, cContent)
+    values (#{cId,jdbcType=INTEGER}, #{cTitle,jdbcType=VARCHAR}, #{cLaunchId,jdbcType=INTEGER}, 
+      #{cCreateTime,jdbcType=DATE}, #{cContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
+    insert into gy_report_topictheme
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        cId,
+      </if>
+      <if test="cTitle != null" >
+        cTitle,
+      </if>
+      <if test="cLaunchId != null" >
+        cLaunchId,
+      </if>
+      <if test="cCreateTime != null" >
+        cCreateTime,
+      </if>
+      <if test="cContent != null" >
+        cContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cTitle != null" >
+        #{cTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cLaunchId != null" >
+        #{cLaunchId,jdbcType=INTEGER},
+      </if>
+      <if test="cCreateTime != null" >
+        #{cCreateTime,jdbcType=DATE},
+      </if>
+      <if test="cContent != null" >
+        #{cContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
+    update gy_report_topictheme
+    <set >
+      <if test="cTitle != null" >
+        cTitle = #{cTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="cLaunchId != null" >
+        cLaunchId = #{cLaunchId,jdbcType=INTEGER},
+      </if>
+      <if test="cCreateTime != null" >
+        cCreateTime = #{cCreateTime,jdbcType=DATE},
+      </if>
+      <if test="cContent != null" >
+        cContent = #{cContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where cId = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
+    update gy_report_topictheme
+    set cTitle = #{cTitle,jdbcType=VARCHAR},
+      cLaunchId = #{cLaunchId,jdbcType=INTEGER},
+      cCreateTime = #{cCreateTime,jdbcType=DATE},
+      cContent = #{cContent,jdbcType=LONGVARCHAR}
+    where cId = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
+    update gy_report_topictheme
+    set cTitle = #{cTitle,jdbcType=VARCHAR},
+      cLaunchId = #{cLaunchId,jdbcType=INTEGER},
+      cCreateTime = #{cCreateTime,jdbcType=DATE}
+    where cId = #{cId,jdbcType=INTEGER}
+  </update>
+</mapper>

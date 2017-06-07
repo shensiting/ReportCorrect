@@ -1,15 +1,15 @@
 package org.gzhmc.report4gzhmc.model;
 
 public class Test {
-    private Integer cId;
+    private int cId;
 
     private String cTestName;
 
-    public Integer getcId() {
+    public int getcId() {
         return cId;
     }
 
-    public void setcId(Integer cId) {
+    public void setcId(int cId) {
         this.cId = cId;
     }
 
