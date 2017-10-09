@@ -31,18 +31,20 @@
 		<!--configLocation属性指定mybatis的核心配置文件 -->
 		<property name="configLocation" value="classpath:config/Configuration.xml" />
 		<!-- 所有配置的mapper文件 -->
-		<property name="mapperLocations" value="classpath*:org/gzhmc/report4gzhmc/mapper/xml/*.xml" />
+		<property name="mapperLocations"
+			value="classpath*:org/gzhmc/report4gzhmc/mapper/xml/*.xml" />
 	</bean>
 	<!-- mapper 映射路径 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="org.gzhmc.report4gzhmc.mapper"/>
+		<property name="basePackage" value="org.gzhmc.report4gzhmc.mapper" />
 	</bean>
 	<!-- 错误异常处理 -->
 	<bean class="org.gzhmc.common.exception.WebExceptionResolver"></bean>
 	<!-- 文件上传 -->
 	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"  p:defaultEncoding="UTF-8" >
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="UTF-8">
 		<property name="maxUploadSize" value="1073741824" />
 	</bean>
-	
+
 </beans>

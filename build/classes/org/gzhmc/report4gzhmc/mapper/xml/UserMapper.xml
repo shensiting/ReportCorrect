@@ -13,7 +13,7 @@
 		by cId desc
 	</select>
 	<select id="getMaxcId" resultType="int">
-	select max(cId) from gy_report_user;
+		select max(cId) from gy_report_user;
 	</select>
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select
@@ -25,7 +25,8 @@
 		parameterType="String">
 		select
 		cId, cUserName, cPassword, cRole, cCreateTime
-		from gy_report_user
+		from
+		gy_report_user
 		where cUserName = #{cUserName }
 	</select>
 	<delete id="delete" parameterType="int">

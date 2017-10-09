@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.gzhmc.report4gzhmc.mapper.TeacherGradeLinkMapper" >
-  <resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.TeacherGradeLink" >
-    <id column="cId" property="cId" />
-    <result column="cTeacherId" property="cTeacherId"  />
-    <result column="cGradeId" property="cGradeId" />
-    <result column="cCreateTime" property="cCreateTime"  />
-    <result column="cStatus" property="cStatus" />   
-    <association property="grade" javaType="org.gzhmc.report4gzhmc.model.Grade">
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.TeacherGradeLinkMapper">
+	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.TeacherGradeLink">
+		<id column="cId" property="cId" />
+		<result column="cTeacherId" property="cTeacherId" />
+		<result column="cGradeId" property="cGradeId" />
+		<result column="cCreateTime" property="cCreateTime" />
+		<result column="cStatus" property="cStatus" />
+		<association property="grade" javaType="org.gzhmc.report4gzhmc.model.Grade">
 			<id column="cId" property="cId" />
 			<result column="cYearClass" property="cYearClass" />
 			<result column="cClass" property="cClass" />
-	</association>
-	<collection property="college" javaType="org.gzhmc.report4gzhmc.model.College">
-		<result column="cCollegeName" property="cCollegeName" />
-	</collection>
-	<collection property="major" javaType="org.gzhmc.report4gzhmc.model.Major">
-		<result column="cMajorName" property="cMajorName" />
-	</collection>
-	<collection property="teacher" javaType="org.gzhmc.report4gzhmc.model.Teacher">
-	    <result column="cTeacherId" property="cTeacherId" />
-		<result column="cName" property="cName" />
-	</collection>
-  </resultMap>
-  
-  <select id="getAllTeaGra" resultMap="BaseResultMap">
-        select tg.cId,tg.cGradeId,t.cName,t.cTeacherId,m.cMajorName,c.cCollegeName,tg.cStatus,t.cTeacherId,
+		</association>
+		<collection property="college" javaType="org.gzhmc.report4gzhmc.model.College">
+			<result column="cCollegeName" property="cCollegeName" />
+		</collection>
+		<collection property="major" javaType="org.gzhmc.report4gzhmc.model.Major">
+			<result column="cMajorName" property="cMajorName" />
+		</collection>
+		<collection property="teacher" javaType="org.gzhmc.report4gzhmc.model.Teacher">
+			<result column="cTeacherId" property="cTeacherId" />
+			<result column="cName" property="cName" />
+		</collection>
+	</resultMap>
+
+	<select id="getAllTeaGra" resultMap="BaseResultMap">
+		select
+		tg.cId,tg.cGradeId,t.cName,t.cTeacherId,m.cMajorName,c.cCollegeName,tg.cStatus,t.cTeacherId,
 		g.cYearClass,g.cClass from gy_report_grade g,gy_report_college c,
 		gy_report_major m,gy_report_teacher t,gy_report_teacher_grade tg where
-        tg.cTeacherId=t.cUserId and g.cMajorId=m.cId and g.cCollegeId=c.cId and tg.cGradeId=g.cId
+		tg.cTeacherId=t.cUserId and g.cMajorId=m.cId and g.cCollegeId=c.cId
+		and tg.cGradeId=g.cId
 	</select>
-	 <select id="getAllTeaGraByTeaId" resultMap="BaseResultMap" parameterType="int">
-        select tg.cId,tg.cGradeId,t.cName,m.cMajorName,c.cCollegeName,tg.cStatus,t.cTeacherId,
+	<select id="getAllTeaGraByTeaId" resultMap="BaseResultMap"
+		parameterType="int">
+		select
+		tg.cId,tg.cGradeId,t.cName,m.cMajorName,c.cCollegeName,tg.cStatus,t.cTeacherId,
 		g.cYearClass,g.cClass from gy_report_grade g,gy_report_college c,
 		gy_report_major m,gy_report_teacher t,gy_report_teacher_grade tg where
-        tg.cTeacherId=t.cUserId and g.cMajorId=m.cId and g.cCollegeId=c.cId and tg.cGradeId=g.cId and tg.cTeacherId=#{cTeacherId}
+		tg.cTeacherId=t.cUserId and g.cMajorId=m.cId and g.cCollegeId=c.cId
+		and tg.cGradeId=g.cId and tg.cTeacherId=#{cTeacherId}
 	</select>
- 
+
 </mapper>

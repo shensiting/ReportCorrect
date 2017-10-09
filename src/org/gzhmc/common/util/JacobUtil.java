@@ -36,14 +36,19 @@ public class JacobUtil {
 			app.setProperty("Visible", new Variant(false));
 			// 获得documents对象
 			Dispatch docs = (Dispatch) app.getProperty("Documents").toDispatch();
-
 			// 打开文件
 			Dispatch doc = Dispatch.invoke(docs, "Open", Dispatch.Method,
 					new Object[] { docfile, new Variant(false), new Variant(true) }, new int[1]).toDispatch();
-
+			  /* 
+		     * new Variant(10)筛选过的网页 
+		     * new Variant(9) 单个文件网页 
+		     * new Variant(8) 另存为网页 
+		     * new Variant(7) 另存为txt格式 
+		     * new Variant(6) 另存为rtf格式 
+		     * new Variant(0) 另存为doc格式 
+		     */  			
 			// 保存新的文件
-
-			Dispatch.invoke(doc, "SaveAs", Dispatch.Method, new Object[] { htmlfile, new Variant(WORD_HTML) },
+			Dispatch.invoke(doc, "SaveAs", Dispatch.Method, new Object[] { htmlfile, new Variant(10) },
 					new int[1]);
 			Variant f = new Variant(false);
 			Dispatch.call(doc, "Close", f);
@@ -80,5 +85,47 @@ public class JacobUtil {
 		}
 
 	}
+	
+	 /**  
+	  
+     * JACOB方式  
+  
+     * notes:需要将jacob.dll拷贝到windows/system32或者项目所在jre\bin目录下面(比如我的Eclipse正在用的Jre路径是D:\Java\jdk1.7.0_17\jre\bin)。  
+  
+     * @param html html静态页面路径  
+  
+     * @param wordFile 要生成的word文档路径  
+  
+     */  
+  
+    public static void htmlToWord(String htmlFile, String wordFile) {      
+          
+            ActiveXComponent app = new ActiveXComponent("Word.Application"); // 启动word  
+            //System.out.println("*****正在转换...*****");  
+            try {  
+  
+                app.setProperty("Visible", new Variant(false));  
+  
+                Dispatch wordDoc = app.getProperty("Documents").toDispatch();  
+  
+                wordDoc = Dispatch.invoke(wordDoc, "Add", Dispatch.Method, new Object[0], new int[1]).toDispatch();  
+  
+                Dispatch.invoke(app.getProperty("Selection").toDispatch(), "InsertFile", Dispatch.Method, new Object[] { htmlFile, "", new Variant(false), new Variant(false), new Variant(false) }, new int[3]);  
+  
+                Dispatch.invoke(wordDoc, "SaveAs", Dispatch.Method, new Object[] {wordFile, new Variant(1)}, new int[1]);  
+  
+                Dispatch.call(wordDoc, "Close", new Variant(false));  
+  
+            } catch (Exception e) {  
+  
+                e.printStackTrace();  
+  
+            } finally {  
+  
+                app.invoke("Quit", new Variant[] {});  
+  
+            }  
+           // System.out.println("*****转换完毕********");  
+    }  
 
 }

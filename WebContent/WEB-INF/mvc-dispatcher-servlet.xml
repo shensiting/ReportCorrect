@@ -11,30 +11,26 @@
 
 	<!-- 自动扫描controller -->
 	<context:component-scan base-package="org.gzhmc.report4gzhmc.controller" />
+	<!-- 自动扫描(自动注入)，扫描org.gzhmc.report4gzhmc.service这个包以及它的子包的所有使用@Service注解标注的类 -->
+    <context:component-scan base-package="org.gzhmc.report4gzhmc.service" />
 	<!-- 开启注解 -->
 	<mvc:annotation-driven />
-	<!-- 静态资源 -->
-		<mvc:resources location="/WEB-INF/res/users/css/" mapping="/users/css/**" />
-		<mvc:resources location="/WEB-INF/res/users/lib/" mapping="/users/lib/**" />
-	<mvc:resources location="/WEB-INF/res/users/images/" mapping="/users/images/**" />
-	<mvc:resources location="/WEB-INF/res/users/js/" mapping="/users/js/**" />
-	
-	<mvc:resources location="/WEB-INF/res/users/temp/" mapping="/users/temp/**" />
-	
-	
-	
-	<mvc:resources location="/WEB-INF/res/user/CSS/" mapping="/user/CSS/**" />
-	<mvc:resources location="/WEB-INF/res/user/Images/" mapping="/user/Images/**" />
-	<mvc:resources location="/WEB-INF/res/user/Javascript/" mapping="/user/Javascript/**" />
-	<mvc:resources location="/WEB-INF/res/images/" mapping="/images/**" />
-	<mvc:resources location="/WEB-INF/res/css/" mapping="/css/**" />
-	<mvc:resources location="/WEB-INF/res/js/" mapping="/js/**" />
-	<mvc:resources location="/WEB-INF/res/fonts/" mapping="/fonts/**"/>
-	<mvc:resources location="/WEB-INF/res/manage/" mapping="/manage/**" />	
-	<mvc:resources location="/gzhmc/report/" mapping="/report/**" />	
-	<mvc:resources location="/gzhmc/picture/" mapping="/picture/**" />		
-	<mvc:resources location="/gzhmc/pdf/" mapping="/pdf/**" />	
-	<mvc:resources location="/gzhmc/qrcode/" mapping="/qrcode/**" />	
+	<!-- 静态资源 <mvc:resources location="/WEB-INF/res/users/css/" mapping="/users/css/**" 
+		/> <mvc:resources location="/WEB-INF/res/users/lib/" mapping="/users/lib/**" 
+		/> <mvc:resources location="/WEB-INF/res/users/images/" mapping="/users/images/**" 
+		/> <mvc:resources location="/WEB-INF/res/users/js/" mapping="/users/js/**" 
+		/> <mvc:resources location="/WEB-INF/res/users/temp/" mapping="/users/temp/**" 
+		/> <mvc:resources location="/WEB-INF/res/user/CSS/" mapping="/user/CSS/**" 
+		/> <mvc:resources location="/WEB-INF/res/user/Images/" mapping="/user/Images/**" 
+		/> <mvc:resources location="/WEB-INF/res/user/Javascript/" mapping="/user/Javascript/**" 
+		/> <mvc:resources location="/WEB-INF/res/images/" mapping="/images/**" /> 
+		<mvc:resources location="/WEB-INF/res/css/" mapping="/css/**" /> <mvc:resources 
+		location="/WEB-INF/res/js/" mapping="/js/**" /> <mvc:resources location="/WEB-INF/res/fonts/" 
+		mapping="/fonts/**"/> <mvc:resources location="/WEB-INF/res/manage/" mapping="/manage/**" 
+		/> <mvc:resources location="/gzhmc/report/" mapping="/report/**" /> <mvc:resources 
+		location="/gzhmc/picture/" mapping="/picture/**" /> <mvc:resources location="/gzhmc/pdf/" 
+		mapping="/pdf/**" /> <mvc:resources location="/gzhmc/qrcode/" mapping="/qrcode/**" 
+		/> -->
 	<mvc:default-servlet-handler />
 
 	<bean

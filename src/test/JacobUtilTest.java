@@ -7,16 +7,21 @@ public class JacobUtilTest {
 
 	    @Test
 	    public void testwordToHtml() {	      
-	       String docfile = "C:\\Users\\lenovo\\Desktop\\广医论坛.doc";
-	       String htmlfile = "C:\\Users\\lenovo\\Desktop\\广医论坛.html";
+	       String docfile = "C:\\Users\\lenovo\\Desktop\\人力资源课后习题(1).docx";
+	       String htmlfile = "C:\\Users\\lenovo\\Desktop\\人力资源课后习题(1).html";
 	       JacobUtil.wordToHtml(docfile, htmlfile);
 	       
 	    }
 	    @Test
 	    public void testhtmotoutf() {
-			String htmlpath="C:\\Users\\Administrator\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Report4gzhmc\\gzhmc\\report\\基础学院\\2013级\\生物技术\\3班\\生物技术生化实验\\html\\2_2014153004.html";
-			JacobUtil.html2utf(htmlpath);
+			String htmlpath="C:\\Users\\lenovo\\Desktop\\报告查看\\报告查看.html";
+			String docfile="C:\\Users\\lenovo\\Desktop\\报告查看\\报告查看.doc";
+			JacobUtil.htmlToWord(htmlpath, docfile);
 			System.out.println("成功");
+		}
+	    @Test
+	    public void name() {
+			
 		}
 
 }

@@ -14,12 +14,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta name="keywords" content="">
 </head>
 <body>
- <div style="width: 50%;height: 50%;margin: auto;padding-top: 10%" align="center">
- <h1 style="font-size: 60px;color: red;"><img src="<%=basePath %>images/404_1.gif" alt="icon" style="width: 100px;height: 90px;">出错啦!</h1>
-	<h2>糟糕！${msg}</h2>
-	<img src="<%=basePath %>user/Images/Icons/Preview/house_home_building.png" alt="icon" style="width: 60px;height: 50px">
-	<br/>
-	<div><a href="<%=basePath %>login.jsp" style="text-decoration: underline;">返回登陆</a></div>
-	</div> 
+	<div style="width: 50%; height: 50%; margin: auto; padding-top: 10%"
+		align="center">
+		<h1 style="font-size: 60px; color: red;">
+			<img src="<%=basePath %>images/404_1.gif" alt="icon"
+				style="width: 100px; height: 90px;">出错啦!
+		</h1>
+		<h2>糟糕！${msg}</h2>
+		<img
+			src="<%=basePath %>user/Images/Icons/Preview/house_home_building.png"
+			alt="icon" style="width: 60px; height: 50px"> <br />
+		<div>
+			<a href="<%=basePath %>login.jsp" style="text-decoration: underline;">返回登陆</a>
+		</div>
+	</div>
 </body>
 </html>

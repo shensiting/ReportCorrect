@@ -5,20 +5,19 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8">
-
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
+<%@ include file="../common/userslib.jsp"%>
 
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
@@ -34,10 +33,11 @@
 <title>实验报告管理系统</title>
 <script type="text/javascript">
 //修改函数
-
-function showAddInput(){
-	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
-/*添加*/
+	function showAddInput() {
+		$("#addinfo").css('display', 'block');
+		$("#addinfo").css('text-align', 'center');
+	}
+	/*添加*/
 function sumit(Gradeform) {
 	$.ajax({
 		type : 'get',
@@ -76,25 +76,22 @@ function sumit(Gradeform) {
 		href="javascript:location.replace(location.href);" title="刷新"><i
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="pd-20">
-			<div class="cl pd-5 bg-1 bk-gray mt-20">
-			<span class="l">
-			 <a href="javascript:;" onclick="deleteFunc()"
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;" onclick="deleteFunc()"
 				class="btn btn-danger radius"> <i class="Hui-iconfont">&#xe6e2;</i>批量删除
-			</a> 
-			
-			<a
-				class="btn btn-success radius"
-				onclick="article_add('班别编辑','<%=basePath%>manage/addGrade','500','400')" href="javascript:;"><i
-					class="Hui-iconfont">&#xe600;</i>单个添加</a>
-			</span> 
+			</a> <a class="btn btn-success radius"
+				onclick="article_add('班别编辑','<%=basePath%>manage/addGrade','500','400')"
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>单个添加</a>
+			</span>
 		</div>
 		<div class="mt-20">
 			<table
 				class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"></th>
-						
+						<th width="25"><input type="checkbox"
+							id="title-table-checkbox" name="title-table-checkbox"></th>
+						<th>ID</th>
 						<th>年级</th>
 						<th>专业</th>
 						<th>班别</th>
@@ -106,12 +103,14 @@ function sumit(Gradeform) {
 					<c:forEach var="item" items="${gmclist }">
 						<tr class="text-c">
 							<td><input name="checkboxid" id="checkboxid" type="checkbox"
-								value="${ item.cId}" /></td>
+								value="${item.cId}" /></td>
+							<td>${item.cId}</td>
 							<td id="cYearClass">${item.cYearClass}</td>
 							<td id="cMajorName">${item.major.cMajorName}</td>
 							<td id="cClass">${item.cClass}</td>
 							<td id="cCollegeName">${item.college.cCollegeName}</td>
-							<td class="f-14 td-manage"><a onclick="editFunc(${ item.cId})" style="text-decoration: none"
+							<td class="f-14 td-manage"><a
+								onclick="editFunc(${ item.cId})" style="text-decoration: none"
 								class="ml-5" id="edit" href="javascript:;" title="编辑"><i
 									class="Hui-iconfont">&#xe6df;</i></a> <a
 								style="text-decoration: none" class="ml-5"
@@ -122,12 +121,19 @@ function sumit(Gradeform) {
 				</tbody>
 			</table>
 		</div>
+		<div style="margin-top: 5%; height: 35px">
+			<%@include file="../common/footer.jsp"%>
+		</div>
 	</div>
-<script type="text/javascript" src="<%=basePath%>users/lib/laypage/1.2/laypage.js"></script> 
-<script type="text/javascript" src="<%=basePath%>users/lib/My97DatePicker/WdatePicker.js"></script> 
-<script type="text/javascript" src="<%=basePath%>users/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
-<script type="text/javascript" src="<%=basePath%>users/lib/My97DatePicker/WdatePicker.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript"
+		src="<%=basePath%>users/lib/laypage/1.2/laypage.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>users/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>users/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>users/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript">
 		$('.table-sort').dataTable({
 			"aaSorting" : [ [ 1, "desc" ] ],//默认第几个排序
 			"bStateSave" : true,//状态保存

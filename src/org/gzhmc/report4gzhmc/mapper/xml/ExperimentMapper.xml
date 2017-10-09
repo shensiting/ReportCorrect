@@ -1,66 +1,68 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.gzhmc.report4gzhmc.mapper.ExperimentMapper" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.ExperimentMapper">
 	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.Experiment">
 		<id column="cId" property="cId" />
 		<result column="cExperimentName" property="cExperimentName" />
 		<result column="cExperimentTime" property="cExperimentTime" />
-		<result column="cExperimentEnglishName" property="cExperimentEnglishName" />		
-		<result column="cClassify" property="cClassify" />		
+		<result column="cExperimentEnglishName" property="cExperimentEnglishName" />
+		<result column="cClassify" property="cClassify" />
 	</resultMap>
- 
- <select id="getAll" resultMap="BaseResultMap" parameterType="int" >
-    select *    from gy_report_experimental_test
-    order by gy_report_experimental_test.cId desc
-  </select>
-  <select id="getById" resultMap="BaseResultMap" parameterType="int" >
-    select 
-    cId, cExperimentName, cExperimentTime, cExperimentEnglishName
-    from gy_report_experimental_test
-    where cId = #{cId}
-  </select>
-   <select id="getByClassify" resultMap="BaseResultMap" parameterType="int" >
-    select 
-    cId, cExperimentName
-    from gy_report_experimental_test
-    where cClassify = #{cClassify}
-  </select>
-  <delete id="delete" parameterType="int" >
-    delete from gy_report_experimental_test
-    where cId = #{cId }
-  </delete>
-  <insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Experiment" >
-    insert into gy_report_experimental_test (cId, cExperimentName, cExperimentTime, 
-      cExperimentEnglishName ,cClassify)
-    values (#{cId }, #{cExperimentName }, #{cExperimentTime }, 
-      #{cExperimentEnglishName }, #{cClassify})
-  </insert>
 
-  <update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Experiment" >
-    update gy_report_experimental_test
-    <set >
-      <if test="cExperimentName != null" >
-        cExperimentName = #{cExperimentName },
-      </if>
-      <if test="cExperimentTime != null" >
-        cExperimentTime = #{cExperimentTime },
-      </if>
-      <if test="cExperimentEnglishName != null" >
-        cExperimentEnglishName = #{cExperimentEnglishName },
-      </if>
-      
-      <if test="cClassify != null" >
-        cClassify = #{cClassify },
-      </if>
-    </set>
-    where cId = #{cId }
-  </update>
-  <update id="update" parameterType="org.gzhmc.report4gzhmc.model.Experiment" >
-    update gy_report_experimental_test
-    set cExperimentName = #{cExperimentName },
-      cExperimentTime = #{cExperimentTime},
-      cExperimentEnglishName = #{cExperimentEnglishName},    
-      cClassify = #{cClassify}
-    where cId = #{cId }
-  </update>
+	<select id="getAll" resultMap="BaseResultMap" parameterType="int">
+		select * from gy_report_experimental_test
+		order by gy_report_experimental_test.cId desc
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		select
+		cId, cExperimentName, cExperimentTime, cExperimentEnglishName
+		from gy_report_experimental_test
+		where cId = #{cId}
+	</select>
+	<select id="getByClassify" resultMap="BaseResultMap"
+		parameterType="int">
+		select
+		cId, cExperimentName
+		from gy_report_experimental_test
+		where cClassify = #{cClassify}
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from gy_report_experimental_test
+		where cId = #{cId }
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Experiment">
+		insert into gy_report_experimental_test (cId, cExperimentName,
+		cExperimentTime,
+		cExperimentEnglishName ,cClassify)
+		values (#{cId }, #{cExperimentName }, #{cExperimentTime },
+		#{cExperimentEnglishName }, #{cClassify})
+	</insert>
+
+	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Experiment">
+		update gy_report_experimental_test
+		<set>
+			<if test="cExperimentName != null">
+				cExperimentName = #{cExperimentName },
+			</if>
+			<if test="cExperimentTime != null">
+				cExperimentTime = #{cExperimentTime },
+			</if>
+			<if test="cExperimentEnglishName != null">
+				cExperimentEnglishName = #{cExperimentEnglishName },
+			</if>
+
+			<if test="cClassify != null">
+				cClassify = #{cClassify },
+			</if>
+		</set>
+		where cId = #{cId }
+	</update>
+	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.Experiment">
+		update gy_report_experimental_test
+		set cExperimentName = #{cExperimentName },
+		cExperimentTime = #{cExperimentTime},
+		cExperimentEnglishName = #{cExperimentEnglishName},
+		cClassify = #{cClassify}
+		where cId = #{cId }
+	</update>
 </mapper>

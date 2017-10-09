@@ -10,14 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.gzhmc.common.base.BaseController;
+import org.gzhmc.common.util.Calculator;
 import org.gzhmc.common.util.CaptchaUtil;
 import org.gzhmc.common.util.StringUtils;
-import org.gzhmc.report4gzhmc.mapper.CollegeMapper;
-import org.gzhmc.report4gzhmc.mapper.GradeMajorCollegeMapper;
-import org.gzhmc.report4gzhmc.mapper.MajorMapper;
-import org.gzhmc.report4gzhmc.mapper.StudentMapper;
-import org.gzhmc.report4gzhmc.mapper.TeacherMapper;
-import org.gzhmc.report4gzhmc.mapper.UserMapper;
+import org.gzhmc.report4gzhmc.service.CollegeService;
+import org.gzhmc.report4gzhmc.service.GradeMajorCollegeService;
+import org.gzhmc.report4gzhmc.service.MajorService;
+import org.gzhmc.report4gzhmc.service.StudentService;
+import org.gzhmc.report4gzhmc.service.TeacherService;
+import org.gzhmc.report4gzhmc.service.UserService;
 import org.gzhmc.report4gzhmc.model.College;
 import org.gzhmc.report4gzhmc.model.GradeMajorCollege;
 import org.gzhmc.report4gzhmc.model.Major;
@@ -40,17 +41,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController extends BaseController {
 
 	@Autowired
-	UserMapper userMapper;
+	UserService userService;
 	@Autowired
-	MajorMapper majorMapper;
+	MajorService majorService;
 	@Autowired
-	StudentMapper studentMapper;
+	StudentService studentService;
 	@Autowired
-	TeacherMapper teacherMapper;
+	TeacherService teacherService;
 	@Autowired
-	CollegeMapper collegeMapper;
+	CollegeService collegeService;
 	@Autowired
-	GradeMajorCollegeMapper gradeMajorCollegeMapper;
+	GradeMajorCollegeService gradeMajorCollegeService;
 
 	// 判断学生
 	private int STUDENT_ROLE = 3;
@@ -69,13 +70,13 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/register")
-	public ModelAndView register(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView register(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.setAttribute("userid", " ");
 		session.setMaxInactiveInterval(618000);
-		List<College> colleges = collegeMapper.getAll();
-		List<Major> majors = majorMapper.getAll();
-		List<GradeMajorCollege> gradeMajorColleges = gradeMajorCollegeMapper.getAll();
+		List<College> colleges = collegeService.getAll();
+		List<Major> majors = majorService.getAll();
+		List<GradeMajorCollege> gradeMajorColleges = gradeMajorCollegeService.getAll();
 		ModelAndView modelAndView = new ModelAndView("/manage/register");
 		modelAndView.addObject("colleges", colleges);
 		modelAndView.addObject("majors", majors);
@@ -106,7 +107,12 @@ public class LoginController extends BaseController {
             
         }  
     }  
-	
+	/**
+	 * 获取验证码
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
     @RequestMapping("/check")  
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {  
         // 通知浏览器不要缓存  
@@ -116,11 +122,93 @@ public class LoginController extends BaseController {
         CaptchaUtil util = CaptchaUtil.Instance();  
         // 将验证码输入到session中，用来验证  
         String code = util.getString();  
-        request.getSession().setAttribute("code", code);  
+        //计算验证码           
+        Calculator cal = new Calculator(); 		
+ 		int result =(int)cal.calculate(code); 
+ 		String meString=String.valueOf(result);
+        request.getSession().setAttribute("code", meString);  
         // 输出打web页面  
         ImageIO.write(util.getImage(), "jpg", response.getOutputStream());  
     }  
-    
+    /**
+	 * 验证用户名
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = { "/checkUser" })
+	public void checkUser(HttpServletRequest request, HttpServletResponse response) {				
+		String number = request.getParameter("number").trim();		
+		ResultJson json = new ResultJson();
+		User user = userService.getByUserName(number);		
+		if(null!=user){
+			json.setSuccess(true);
+		}else{
+			json.setSuccess(false);
+		}
+		writeResultJson(response, json);
+	}
+	
+	/**
+	 * 验证密码
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = { "/checkPassword" })
+	public void checkPassword(HttpServletRequest request, HttpServletResponse response) {				
+		String number = request.getParameter("number").trim();	
+		String password = request.getParameter("password").trim();
+		ResultJson json = new ResultJson();
+		User user = userService.getByUserName(number);		
+		if(null!=user){
+			if (user.getcPassword().equals(password)) {			
+				json.setSuccess(true);
+			}else{
+				json.setSuccess(false);
+			}
+		}else{
+			json.setSuccess(false);
+		}
+		writeResultJson(response, json);
+	}
+	/**
+	 * 验证密码
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value = { "/login.action" })
+	public ModelAndView loginAction(HttpServletRequest request) {				
+		HttpSession session = request.getSession();
+		//String codeSession = (String) session.getAttribute("code"); 
+		session.setAttribute("userid", " ");
+		session.setMaxInactiveInterval(618000);
+		String number = request.getParameter("number").trim();	
+		//String password = request.getParameter("password").trim();
+		ModelAndView modelAndView;
+		User user = userService.getByUserName(number);		
+		if (user.getcRole() == MANAGE_ROLE) {
+			session.setAttribute("userid", user.getcId());
+			modelAndView=new ModelAndView("redirect:/manage/index");
+		} else if (user.getcRole() == TEACHER_ROLE) {
+			// 判断老师账号是否通过验证
+			Teacher teacher = teacherService.getByTeacherId(number);
+			if (teacher != null) {			
+				session.setAttribute("userid", user.getcId());
+				modelAndView=new ModelAndView("redirect:/teacher/index");				
+			}else{
+				modelAndView=new ModelAndView("common/error");	
+			}
+		} else {
+			session.setAttribute("userid", user.getcId());
+			modelAndView=new ModelAndView("redirect:/student/index");	
+			
+		}
+
+		return modelAndView;
+	}
+	
 	/**
 	 * 登陆验证信息
 	 * 
@@ -136,9 +224,9 @@ public class LoginController extends BaseController {
 		String code=request.getParameter("code").trim();
 		String number = request.getParameter("number").trim();
 		String password = request.getParameter("password").trim();
-		//System.out.println(password);
+		
 		ResultJson json = new ResultJson();
-		User user = userMapper.getByUserName(number);
+		User user = userService.getByUserName(number);		
 		//判断验证码是否正确
 		if (code.equals(codeSession)) {
 			if (null != user) {
@@ -149,11 +237,11 @@ public class LoginController extends BaseController {
 						json.setMsg("manage/index");
 					} else if (user.getcRole() == TEACHER_ROLE) {
 						// 判断老师账号是否通过验证
-						Teacher teacher = teacherMapper.getByTeacherId(number);
+						Teacher teacher = teacherService.getByTeacherId(number);
 						if (teacher != null) {
 							// if (teacher.getcVerify() == TEACHER_VERIFY) {
 							session.setAttribute("userid", user.getcId());
-							json.setMsg("teacher/test");
+							json.setMsg("teacher/index");
 							// } else {
 							// json.setSuccess(false);
 							// json.setMsg("对不起，您的账号还未通过验证，请等验证完毕后再登录。\n验证时间一般为一个工作日，谢谢合作。");
@@ -194,7 +282,7 @@ public class LoginController extends BaseController {
 		// 判断是否数据库同时把两个数据存入
 		int result;
 		ResultJson json = new ResultJson();
-		User user = userMapper.getByUserName(ScId);
+		User user = userService.getByUserName(ScId);
 		if (null != user) {
 			json.setSuccess(false);
 			json.setMsg("账号已存在，请前往登录。");
@@ -205,16 +293,16 @@ public class LoginController extends BaseController {
 			user2.setcPassword(ScPassword);
 			user2.setcRole(STUDENT_ROLE);
 			user2.setcUserName(ScId);
-			result = userMapper.add(user2);
+			result = userService.add(user2);
 			if (result != 0) {
 				// 存入学生信息
-				int cuserid = userMapper.getMaxcId();
+				int cuserid = userService.getMaxcId();
 				Student student = new Student();
 				student.setcUserId(cuserid);
 				student.setcGradeId(StringUtils.string2int(ScYearClass));
 				student.setcName(ScName);
 				student.setcStudentNumber(ScId);
-				result = studentMapper.add(student);
+				result = studentService.add(student);
 				if (result != 0) {
 					json.setSuccess(true);
 				} else {
@@ -246,7 +334,7 @@ public class LoginController extends BaseController {
 		// 判断是否数据库同时把两个数据存入
 		int result;
 		ResultJson json = new ResultJson();
-		User user = userMapper.getByUserName(TcId);
+		User user = userService.getByUserName(TcId);
 		if (null != user) {
 			//System.out.println(user.getcUserName() + " null!=user");
 			json.setSuccess(false);
@@ -258,16 +346,16 @@ public class LoginController extends BaseController {
 			user2.setcPassword(TcPassword);
 			user2.setcRole(TEACHER_ROLE);
 			user2.setcUserName(TcId);
-			result = userMapper.add(user2);
+			result = userService.add(user2);
 			if (result != 0) {
 				// 存入教师信息
-				int cuserid = userMapper.getMaxcId();
+				int cuserid = userService.getMaxcId();
 				Teacher teacher = new Teacher();
 				teacher.setcCollegeId(StringUtils.string2int(TcCollege));
 				teacher.setcName(TcName);
 				teacher.setcTeacherId(TcId);
 				teacher.setcUserId(cuserid);
-				result = teacherMapper.add(teacher);
+				result = teacherService.add(teacher);
 				if (result != 0) {
 					json.setSuccess(true);
 				} else {

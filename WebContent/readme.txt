@@ -65,3 +65,16 @@ js            /WEB-INF/res/js/			  <%=basePath %>js/**
 	private int MANAGE_ROLE = 1;
 	// 判断教师账号是否已经被验证
 	private int TEACHER_VERIFY = 1;
+
+跟新版注意事项：
+1.在布置服务器时需要在server.xml文件添加       <Context docBase="ueditor" path="/ueditor" reloadable="true" source="org.eclipse.jst.jee.server:ueditor"/>
+ <Context  path="/ueditor" docBase="D:\java\tomcat\apache-tomcat-8.0.35\webapps\ueditor" debug="0"  privileged="true" 
+reloadable="true"/>
+其中source看具体情况更改配置，作用是ueditor访问项目外文件夹里面的图片,同时要在与项目平行的文件夹内新建ueditor文件
+2.部署项目时，修改文件上传绝对路径和下载绝对路径,修改查看word文档绝对路径
+3.在布置服务器时需要在server.xml文件设置  <Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443" maxPostSize="-1" maxSavePostSize="-1" maxHttpHeaderSize ="1024000" />
+ report cstatu:0:未批改，1：已批改 2：不及格允许再次提交（中间状态）3：允许再次提交4：不及格
+ 4.jacob.jar需要放在tomcat，lib下
+ 5:cTopicStatus=0表示为审核，为1 为通过
+ 
+ie内核不支持iframe onload刷新子窗口，在父窗口onload完时，子窗口还未onload，故会造成一系列js异常

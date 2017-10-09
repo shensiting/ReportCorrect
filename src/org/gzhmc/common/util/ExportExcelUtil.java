@@ -138,9 +138,9 @@ public class ExportExcelUtil {
 		case "cExperimentName":
 			value=dataList.get(it).getcExperimentName();
 			break;
-		case "cReportNum":
-			value=dataList.get(it).getcReportNum();
-			break;
+//		case "cReportNum":
+//			value=dataList.get(it).getcReportNum();
+//			break;
 		case "cSum":
 			value=dataList.get(it).getcSum().toString();
 			break;

@@ -3,53 +3,83 @@ package org.gzhmc.report4gzhmc.model;
 import java.util.Date;
 
 public class TopicTheme {
-    private Integer cId;
+	private int cId;
 
-    private String cTitle;
+	private String cTitle;
 
-    private Integer cLaunchId;
+	private int cLaunchId;
 
-    private Date cCreateTime;
+	private Date cCreateTime;
 
-    private String cContent;
+	private int cExperimentId;
 
-    public Integer getcId() {
-        return cId;
-    }
+	private int cTopicStatus;
 
-    public void setcId(Integer cId) {
-        this.cId = cId;
-    }
+	private String cContent;
 
-    public String getcTitle() {
-        return cTitle;
-    }
+	private int cCommentNum;
 
-    public void setcTitle(String cTitle) {
-        this.cTitle = cTitle == null ? null : cTitle.trim();
-    }
+	public int getcCommentNum() {
+		return cCommentNum;
+	}
 
-    public Integer getcLaunchId() {
-        return cLaunchId;
-    }
+	public void setcCommentNum(int cCommentNum) {
+		this.cCommentNum = cCommentNum;
+	}
 
-    public void setcLaunchId(Integer cLaunchId) {
-        this.cLaunchId = cLaunchId;
-    }
+	public int getcId() {
+		return cId;
+	}
 
-    public Date getcCreateTime() {
-        return cCreateTime;
-    }
+	public void setcId(int cId) {
+		this.cId = cId;
+	}
 
-    public void setcCreateTime(Date cCreateTime) {
-        this.cCreateTime = cCreateTime;
-    }
+	public String getcTitle() {
+		return cTitle;
+	}
 
-    public String getcContent() {
-        return cContent;
-    }
+	public void setcTitle(String cTitle) {
+		this.cTitle = cTitle == null ? null : cTitle.trim();
+	}
 
-    public void setcContent(String cContent) {
-        this.cContent = cContent == null ? null : cContent.trim();
-    }
+	public int getcLaunchId() {
+		return cLaunchId;
+	}
+
+	public void setcLaunchId(int cLaunchId) {
+		this.cLaunchId = cLaunchId;
+	}
+
+	public Date getcCreateTime() {
+		return cCreateTime;
+	}
+
+	public void setcCreateTime(Date cCreateTime) {
+		this.cCreateTime = cCreateTime;
+	}
+
+	public int getcExperimentId() {
+		return cExperimentId;
+	}
+
+	public void setcExperimentId(int cExperimentId) {
+		this.cExperimentId = cExperimentId;
+	}
+
+	public int getcTopicStatus() {
+		return cTopicStatus;
+	}
+
+	public void setcTopicStatus(int cTopicStatus) {
+		this.cTopicStatus = cTopicStatus;
+	}
+
+	public String getcContent() {
+		return cContent;
+	}
+
+	public void setcContent(String cContent) {
+		this.cContent = cContent == null ? null : cContent.trim();
+	}
 }

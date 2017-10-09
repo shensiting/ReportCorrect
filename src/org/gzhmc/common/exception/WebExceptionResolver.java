@@ -20,9 +20,11 @@ public class WebExceptionResolver implements HandlerExceptionResolver{
 		WebException exception = null;
 		if (e instanceof WebException){//判断类型
 			exception=(WebException)e;
+			
 		}else{
 			exception=new WebException();
 		}
+		
 		return new ModelAndView("common/error").addObject("msg", exception.getMsg());
 	}
 

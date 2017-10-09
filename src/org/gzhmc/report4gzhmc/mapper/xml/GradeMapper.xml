@@ -8,36 +8,39 @@
 		<result column="cClass" property="cClass" />
 		<result column="cCollegeId" property="cCollegeId" />
 	</resultMap>
-			
+
 	<select id="getByStuGradeId" resultType="int" parameterType="int">
 		select
 		count(*)
 		from gy_report_student
 		where cGradeId = #{cGradeId}
 	</select>
-	
+
 	<select id="getByGraExamGradeId" resultType="int" parameterType="int">
 		select
 		count(*)
 		from gy_report_grade_exam
 		where cGradeId = #{cGradeId}
 	</select>
-	
-	<select id="getByteaGradeGradeId" resultType="int" parameterType="int">
+
+	<select id="getByteaGradeGradeId" resultType="int"
+		parameterType="int">
 		select
 		count(*)
 		from gy_report_teacher_grade
-		where cGradeId = #{cGradeId}
-	</select>		
-			
-			
+		where cGradeId
+		= #{cGradeId}
+	</select>
+
+
 	<select id="getAll" resultMap="BaseResultMap" parameterType="int">
 		select * from gy_report_grade
 	</select>
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select
 		cId, cYearClass, cMajorId, cClass, cCollegeId
-		from gy_report_grade
+		from
+		gy_report_grade
 		where cId = #{cId}
 	</select>
 	<delete id="delete" parameterType="int">
@@ -45,9 +48,11 @@
 		where cId = #{cId}
 	</delete>
 	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Grade">
-		insert into gy_report_grade (cId, cYearClass, cMajorId,
+		insert into gy_report_grade (cId,
+		cYearClass, cMajorId,
 		cClass, cCollegeId)
-		values (#{cId}, #{cYearClass}, #{cMajorId},
+		values (#{cId}, #{cYearClass},
+		#{cMajorId},
 		#{cClass}, #{cCollegeId})
 	</insert>
 	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Grade">
@@ -70,7 +75,8 @@
 	</update>
 	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.Grade">
 		update gy_report_grade
-		set cYearClass = #{cYearClass},
+		set
+		cYearClass = #{cYearClass},
 		cMajorId = #{cMajorId},
 		cClass = #{cClass},
 		cCollegeId = #{cCollegeId}

@@ -5,27 +5,28 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8">
-
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+<%@ include file="../common/userslib.jsp"%>
 <!--[if lt IE 9]>
-<script type="text/javascript" src="lib/html5.js"></script>
-<script type="text/javascript" src="lib/respond.min.js"></script>
-<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/respond.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/PIE_IE678.js"></script>
 <![endif]-->
 
+
 <!--[if IE 6]>
-<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>个人信息</title>
@@ -34,8 +35,9 @@ td, th {
 	height: 50px;
 	font-size: 15px;
 }
-.pch{
-text-align: center;
+
+.pch {
+	text-align: center;
 }
 </style>
 </head>
@@ -49,12 +51,12 @@ text-align: center;
 			</thead>
 			<tbody>
 				<tr>
-					<td width="10%">学号：</td>					
+					<td width="10%">学号：</td>
 					<td>${student.cStudentNumber}</td>
 					<td class="pch" width="15%" rowspan="4"><img alt=""
 						src="<%=basePath%>gzhmc/picture${student.getcPicturePath()}"
-						onerror="this.src='<%=basePath%>gzhmc/picture/sl.png'" width="150px"
-						height="150px"></td>
+						onerror="this.src='<%=basePath%>gzhmc/picture/sl.png'"
+						width="150px" height="150px"></td>
 				</tr>
 				<tr>
 					<td>姓名：</td>
@@ -80,6 +82,11 @@ text-align: center;
 				</tr>
 			</tbody>
 		</table>
+		<div
+			style="margin-top: 5%; text-align: center; font-size: 10px; color: gray;">
+			<footer> Copyright &copy; 2017, Crazy Code, All Rights
+			Reserved </footer>
+		</div>
 	</div>
 </body>
 </html>

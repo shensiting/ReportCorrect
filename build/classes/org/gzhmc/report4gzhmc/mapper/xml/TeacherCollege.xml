@@ -17,14 +17,16 @@
 		select
 		teacher.cUserId,teacher.cName,teacher.cTeacherId,teacher.cCollegeId,college.cCollegeName,college.cId
 		from gy_report_college college,gy_report_teacher teacher
-		where teacher.cCollegeId=college.cId order by cUserId desc
+		where
+		teacher.cCollegeId=college.cId order by cUserId desc
 	</select>
 
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select
 		teacher.cUserId,teacher.cName,teacher.cTeacherId,teacher.cCollegeId,college.cCollegeName,college.cId
 		from gy_report_college college,gy_report_teacher teacher
-		where teacher.cCollegeId=college.cId and teacher.cUserId = #{cUserId }
+		where
+		teacher.cCollegeId=college.cId and teacher.cUserId = #{cUserId }
 	</select>
 
 	<select id="getByTeacherId" resultMap="BaseResultMap"
@@ -32,6 +34,7 @@
 		select
 		teacher.cUserId,teacher.cName,teacher.cTeacherId,teacher.cCollegeId,college.cCollegeName,college.cId
 		from gy_report_college college,gy_report_teacher teacher
-		where teacher.cCollegeId=college.cId and teacher.cTeacherId=#{cTeacherId}
+		where
+		teacher.cCollegeId=college.cId and teacher.cTeacherId=#{cTeacherId}
 	</select>
 </mapper>

@@ -30,25 +30,26 @@ public class UploadFileUtil {
 	 * @return
 	 */
 	public static String uploadReport(HttpServletRequest request, StudentGrade studentGrade, ExperimentalTest experimentalTest,
-			MultipartFile uploadFile, int count1) {
-
+			MultipartFile uploadFile, int count1,String path1) {
+        String wordPath=null;
 		String name = uploadFile.getOriginalFilename()
 				.substring(uploadFile.getOriginalFilename().lastIndexOf("."), uploadFile.getOriginalFilename().length())
-				.trim();
-		// 获取相对地址
-		String path1 = request.getServletContext().getRealPath("gzhmc/report");
+				.trim();			    
 		// 获取存储位置
 		String path2 = "/" + studentGrade.getCollege().getcCollegeName() + "/" + studentGrade.getGrade().getcYearClass()
 				+ "/" + studentGrade.getMajor().getcMajorName() + "/" + studentGrade.getGrade().getcClass() + "/"
 				+ experimentalTest.getcExperimentName() + "/";
+		
 		String uploadFilePath = path1 + path2 + "word/";
+		//System.out.println(uploadFilePath);
 		String htmlPath = path1 + path2 + "html\\";
 		// 替换路径中的\
 		uploadFilePath = uploadFilePath.replace('\\', '/');
 		htmlPath = htmlPath.replace('/', '\\');
 		// 将实验命名为实验id+学号
 		String filename = experimentalTest.getcId() + "_" + studentGrade.getcStudentNumber() + "_" + count1;
-
+		wordPath=path2 + "word/"+filename+name;
+		wordPath = wordPath.replace('\\', '/');
 		try {
 			InputStream is = uploadFile.getInputStream();
 			if (null != studentGrade.getcPicturePath()) {
@@ -67,7 +68,7 @@ public class UploadFileUtil {
 				tempFile2.mkdirs();
 			}
 			// 开始保存文件到服务器
-			if (!filename.equals("")) {
+			if (!filename.equals("")) {				
 				FileOutputStream fos = new FileOutputStream(uploadFilePath + filename + name);
 				byte[] buffer = new byte[8192]; // 每次读8K字节
 				int count = 0;
@@ -89,7 +90,7 @@ public class UploadFileUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return path2;
+		return wordPath;
 	}
 
 }

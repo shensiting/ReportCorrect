@@ -5,20 +5,19 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8">
-
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
+<%@ include file="../common/userslib.jsp"%>
 
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
@@ -35,35 +34,70 @@
 <script type="text/javascript">
 //修改函数
 
-function showAddInput(){
-	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
-	 
-/*添加*/
-function sumit(teacherform) {
-	var cGradeId = teacherform.cGradeId.value;	 
-	var experiment=teacherform.experiment.value;	 
-	$.ajax({
-		type : 'get',
-		dataType : 'json',
-		async: false,
-		url : '<%=basePath%>teacher/addGradeExam?cGradeId=' + cGradeId+ '&experiment='+experiment+'',
-			success : function(data) {
-				if (data.success) {
-					alert("关联成功！");
 
-				} else {
-					alert("操作失败，请重新操作");
-					
-				}
-
-			},
-			error : function() {
-				alert("服务器异常，请稍候再试！");
-			}
-		});
-
+	function showAddInput() {
+		$("#addinfo").css('display', 'block');
+		$("#addinfo").css('text-align', 'center');
 	}
+
+	/*添加*/
+	function sumit() {
+		var experiment = $("#experiment").val();
+		var cGradeId = $("#cGradeId").val();
+		if (experiment == "" || cGradeId == "") {
+			layer.alert("条件不允许为空！")
+		} else {
+			$.ajax({
+				type : 'get',
+				dataType : 'json',
+				async : false,
+				url : '
+<%=basePath%>teacher/addGradeExam?cGradeId=' + cGradeId+ '&experiment='+experiment+'',
+				success : function(data) {
+					if (data.success) {
+						alert(data.msg);
+						location.reload();
+					} else {
+						alert(data.msg);						
+					}
+				},
+				error : function() {
+					alert("服务器异常，请稍候再试！");
+				}
+			});
+		}
+	}
+	//更改实验提交形式
+function changeSubmitForm(id){
+	layer.confirm(
+			'确认修改当前作业提交形式?',
+			{
+				btn : [ '是的', '放弃' ],
+				shade : false
+			},function(sender, modal, index) {
+			//只有一个确定按钮，这里进行删除操作
+			//通过ajax向后台请求
+			$.ajax({
+				type : 'get',
+				dataType : 'json',
+				url : '<%=basePath%>teacher/updateGESubnitForm?id=' + id,
+				success : function(data) {
+					if (data.success) {
+						//删除成功，刷新页面
+						alert("修改成功！");	
+					} else {
+						alert("修改失败！");		
+					}
+					//刷新页面
+					location.reload();
+				},error : function() {
+					alert("服务器异常，请稍候再试！");
+				}
+					});
+			});
 	
+}
+	//更改实验状态	
 	function changeStatus(id){
 		layer.confirm(
 				'确认修改实验当前状态?',
@@ -114,6 +148,11 @@ $(function(){
     });                                       
 });  
 </script>
+<style type="text/css">
+.editor td {
+	text-align: center;
+}
+</style>
 </head>
 <body>
 	<nav class="breadcrumb"> 班级实验关联管理 <a
@@ -126,11 +165,14 @@ $(function(){
 			<span class="l"> <a href="javascript:;" onclick="deleteFunc()"
 				class="btn btn-danger radius"> <i class="Hui-iconfont">&#xe6e2;</i>批量删除
 			</a> <a class="btn btn-success radius" onclick="showAddInput()"
-				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>单个添加</a>
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>单个添加</a> <a
+				class="btn btn-primary radius" href="javascript:;"
+				onclick="addWindow('作业提交人数统计','<%=basePath%>teacher/examAccount','1000','600')"><i
+					class="Hui-iconfont">&#xe665;</i>作业统计查询</a>
 			</span> <span class="r">共有数据：<strong>${gradeExams.size() }</strong>条
 			</span>
 		</div>
-		
+
 		<div style="display: none;" id="addinfo" class="pd-20">
 			<form class="form-horizontal" method="post" action=""
 				name="basic_validate" id="basic_validate">
@@ -151,7 +193,7 @@ $(function(){
 
 						<span class="select-box"> <select id="experiment"
 							name="experiment" class="select">
-								<option>----请选择实验----</option>
+								<option value="">----请选择实验----</option>
 						</select>
 						</span>
 					</div>
@@ -164,16 +206,15 @@ $(function(){
 							id="cGradeId" class="select" size="1" datatype="*"
 							nullmsg="请选择隶属班级！">
 								<c:forEach var="item" items="${gradeMajorColleges }">
-												<option value="${item.cId}">
-													${item.getcYearClass()} ${item.getMajor().getcMajorName()}
-													${item.getcClass()}</option>
-											</c:forEach>
+									<option value="${item.cId}">${item.getcYearClass()}
+										${item.getMajor().getcMajorName()} ${item.getcClass()}</option>
+								</c:forEach>
 						</select></span>
 					</div>
-					<div style="width: 40%;text-align: right;float: left;">
-						<button style="width: 100px; margin-right: 60%" type="submit"
-							class="btn btn-primary radius" onclick="sumit(this.form)" id=""
-							name="">关联</button>
+					<div style="width: 40%; text-align: right; float: left;">
+						<a style="width: 100px; margin-right: 60%" type="submit"
+							class="btn btn-primary radius" onclick="sumit()" id=""
+							href="javascript:;" name="">关联</a>
 					</div>
 				</div>
 
@@ -186,12 +227,14 @@ $(function(){
 				class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"></th>
+						<th width="25"><input type="checkbox"
+							id="title-table-checkbox" name="title-table-checkbox"></th>
 						<th width="100">ID</th>
-						<th>实验名称</th>						
-						<th>关联班级</th>		
-						<th width="10%">状态</th>				
-						<th width="35px">删除</th>			
+						<th>实验名称</th>
+						<th>关联班级</th>
+						<th width="10%">状态</th>
+						<th width="10%">作业提交形式</th>
+						<th width="35px">删除</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -199,22 +242,36 @@ $(function(){
 						<tr class="editor">
 							<td style="text-align: center;"><input name="checkboxid"
 								type="checkbox" value="${item.getcId()}" /></td>
-								<td>${item.getcId()}</td>
-							<td id="cUserId">${item.getExperiment().getcExperimentName()}</td>													
-							<td>${item.getCollege().getcCollegeName()} ${item.getGrade().getcYearClass()}
-								 ${item.getMajor().getcMajorName()} ${item.getGrade().getcClass()}</td>						
-							<td>
-							<c:choose>
+							<td>${item.getcId()}</td>
+							<td id="cUserId">${item.getExperiment().getcExperimentName()}</td>
+							<td>${item.getCollege().getcCollegeName()}
+								${item.getGrade().getcYearClass()}
+								${item.getMajor().getcMajorName()}
+								${item.getGrade().getcClass()}</td>
+							<td><c:choose>
 									<c:when test="${item.cStatus=='0'}">
 										<a class="btn btn-success radius"
-				              onclick="changeStatus('${item.getcId()}')" href="javascript:;">报告提交中</a>
+											onclick="changeStatus('${item.getcId()}')"
+											href="javascript:;">批阅</a>
 									</c:when>
-									<c:otherwise>									
-							        <a class="btn btn-primary radius"
-				              onclick="changeStatus('${item.getcId()}')" href="javascript:;">报告批改中</a>									
+									<c:otherwise>
+										<a class="btn btn-primary radius"
+											onclick="changeStatus('${item.getcId()}')"
+											href="javascript:;">批阅中</a>
 									</c:otherwise>
-								</c:choose>
-							</td>
+								</c:choose></td>
+							<td><c:choose>
+									<c:when test="${item.cSubmitForm=='0'}">
+										<a class="btn btn-success radius"
+											onclick="changeSubmitForm('${item.getcId()}')"
+											href="javascript:;">在线编辑提交</a>
+									</c:when>
+									<c:otherwise>
+										<a class="btn btn-primary radius"
+											onclick="changeSubmitForm('${item.getcId()}')"
+											href="javascript:;">Word文档提交</a>
+									</c:otherwise>
+								</c:choose></td>
 							<td><a style="text-decoration: none" class="ml-5"
 								onClick="article_del(this,'${item.getcId()}')"
 								href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
@@ -222,6 +279,9 @@ $(function(){
 					</c:forEach>
 				</tbody>
 			</table>
+		</div>
+		<div style="margin-top: 5%; height: 35px">
+			<%@include file="../common/footer.jsp"%>
 		</div>
 	</div>
 
@@ -305,7 +365,7 @@ $(function(){
 					});
 		}
 		/*资讯-添加*/
-		function article_add(title, url, w, h) {
+		function addWindow(title, url, w, h) {
 			layer_show(title,url,w,h)
 		}
 		

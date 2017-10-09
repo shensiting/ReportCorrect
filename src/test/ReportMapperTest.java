@@ -5,6 +5,8 @@ import static org.junit.Assert.fail;
 import java.util.Date;
 import java.util.List;
 
+import org.gzhmc.common.util.DownLoadUtil;
+import org.gzhmc.common.util.StringUtils;
 import org.gzhmc.report4gzhmc.mapper.ReportMapper;
 import org.gzhmc.report4gzhmc.mapper.TeacherExperimentalMapper;
 import org.gzhmc.report4gzhmc.model.Report;
@@ -48,12 +50,12 @@ public class ReportMapperTest {
 
 	@Test
 	public void testUpdate() {
-
-		Report report = reportMapper.getById(1);
-
-		report.setcReportNum("测试名字");
-
-		int result = reportMapper.update(report);
+       Report report=reportMapper.getById(2);
+		report.setcScoreId(1);
+		report.setcPath("9ophsodhfs");
+		report.setcTeacherId(13223);
+		report.setcStatu(1);
+		int result = reportMapper.updateScore(report);
 		System.out.println("update result :" + result);
 	}
 
@@ -104,5 +106,11 @@ public class ReportMapperTest {
 //		
 		
 	}
-	
+
+		@Test
+		public void testExportWord() throws Exception {
+			Report report=reportMapper.getById(2);
+			
+		}
+
 }

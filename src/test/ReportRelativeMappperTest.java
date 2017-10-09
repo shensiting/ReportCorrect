@@ -27,8 +27,8 @@ public class ReportRelativeMappperTest {
 
 	@Test
 	public void testGetByGradeId() {
-		List<ReportRelative> relatives=reportRelativeMappper.getByGradeId(1);
-		System.out.println(relatives.get(0).getGradeExam().getcStatus());
+//		List<ReportRelative> relatives=reportRelativeMappper.getByGradeId(1);
+//		System.out.println(relatives.get(0).getGradeExam().getcStatus());
 	}
 
 	@Test
@@ -58,14 +58,14 @@ public class ReportRelativeMappperTest {
 
 	@Test
 	public void testgetExperimentIdandGradeId() {
-		List<ReportRelative> reportRelatives=reportRelativeMappper.getExperimentIdandGradeId();
+		List<ReportRelative> reportRelatives=reportRelativeMappper.getExitScoreByExperimentIdandGradeId(7, 1, 1);
 		System.out.println(reportRelatives.size());		
 	}
 
 	@Test
 	public void testGetReportLinkExperimentByStuId() {
-		List<ReportRelative> reportRelatives=reportRelativeMappper.getReportLinkExperimentByStuId(6);
-        System.out.println(reportRelatives.size());
+		//List<ReportRelative> reportRelatives=reportRelativeMappper.getReportLinkExperimentByStuId(6);
+       // System.out.println(reportRelatives.size());
 	}
 
 }

@@ -1,6 +1,8 @@
 package org.gzhmc.report4gzhmc.model;
+
 /**
  * 学院表
+ * 
  * @author Administrator
  *
  */

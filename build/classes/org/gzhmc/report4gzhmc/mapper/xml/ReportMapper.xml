@@ -6,12 +6,13 @@
 		<result column="cReportNum" property="cReportNum" />
 		<result column="cScoreId" property="cScoreId" />
 		<result column="cStudentId" property="cStudentId" />
-		<result column="cStatus" property="cStatus" />
+		<result column="cStatu" property="cStatu" />
 		<result column="cPath" property="cPath" />
 		<result column="cCreateTime" property="cCreateTime" />
 		<result column="cPdfPath" property="cPdfPath" />
 		<result column="cProcess" property="cProcess" />
 		<result column="cQRcode" property="cQRcode" />
+		<result column="cContent" property="cContent" />
 		<result column="cTeacherId" property="cTeacherId" />
 		<result column="cExperimentTextId" property="cExperimentTextId" />
 	</resultMap>
@@ -49,15 +50,18 @@
 		delete from gy_report_report
 		where cId = #{cId }
 	</delete>
-	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Report" useGeneratedKeys="true" keyProperty="cId">
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Report"
+		useGeneratedKeys="true" keyProperty="cId">
 		insert into gy_report_report
-		(cReportNum,cScoreId,cStudentId,cStatus,
-		cPath,cCreateTime,cPdfPath,cProcess,cQRcode,cTeacherId,cExperimentTextId)
+		(cReportNum,cScoreId,cStudentId,cStatu,
+		cPath,cCreateTime,cPdfPath,cProcess,cQRcode,cTeacherId,cExperimentTextId,cContent)
 		values ( #{cReportNum }, #{cScoreId },
 		#{cStudentId },
-		#{cStatus }, #{cPath }, #{cCreateTime
+		#{cStatu },
+		#{cPath }, #{cCreateTime
 		}, #{cPdfPath }, #{cProcess },
-		#{cQRcode }, #{cTeacherId }, #{cExperimentTextId })
+		#{cQRcode },
+		#{cTeacherId }, #{cExperimentTextId }, #{cContent })
 	</insert>
 
 	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Report">
@@ -77,8 +81,8 @@
 			<if test="cStudentId != null">
 				cStudentId = #{cStudentId },
 			</if>
-			<if test="cStatus != null">
-				cStatus = #{cStatus },
+			<if test="cStatu != null">
+				cStatu = #{cStatu },
 			</if>
 			<if test="cPath != null">
 				cPath = #{cPath },
@@ -98,7 +102,9 @@
 			<if test="cExperimentTextId != null">
 				cExperimentTextId = #{cExperimentTextId },
 			</if>
-
+			<if test="cContent != null">
+				cContent = #{cContent },
+			</if>
 		</set>
 		where cId = #{cId }
 	</update>
@@ -109,16 +115,26 @@
 		cScoreId = #{cScoreId },
 		cStudentId =
 		#{cStudentId },
-		cStatus = #{cStatus },
+		cStatu = #{cStatu },
 		cPath = #{cPath },
-		cCreateTime =
-		#{cCreateTime },
+		cCreateTime
+		=#{cCreateTime },
 		cPdfPath = #{cPdfPath },
 		cProcess = #{cProcess },
 		cQRcode = #{cQRcode },
 		cTeacherId = #{cTeacherId },
-		cExperimentTextId =
-		#{cExperimentTextId }
+		cExperimentTextId
+		=#{cExperimentTextId },
+		cContent=#{cContent }
+		where cId = #{cId }
+	</update>
+	<update id="updateScore" parameterType="org.gzhmc.report4gzhmc.model.Report">
+		update gy_report_report
+		set
+		cScoreId = #{cScoreId },
+		cStatu = #{cStatu },
+		cPdfPath = #{cPdfPath },
+		cTeacherId = #{cTeacherId }
 		where cId = #{cId }
 	</update>
 </mapper>

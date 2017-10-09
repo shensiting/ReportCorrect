@@ -5,20 +5,19 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8">
-
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
+<%@ include file="../common/userslib.jsp"%>
 
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
@@ -34,9 +33,12 @@
 <title>学生管理</title>
 <script type="text/javascript">
 //修改函数
+	function showAddInput() {
+		$("#addinfo").css('display', 'block');
+		$("#addinfo").css('text-align', 'center');
+		 $("#cStudentNumber").attr("readOnly",false);
+	}
 
-function showAddInput(){
-	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
 /*添加*/
 function sumit(studentform) {
 	var cUserId = studentform.id.value;
@@ -50,31 +52,27 @@ function sumit(studentform) {
 		url : '<%=basePath %>manage/addStudent.action?id='+cUserId+'&Studentnum='+cStudentNumber+'&Studentname='+cName+'&cGradeId='+cGradeId+'',
 		success : function(data) {
 			if (data.success) {
-				alert("操作成功！");
+				alert(data.msg);
 				
 			} else {
-				
-				layer.msg('操作失败，请重新操作', {
-					icon : 6,
-					time : 5000
-				});		
-			}
-			
-		},error : function() {
-			layer.msg('操作失败，请重新操作', {
-				icon : 6,
-				time : 4000
-			});	
+				alert(data.msg);	
+			}			
+		},error : function() {			
 			layer.msg('服务器异常，请稍候再试！', {
 				icon : 6,
 				time : 4000
 			});	
 		}
-			});
+	});
 		
 }
 
 </script>
+<style type="text/css">
+.editor td {
+	text-align: center;
+}
+</style>
 </head>
 <body>
 	<nav class="breadcrumb"> <i class="Hui-iconfont">&#xe67f;</i> 首页
@@ -84,18 +82,14 @@ function sumit(studentform) {
 		href="javascript:location.replace(location.href);" title="刷新"><i
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="pd-20">
-			<div class="cl pd-5 bg-1 bk-gray mt-20">
-			<span class="l">
-			 <a href="javascript:;" onclick="deleteFunc()"
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;" onclick="deleteFunc()"
 				class="btn btn-danger radius"> <i class="Hui-iconfont">&#xe6e2;</i>批量删除
-			</a> 
-			<a class="btn btn-primary radius"
-				onclick="article_add('添加资讯','article-add.html')" href="javascript:;"><i
-					class="Hui-iconfont">&#xe600;</i>批量导入</a>
-			<a
-				class="btn btn-success radius"
-				onclick="showAddInput()" href="javascript:;"><i
-					class="Hui-iconfont">&#xe600;</i>单个添加</a>
+			</a> <a class="btn btn-primary radius"
+				onclick="article_add('批量导入学生信息','<%=basePath%>manage/batchImportStu')"
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>批量导入</a> <a
+				class="btn btn-success radius" onclick="showAddInput()"
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>单个添加</a>
 			</span> <span class="r">共有数据：<strong>${studentGrades.size() }</strong>条
 			</span>
 		</div>
@@ -115,27 +109,27 @@ function sumit(studentform) {
 					<label class="form-label col-2">姓名：</label>
 					<div class="formControls col-2">
 
-						<input
-							type="text" class="input-text" value="" style="width: 250px"
-							placeholder="输入姓名" required="required" id="cName"
-							name="cName">
+						<input type="text" class="input-text" value=""
+							style="width: 250px" placeholder="输入姓名" required="required"
+							id="cName" name="cName">
 					</div>
 
-					<label class="form-label col-2">所属班级：</label> 
+					<label class="form-label col-2">所属班级：</label>
 					<div class="formControls col-2">
 						<span class="select-box"> <select name="cGradeId"
-							id="cGradeId" class="select" size="1" datatype="*" nullmsg="请选择隶属班级！">
+							id="cGradeId" class="select" size="1" datatype="*"
+							nullmsg="请选择隶属班级！">
 								<c:forEach var="item" items="${gradeMajorColleges }">
-												<option value="${item.cId}">
-													${item.getcYearClass()} ${item.getMajor().getcMajorName()}
-													${item.getcClass()}</option>
-											</c:forEach>
-							</select></span>
-					</div>					
-					<button style="width: 100px"  type="submit" class="btn btn-primary radius" onclick="sumit(this.form)"
-					id="" name="">提交</button>
+									<option value="${item.cId}">${item.getcYearClass()}
+										${item.getMajor().getcMajorName()} ${item.getcClass()}</option>
+								</c:forEach>
+						</select></span>
+					</div>
+					<button style="width: 100px" type="submit"
+						class="btn btn-primary radius" onclick="sumit(this.form)" id=""
+						name="">提交</button>
 				</div>
-				
+
 			</form>
 		</div>
 		<div class="mt-20">
@@ -143,14 +137,16 @@ function sumit(studentform) {
 				class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"></th>
+						<th width="25"><input type="checkbox"
+							id="title-table-checkbox" name="title-table-checkbox"></th>
 						<th width="100">ID</th>
 						<th>学号</th>
 						<th>姓名</th>
 						<th>班级</th>
-						<th>班级ID</th>
+						<th width="50px">班级ID</th>
+						<th width="50px">手机号码</th>
 						<th width="35px">编辑</th>
-						<th width="35px">删除</th>			
+						<th width="35px">删除</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -161,18 +157,25 @@ function sumit(studentform) {
 							<td>${item.getcUserId()}</td>
 							<td>${item.getcStudentNumber()}</td>
 							<td>${item.getcName()}</td>
-							<td>${item.getGrade().getcYearClass()} ${item.getMajor().getcMajorName()} ${item.getGrade().getcClass()} ${item.getCollege().getcCollegeName()}</td>
-							<td> ${item.getcGradeId()}</td>
-							<td class="f-14 td-manage"><a style="text-decoration: none" class="ml-5" id="edit"
-								href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
-								</td><td>
-								<a style="text-decoration: none" class="ml-5"
-								onClick="article_del(this,'${item.getcUserId()}')" href="javascript:;"
-								title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+							<td>${item.getGrade().getcYearClass()}
+								${item.getMajor().getcMajorName()}
+								${item.getGrade().getcClass()}
+								${item.getCollege().getcCollegeName()}</td>
+							<td>${item.getcGradeId()}</td>
+							<td>${item.getcPhoneNum()}</td>
+							<td class="f-14 td-manage"><a style="text-decoration: none"
+								class="ml-5" id="edit" href="javascript:;" title="编辑"><i
+									class="Hui-iconfont">&#xe6df;</i></a></td>
+							<td><a style="text-decoration: none" class="ml-5"
+								onClick="article_del(this,'${item.getcUserId()}')"
+								href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+		</div>
+		<div style="margin-top: 5%; height: 35px">
+			<%@include file="../common/footer.jsp"%>
 		</div>
 	</div>
 
@@ -219,7 +222,7 @@ function sumit(studentform) {
 		//编辑
 		$(function() {
 			$(".editor").each(function(){
-			var tmp=$(this).children().eq(6);
+			var tmp=$(this).children().eq(7);
 			var btn=tmp.children();
 			btn.bind("click",function(){				
 				document.getElementById("id").value=btn.parent().parent().children("td").get(1).innerHTML;
@@ -227,6 +230,7 @@ function sumit(studentform) {
 				document.getElementById("cName").value=btn.parent().parent().children("td").get(3).innerHTML;
 				document.getElementById("cGradeId").value =btn.parent().parent().children("td").get(5).innerHTML.trim();
 				document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;	
+				$("#cStudentNumber").attr("readOnly",true);
 			});
 			});
 		});
@@ -257,16 +261,10 @@ function sumit(studentform) {
 						success : function(data) {
 							if (data.success) {
 								//删除成功，刷新页面
-								layer.msg('删除成功', {
-									icon : 6,
-									time : 4000
-								});	
-							} else {
-								var str=data.msg;
-								layer.msg(str, {
-									icon : 6,
-									time : 1000
-								});		
+								alert("删除成功");
+									
+							} else {								
+								alert(data.msg);	
 							}
 							//刷新页面
 							location.reload();
@@ -292,13 +290,9 @@ function sumit(studentform) {
 					url : '<%=basePath%>manage/delStudent.action?ids=' + id,
 					success : function(data) {
 						if (data.success) {
-							
+							alert("删除成功");
 						} else {
-							var str=data.msg;
-							layer.msg(str, {
-								icon : 6,
-								time : 1000
-							});		
+							alert(data.msg);		
 						}
 						//刷新页面
 						location.reload();

@@ -1,8 +1,8 @@
 package org.gzhmc.report4gzhmc.model;
-/**
- * 实验报告表
- * @author stShen
- */
+
+/**实验报告表
+* @author stShen
+*/
 import java.util.Date;
 
 public class Report {
@@ -18,7 +18,17 @@ public class Report {
 	private String cProcess;
 	private String cQRcode;
 	private int cTeacherId;
-    private int cExperimentTextId;
+	private int cExperimentTextId;
+	private String cContent;
+
+	public String getcContent() {
+		return cContent;
+	}
+
+	public void setcContent(String cContent) {
+		this.cContent = cContent;
+	}
+
 	public String getcPdfPath() {
 		return cPdfPath;
 	}
@@ -42,6 +52,7 @@ public class Report {
 	public void setcQRcode(String cQRcode) {
 		this.cQRcode = cQRcode;
 	}
+
 	public int getcScoreId() {
 		return cScoreId;
 	}

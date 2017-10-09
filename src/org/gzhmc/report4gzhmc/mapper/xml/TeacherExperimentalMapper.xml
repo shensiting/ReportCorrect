@@ -19,7 +19,8 @@
 		gy_report_teacher_experimental
 		where cId = #{cId }
 	</select>
-	<select id="getByTeacherId" resultMap="BaseResultMap" parameterType="int">
+	<select id="getByTeacherId" resultMap="BaseResultMap"
+		parameterType="int">
 		select
 		cId, cTeacherId, cExperimentalTestId
 		from
@@ -31,7 +32,8 @@
 		count(cTeacherId)
 		from
 		gy_report_teacher_experimental
-		where cTeacherId = #{cTeacherId }
+		where
+		cTeacherId = #{cTeacherId }
 	</select>
 	<delete id="delete" parameterType="int">
 		delete from

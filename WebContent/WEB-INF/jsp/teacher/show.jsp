@@ -80,14 +80,7 @@ table tr td {
 					style="width: 80px; height: 80px;">
 			</div>
 		</div>
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
-		<br />
+		<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
 
 		<h1 align="center">${reportRelative.getExperimentalTest().getcExperimentName()}良好证书</h1>
 		<br /> <br />

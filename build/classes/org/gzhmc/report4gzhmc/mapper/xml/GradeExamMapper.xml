@@ -7,6 +7,7 @@
 		<result column="cExperimentId" property="cExperimentId" />
 		<result column="cCreateTime" property="cCreateTime" />
 		<result column="cStatus" property="cStatus" />
+		<result column="cSubmitForm" property="cSubmitForm" />
 		<association property="grade" javaType="org.gzhmc.report4gzhmc.model.Grade">
 			<result column="cYearClass" property="cYearClass" />
 			<result column="cClass" property="cClass" />
@@ -24,21 +25,35 @@
 
 	</resultMap>
 	<select id="getAll" resultMap="BaseResultMap">
-		select distinct ge.cId,g.cClass,g.cYearClass,m.cMajorName,c.cCollegeName,
+		select distinct
+		ge.cSubmitForm,ge.cId,g.cClass,g.cYearClass,m.cMajorName,c.cCollegeName,
 		et.cExperimentName from gy_report_grade_exam ge,gy_report_grade
 		g,gy_report_major m,
 		gy_report_experimental_test et,gy_report_college c
 		where ge.cExperimentId=et.cId and g.cCollegeId=c.cId and
 		g.cMajorId=m.cId and g.cId=ge.cGradeId ORDER BY ge.cId DESC
 	</select>
-	<select id="getByTeaGradeId" resultMap="BaseResultMap" parameterType="int">
+	<select id="getByTeaGradeId" resultMap="BaseResultMap"
+		parameterType="int">
 		select distinct
-		ge.cStatus,ge.cId,g.cClass,g.cYearClass,m.cMajorName,c.cCollegeName,
+		ge.cSubmitForm,ge.cStatus,ge.cId,g.cClass,g.cYearClass,m.cMajorName,c.cCollegeName,
 		et.cExperimentName from gy_report_grade_exam ge,gy_report_grade
 		g,gy_report_major m,
 		gy_report_experimental_test et,gy_report_college c
 		where ge.cExperimentId=et.cId and g.cCollegeId=c.cId and
 		g.cMajorId=m.cId and g.cId=ge.cGradeId and ge.cGradeId=#{cGradeId}
+	</select>
+	<select id="getByStuIdAndExamId" resultMap="BaseResultMap">
+		select
+		ge.cId,ge.cSubmitForm,ge.cStatus
+		from gy_report_grade_exam
+		ge,gy_report_student s where
+		ge.cGradeId=s.cGradeId and s.cUserId=#{0}
+		and ge.cExperimentId=#{1}
+	</select>
+	<select id="getByExamIdAndGradeId" resultType="int">
+		select COUNT(*)
+		from gy_report_grade_exam where cExperimentId=#{0} and cGradeId=#{1}
 	</select>
 	<select id="getReportNumByExperimentIdandGradeId" resultType="int">
 		select
@@ -56,17 +71,21 @@
 	</select>
 	<select id="getByGradeId" resultMap="BaseResultMap"
 		parameterType="int">
-		select distinct ge.cId,ge.cGradeId,ge.cExperimentId,
-		et.cExperimentName from gy_report_grade_exam ge,
+		select distinct
+		ge.cSubmitForm,ge.cId,ge.cGradeId,ge.cExperimentId,
+		et.cExperimentName
+		from gy_report_grade_exam ge,
 		gy_report_experimental_test et
-		where ge.cExperimentId=et.cId and ge.cGradeId=#{cGradeId}
+		where
+		ge.cExperimentId=et.cId and ge.cGradeId=#{0} and ge.cSubmitForm=#{1}
 	</select>
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select * from gy_report_grade_exam
 		where cId=#{cId}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="int">
-		delete from gy_report_grade_exam
+		delete from
+		gy_report_grade_exam
 		where cId = #{cId }
 	</delete>
 	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.GradeExam">
@@ -80,5 +99,12 @@
 		gy_report_grade_exam set
 		cStatus = #{cStatus }
 		where cId = #{cId }
+	</update>
+	<update id="updateSubmitForm" parameterType="org.gzhmc.report4gzhmc.model.GradeExam">
+		update
+		gy_report_grade_exam set
+		cSubmitForm = #{cSubmitForm }
+		where cId = #{cId
+		}
 	</update>
 </mapper>

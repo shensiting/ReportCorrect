@@ -16,11 +16,13 @@
 <meta name="keywords" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="<%=basePath%>manage/css/bootstrap.min.css" />
-<link rel="stylesheet" href="<%=basePath%>manage/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet"
+	href="<%=basePath%>manage/css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" href="<%=basePath%>manage/css/uniform.css" />
 <link rel="stylesheet" href="<%=basePath%>manage/css/select2.css" />
 <link rel="stylesheet" href="<%=basePath%>manage/css/unicorn.main.css" />
-<link rel="stylesheet" href="<%=basePath%>manage/css/unicorn.grey.css" class="skin-color" />
+<link rel="stylesheet" href="<%=basePath%>manage/css/unicorn.grey.css"
+	class="skin-color" />
 
 <!-- validate -->
 <script src="<%=basePath%>/manage/js/jquery.min.js"></script>
@@ -156,7 +158,7 @@ function teacherRegister(registeform){
 		<h2 align="center" style="color: #FFF">广州医科大学生物技术系</h2>
 		<h2 align="center" style="color: #FFF">学生报告管理系统</h2>
 	</div>
-	<div id="loginbox" style="height: 394px;width: 450px">
+	<div id="loginbox" style="height: 394px; width: 450px">
 
 		<form id="loginform" class="form-vertical" action="" method="post">
 			<h1 style="color: #616161;">注册</h1>
@@ -209,8 +211,9 @@ function teacherRegister(registeform){
 									</select>
 								</div>
 							</div>
-							<div style="text-align: left"><p style="color:#7B68EE;font-size: 13px;">温馨提示：请使用谷歌浏览器</p>
-						</div>
+							<div style="text-align: left">
+								<p style="color: #7B68EE; font-size: 13px;">温馨提示：请使用谷歌浏览器</p>
+							</div>
 						</div>
 
 						<div class="form-actions">
@@ -261,11 +264,12 @@ function teacherRegister(registeform){
 										<c:forEach var="item" items="${colleges}">
 											<option id="${item.cId}" value="${item.cId}">${item.cCollegeName}</option>
 										</c:forEach>
-									</select>									
+									</select>
 								</div>
-							</div>	
-					    <div style="text-align: left"><p style="color:#7B68EE;font-size: 13px;">温馨提示：请使用谷歌浏览器</p>
-						</div>			
+							</div>
+							<div style="text-align: left">
+								<p style="color: #7B68EE; font-size: 13px;">温馨提示：请使用谷歌浏览器</p>
+							</div>
 						</div>
 
 						<div class="form-actions">
@@ -275,9 +279,9 @@ function teacherRegister(registeform){
 								class="btn btn-inverse" value="注册"
 								onclick="teacherRegister(this.form)" />
 							</span>
-						</div>						
-					</div>					
-				</div>				
+						</div>
+					</div>
+				</div>
 			</div>
 		</form>
 

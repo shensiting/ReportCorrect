@@ -5,7 +5,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,7 +18,7 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
+<%@ include file="../common/userslib.jsp"%>
 
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
@@ -32,11 +32,19 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>教师管理</title>
+<style type="text/css">
+.editor td {
+	text-align: center;
+}
+</style>
 <script type="text/javascript">
 //修改函数
 
 function showAddInput(){
-	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
+	$("#addinfo").css('display', 'block');
+	$("#addinfo").css('text-align', 'center');
+	 $("#teachernum").attr("readOnly",false);
+	 }	
 /*添加*/
 function sumit(teacherform) {
 	var cUserId = teacherform.id.value;
@@ -53,18 +61,10 @@ function sumit(teacherform) {
 				alert(data.msg);
 				
 			} else {
-				
-				layer.msg('操作失败，请重新操作', {
-					icon : 6,
-					time : 5000
-				});		
+				alert(data.msg);	
 			}
 			
-		},error : function() {
-			layer.msg('操作失败，请重新操作', {
-				icon : 6,
-				time : 4000
-			});	
+		},error : function() {			
 			layer.msg('服务器异常，请稍候再试！', {
 				icon : 6,
 				time : 4000
@@ -84,18 +84,14 @@ function sumit(teacherform) {
 		href="javascript:location.replace(location.href);" title="刷新"><i
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="pd-20">
-			<div class="cl pd-5 bg-1 bk-gray mt-20">
-			<span class="l">
-			 <a href="javascript:;" onclick="deleteFunc()"
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;" onclick="deleteFunc()"
 				class="btn btn-danger radius"> <i class="Hui-iconfont">&#xe6e2;</i>批量删除
-			</a> 
-			<a class="btn btn-primary radius"
-				onclick="article_add('添加资讯','article-add.html')" href="javascript:;"><i
-					class="Hui-iconfont">&#xe600;</i>批量导入</a>
-			<a
-				class="btn btn-success radius"
-				onclick="showAddInput()" href="javascript:;"><i
-					class="Hui-iconfont">&#xe600;</i>单个添加</a>
+			</a> <a class="btn btn-primary radius"
+				onclick="article_add('批量导入教师信息','<%=basePath%>manage/batchImportTea')"
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>批量导入</a> <a
+				class="btn btn-success radius" onclick="showAddInput()"
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>单个添加</a>
 			</span> <span class="r">共有数据：<strong>${teacherColleges.size() }</strong>条
 			</span>
 		</div>
@@ -115,25 +111,25 @@ function sumit(teacherform) {
 					<label class="form-label col-2">教师姓名：</label>
 					<div class="formControls col-2">
 
-						<input
-							type="text" class="input-text" value="" style="width: 250px"
-							placeholder="输入教师姓名" required="required" id="teachername"
-							name="teachername">
+						<input type="text" class="input-text" value=""
+							style="width: 250px" placeholder="输入教师姓名" required="required"
+							id="teachername" name="teachername">
 					</div>
 
-					<label class="form-label col-2">所属学院：</label> 
+					<label class="form-label col-2">所属学院：</label>
 					<div class="formControls col-2">
-						<span class="select-box"> <select name="colgid"
-							id="colgid" class="select" size="1" datatype="*" nullmsg="请选择隶属学院！">
+						<span class="select-box"> <select name="colgid" id="colgid"
+							class="select" size="1" datatype="*" nullmsg="请选择隶属学院！">
 								<c:forEach var="item" items="${colleges}">
-								<option value="${item.cId}">${item.cCollegeName}</option>
-							</c:forEach>
-							</select></span>
-					</div>					
-					<button style="width: 100px"  type="submit" class="btn btn-primary radius" onclick="sumit(this.form)"
-					id="" name="">提交</button>
+									<option value="${item.cId}">${item.cCollegeName}</option>
+								</c:forEach>
+						</select></span>
+					</div>
+					<button style="width: 100px" type="submit"
+						class="btn btn-primary radius" onclick="sumit(this.form)" id=""
+						name="">提交</button>
 				</div>
-				
+
 			</form>
 		</div>
 		<div class="mt-20">
@@ -141,14 +137,15 @@ function sumit(teacherform) {
 				class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"></th>
+						<th width="25"><input type="checkbox"
+							id="title-table-checkbox" name="title-table-checkbox"></th>
 						<th width="100">ID</th>
 						<th>教师工号</th>
 						<th>教师姓名</th>
 						<th>隶属学院</th>
 						<th>隶属学院ID</th>
 						<th width="35px">编辑</th>
-						<th width="35px">删除</th>			
+						<th width="35px">删除</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -160,17 +157,20 @@ function sumit(teacherform) {
 							<td id="cTeacherId">${item.getcTeacherId()}</td>
 							<td id="cName">${item.getcName()}</td>
 							<td>${item.getCollege().getcCollegeName()}</td>
-							<td  id="cCollegeId"> ${item.getcCollegeId()}</td>
-							<td class="f-14 td-manage"><a style="text-decoration: none" class="ml-5" id="edit"
-								href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
-								</td><td>
-								<a style="text-decoration: none" class="ml-5"
-								onClick="article_del(this,'${item.getcUserId()}')" href="javascript:;"
-								title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+							<td id="cCollegeId">${item.getcCollegeId()}</td>
+							<td class="f-14 td-manage"><a style="text-decoration: none"
+								class="ml-5" id="edit" href="javascript:;" title="编辑"><i
+									class="Hui-iconfont">&#xe6df;</i></a></td>
+							<td><a style="text-decoration: none" class="ml-5"
+								onClick="article_del(this,'${item.getcUserId()}')"
+								href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+		</div>
+		<div style="margin-top: 5%; height: 35px">
+			<%@include file="../common/footer.jsp"%>
 		</div>
 	</div>
 
@@ -225,6 +225,7 @@ function sumit(teacherform) {
 				document.getElementById("teachername").value=btn.parent().parent().children("td").get(3).innerHTML;
 				document.getElementById("colgid").value =btn.parent().parent().children("td").get(5).innerHTML.trim();
 				document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;	
+				$("#teachernum").attr("readOnly",true);
 			});
 			});
 		});
@@ -255,16 +256,9 @@ function sumit(teacherform) {
 						success : function(data) {
 							if (data.success) {
 								//删除成功，刷新页面
-								layer.msg('删除成功', {
-									icon : 6,
-									time : 4000
-								});	
+								alert("删除成功！");
 							} else {
-								var str=data.msg;
-								layer.msg(str, {
-									icon : 6,
-									time : 1000
-								});		
+								alert(data.msg);
 							}
 							//刷新页面
 							location.reload();
@@ -276,7 +270,7 @@ function sumit(teacherform) {
 		}
 		/*资讯-添加*/
 		function article_add(title, url, w, h) {
-			layer_show(title,url,w,h)
+			layer_show(title,url,900,600)
 		}
 		
 		/*资讯-删除*/
@@ -290,13 +284,10 @@ function sumit(teacherform) {
 					url : '<%=basePath%>manage/delTeacher.action?ids=' + id,
 					success : function(data) {
 						if (data.success) {
-							
+							//删除成功，刷新页面
+							alert("删除成功！");
 						} else {
-							var str=data.msg;
-							layer.msg(str, {
-								icon : 6,
-								time : 1000
-							});		
+							alert(data.msg);
 						}
 						//刷新页面
 						location.reload();

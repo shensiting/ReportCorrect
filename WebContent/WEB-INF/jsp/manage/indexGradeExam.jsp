@@ -5,7 +5,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,7 +18,7 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
+<%@ include file="../common/userslib.jsp"%>
 
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
@@ -32,12 +32,17 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>教师班级管理</title>
+<style type="text/css">
+.editor td {
+	text-align: center;
+}
+</style>
 <script type="text/javascript">
 //修改函数
-
-function showAddInput(){
-	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
-	
+	function showAddInput() {
+		$("#addinfo").css('display', 'block');
+		$("#addinfo").css('text-align', 'center');
+	}	
 </script>
 </head>
 <body>
@@ -48,26 +53,24 @@ function showAddInput(){
 		href="javascript:location.replace(location.href);" title="刷新"><i
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="pd-20">
-			<div class="cl pd-5 bg-1 bk-gray mt-20">
-			<span class="l">
-			 <a href="javascript:;" onclick="deleteFunc()"
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;" onclick="deleteFunc()"
 				class="btn btn-danger radius"> <i class="Hui-iconfont">&#xe6e2;</i>批量删除
-			</a> 
-			
+			</a>
 			</span> <span class="r">共有数据：<strong>${gradeExams.size() }</strong>条
 			</span>
 		</div>
-	
 		<div class="mt-20">
 			<table
 				class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"></th>
+						<th width="25"><input type="checkbox"
+							id="title-table-checkbox" name="title-table-checkbox"></th>
 						<th width="100">ID</th>
-						<th>实验名称</th>						
-						<th>关联班级</th>						
-						<th width="35px">删除</th>			
+						<th>实验名称</th>
+						<th>关联班级</th>
+						<th width="35px">删除</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -75,13 +78,13 @@ function showAddInput(){
 						<tr class="editor">
 							<td style="text-align: center;"><input name="checkboxid"
 								type="checkbox" value="${item.getcId()}" /></td>
-								<td>${item.getcId()}</td>
+							<td>${item.getcId()}</td>
 							<td id="cUserId">${item.getExperiment().getcExperimentName()}</td>
-						
-							
-							<td>${item.getCollege().getcCollegeName()} ${item.getGrade().getcYearClass()}
-								 ${item.getMajor().getcMajorName()} ${item.getGrade().getcClass()}</td>
-						
+							<td>${item.getCollege().getcCollegeName()}
+								${item.getGrade().getcYearClass()}
+								${item.getMajor().getcMajorName()}
+								${item.getGrade().getcClass()}</td>
+
 							<td><a style="text-decoration: none" class="ml-5"
 								onClick="article_del(this,'${item.getcId()}')"
 								href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
@@ -89,6 +92,9 @@ function showAddInput(){
 					</c:forEach>
 				</tbody>
 			</table>
+		</div>
+		<div style="margin-top: 5%; height: 35px">
+			<%@include file="../common/footer.jsp"%>
 		</div>
 	</div>
 
@@ -158,13 +164,9 @@ function showAddInput(){
 						success : function(data) {
 							if (data.success) {
 								//删除成功，刷新页面
-								alert("删除成功！");	
+								alert("删除成功！");
 							} else {
-								var str=data.msg;
-								layer.msg(str, {
-									icon : 6,
-									time : 1000
-								});		
+								alert(data.msg);
 							}
 							//刷新页面
 							location.reload();
@@ -190,13 +192,10 @@ function showAddInput(){
 					url : '<%=basePath%>manage/delExmGrade.action?ids=' + id,
 					success : function(data) {
 						if (data.success) {
+							//删除成功，刷新页面
 							alert("删除成功！");
 						} else {
-							var str=data.msg;
-							layer.msg(str, {
-								icon : 6,
-								time : 1000
-							});		
+							alert(data.msg);
 						}
 						//刷新页面
 						location.reload();

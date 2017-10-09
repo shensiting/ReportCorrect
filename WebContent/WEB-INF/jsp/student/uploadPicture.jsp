@@ -16,9 +16,14 @@
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <!--[if lt IE 9]>
-<script type="text/javascript" src="lib/html5.js"></script>
-<script type="text/javascript" src="lib/respond.min.js"></script>
-<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/respond.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/PIE_IE678.js"></script>
+<![endif]-->
+
+<!--[if IE 6]>
+<script type="text/javascript" src="<%=basePath%>users/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <%@ include file="../common/userslib.jsp"%>
 <link href="<%=basePath_userslib%>users/lib/icheck/icheck.css"
@@ -29,10 +34,7 @@
 <link
 	href="<%=basePath_userslib%>users/lib/webuploader/0.1.5/webuploader.css"
 	rel="stylesheet" type="text/css" />
-<!--[if IE 6]>
-<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
-<script>DD_belatedPNG.fix('*');</script>
-<![endif]-->
+
 <title>新增图片</title>
 <style type="text/css">
 .file {
@@ -87,15 +89,15 @@
 							<div id="dndArea">
 
 								<div id="filePicker-2">
-									<img src="" height="150" 
-									onerror="this.src='<%=basePath_userslib%>users/lib/webuploader/0.1.5/images/image.png'"> 									
+									<img src="" height="150"
+										onerror="this.src='<%=basePath_userslib%>users/lib/webuploader/0.1.5/images/image.png'">
 								</div>
-								
+
 								<p>文件为jpg，jpeg格式，最大限度: 5Mb</p>
-								<a href="javascript:;" class="file">点此选择文件 <input type="file"
-										name="file" id="file" onchange="previewFile()">
-									</a>
-									
+								<a href="javascript:;" class="file">点此选择文件 <input
+									type="file" name="file" id="file" onchange="previewFile()">
+								</a>
+
 							</div>
 						</div>
 						<div class="statusBar" style="display: none;">
@@ -122,6 +124,11 @@
 				</div>
 			</div>
 		</form>
+	</div>
+	<div
+		style="margin-top: 5%; text-align: center; font-size: 10px; color: gray;">
+		<footer> Copyright &copy; 2017, Crazy Code, All Rights
+		Reserved </footer>
 	</div>
 	</div>
 

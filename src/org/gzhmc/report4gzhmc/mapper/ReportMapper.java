@@ -13,5 +13,6 @@ public interface ReportMapper extends BaseMapper<Report> {
 
 	public List<Report> getByexperimrntAndstudentId(Report report);
 
+	public int updateScore(Report report);
+
 }
-	

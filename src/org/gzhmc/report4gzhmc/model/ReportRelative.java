@@ -14,11 +14,20 @@ public class ReportRelative {
 	private String cPdfPath;
 	private String cProcess;
 	private String cQRcode;
-    private int cExperimentTextId;
+	private int cExperimentTextId;
 	private ScoreSheet scoreSheet;
 	private Experiment experimental;
 	private Student student;
 	private GradeExam gradeExam;
+	private String cContent;
+
+	public String getcContent() {
+		return cContent;
+	}
+
+	public void setcContent(String cContent) {
+		this.cContent = cContent;
+	}
 
 	public GradeExam getGradeExam() {
 		return gradeExam;
@@ -43,7 +52,6 @@ public class ReportRelative {
 	public void setcId(String cId) {
 		this.cId = cId;
 	}
-
 
 	public int getcScoreId() {
 		return cScoreId;
@@ -116,8 +124,6 @@ public class ReportRelative {
 	public void setScoreSheet(ScoreSheet scoreSheet) {
 		this.scoreSheet = scoreSheet;
 	}
-
-
 
 	public Student getStudent() {
 		return student;

@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * @Author : gcliang
+ * @Author : gcliang,stShen
  * @Date : 2016年6月23日
+ * @Update Date:2017年11月
  */
 public class UserFilter implements Filter {
 
@@ -33,20 +34,16 @@ public class UserFilter implements Filter {
 		// 取得当前访问系统根本目录对应的绝对路径
 		String currentUrl = request.getRequestURI();
 		String targetUrl = currentUrl.substring(currentUrl.indexOf("/", 1), currentUrl.length());
-//		if (currentUrl.indexOf("/teacher/show") != -1) {			
-//			HttpSession session = request.getSession();
-//			session.setAttribute("userid", " ");
-//			session.setMaxInactiveInterval(3600);						
-//		} 
-			// System.out.println("showUrl:"+showUrl);
+		
 			// 解决初次加载登陆界面时引用js，css错误
 			if (currentUrl.lastIndexOf(".") != -1) {
 				String checkUrl = currentUrl.substring(currentUrl.lastIndexOf("."), currentUrl.length());
 				if (!".woff".equals(checkUrl) && !".ttf".equals(checkUrl) && !".svg".equals(checkUrl) && !".eot".equals(checkUrl) && !".js".equals(checkUrl) && !".css".equals(checkUrl) && !".png".equals(checkUrl)
 						&& !".jpg".equals(checkUrl) && !".jpeg".equals(checkUrl)) {
 					// 比较当前访问的路径是不是登录页面路径
-					if (!"/index.jsp".equals(targetUrl)&&!"/login.jsp".equals(targetUrl) && !"/manage/register".equals(targetUrl)
-							&& !"/manage/check.action".equals(targetUrl)) {
+					if (!"/index.jsp".equals(targetUrl)&&!"/login.jsp".equals(targetUrl)&& !"/manage/login.action".equals(targetUrl)
+							&&!"/manage/check".equals(targetUrl)&&!"/manage/checkPassword".equals(targetUrl)
+							&&!"/student/codeCheck".equals(targetUrl)&&!"/manage/checkUser".equals(targetUrl)) {
 						// 判断当前页是否是重定向以后的登录页面页面，如果是就不做session的判断，防止出现死循环
 						HttpSession session = request.getSession(false);// false
 																		// 是获取不到session时不会重新new一个
@@ -60,7 +57,7 @@ public class UserFilter implements Filter {
 							PrintWriter out = response.getWriter();
 							out.flush();
 							out.println(
-									"<script>alert('登录超时，请重新登录。');window.location.href='../login.jsp';</script>");
+									"<script>alert('请登录后再访问。');window.location.href='../login.jsp';</script>");
 							out.close();
 							return;
 						}
@@ -71,8 +68,9 @@ public class UserFilter implements Filter {
 
 			else {
 				// 比较当前访问的路径是不是登录页面路径
-				if (!"/login.jsp".equals(targetUrl) && !"/manage/register".equals(targetUrl)
-						&& !"/manage/check.action".equals(targetUrl)) {
+				if (!"/login.jsp".equals(targetUrl) && !"/manage/check".equals(targetUrl)
+						&& !"/manage/login.action".equals(targetUrl)&&!"/manage/checkPassword".equals(targetUrl)
+						&&!"/student/codeCheck".equals(targetUrl)&&!"/manage/checkUser".equals(targetUrl)) {
 					// 判断当前页是否是重定向以后的登录页面页面，如果是就不做session的判断，防止出现死循环
 					HttpSession session = request.getSession(false);// false
 																	// 是获取不到session时不会重新new一个
@@ -86,7 +84,7 @@ public class UserFilter implements Filter {
 						PrintWriter out = response.getWriter();
 						out.flush();
 						out.println(
-								"<script>alert('登录超时，请重新登录。');window.location.href='../login.jsp';</script>");
+								"<script>alert('请登录后再访问。');window.location.href='../login.jsp';</script>");
 						out.close();
 						return;
 					}

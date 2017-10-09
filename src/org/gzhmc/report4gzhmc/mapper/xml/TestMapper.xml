@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.gzhmc.report4gzhmc.mapper.TestMapper" >
-  <resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.Test" >
-    <id column="cId" property="cId"   />
-    <result column="cTestName" property="cTestName"   />
-  </resultMap>
-  
-  <select id="getByExamTestId" resultType="int" parameterType="int">
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.TestMapper">
+	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.Test">
+		<id column="cId" property="cId" />
+		<result column="cTestName" property="cTestName" />
+	</resultMap>
+
+	<select id="getByExamTestId" resultType="int" parameterType="int">
 		select
 		count(*)
 		from gy_report_experimental_test
-		where cClassify = #{cTestId}
+		where cClassify =
+		#{cTestId}
 	</select>
-  <select id="getAll" resultMap="BaseResultMap" >
-    select 
-    *
-    from gy_report_test  order by cId desc 
-  </select>
-   <select id="getById" resultMap="BaseResultMap" parameterType="int" >
-    select 
-    *
-    from gy_report_test where cId = #{cId }
-  </select>
-  <delete id="delete" parameterType="int" >
-    delete from gy_report_test
-    where cId = #{cId }
-  </delete>
-  <insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Test" >
-    insert into gy_report_test (cId, cTestName)
-    values (#{cId }, #{cTestName })
-  </insert>
-  <insert id="insertSelective" parameterType="org.gzhmc.report4gzhmc.model.Test" useGeneratedKeys="true" keyProperty="cUserId">
-    insert into gy_report_test (cTestName) values(#{cTestName})
-   
-  </insert>
-  <update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Test" >
-    update gy_report_test
-    <set >
-      <if test="cTestName != null" >
-        cTestName = #{cTestName },
-      </if>
-    </set>
-    where cId = #{cId }
-  </update>
-  <update id="update" parameterType="org.gzhmc.report4gzhmc.model.Test" >
-    update gy_report_test
-    set cTestName = #{cTestName }
-    where cId = #{cId }
-  </update>
+	<select id="getAll" resultMap="BaseResultMap">
+		select
+		*
+		from gy_report_test order by cId desc
+	</select>
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		select
+		*
+		from gy_report_test where cId = #{cId }
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from gy_report_test
+		where cId = #{cId }
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Test">
+		insert into gy_report_test (cId, cTestName)
+		values (#{cId }, #{cTestName })
+	</insert>
+	<insert id="insertSelective" parameterType="org.gzhmc.report4gzhmc.model.Test"
+		useGeneratedKeys="true" keyProperty="cUserId">
+		insert into gy_report_test (cTestName) values(#{cTestName})
+
+	</insert>
+	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Test">
+		update gy_report_test
+		<set>
+			<if test="cTestName != null">
+				cTestName = #{cTestName },
+			</if>
+		</set>
+		where cId = #{cId }
+	</update>
+	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.Test">
+		update gy_report_test
+		set cTestName = #{cTestName }
+		where cId = #{cId }
+	</update>
 </mapper>

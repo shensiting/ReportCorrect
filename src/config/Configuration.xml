@@ -2,16 +2,16 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<!-- 配置实体对象 
-	<typeAliases>-->
-		<!-- 学院 实体
-		<typeAlias alias="College" type="org.gzhmc.report4gzhmc.model.College" /> -->
-	
-		<!-- 评分表 实体
-		<typeAlias alias="ScoreSheet" type="org.gzhmc.report4gzhmc.model.ScoreSheet" /> -->
-		<!-- 专业实体 
-		<typeAlias alias="Major" type="org.gzhmc.report4gzhmc.model.Major" />-->
-		<!-- 用户实体 
-		<typeAlias alias="User" type="org.gzhmc.report4gzhmc.model.User" />-->
-	<!--  </typeAliases> -->
+
+	<!-- 配置实体对象 <typeAliases> -->
+	<!-- 学院 实体 <typeAlias alias="College" type="org.gzhmc.report4gzhmc.model.College" 
+		/> -->
+
+	<!-- 评分表 实体 <typeAlias alias="ScoreSheet" type="org.gzhmc.report4gzhmc.model.ScoreSheet" 
+		/> -->
+	<!-- 专业实体 <typeAlias alias="Major" type="org.gzhmc.report4gzhmc.model.Major" 
+		/> -->
+	<!-- 用户实体 <typeAlias alias="User" type="org.gzhmc.report4gzhmc.model.User" 
+		/> -->
+	<!-- </typeAliases> -->
 </configuration>

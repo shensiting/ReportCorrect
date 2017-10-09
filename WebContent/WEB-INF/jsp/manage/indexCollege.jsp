@@ -5,20 +5,19 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8">
-
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
+<%@ include file="../common/userslib.jsp"%>
 
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
@@ -34,9 +33,10 @@
 <title>学院管理</title>
 <script type="text/javascript">
 //修改函数
-
-function showAddInput(){
-	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
+	function showAddInput() {
+		$("#addinfo").css('display', 'block');
+		$("#addinfo").css('text-align', 'center');
+	}
 /*添加*/
 function sumit(collegeform) {
 	$.ajax({
@@ -127,6 +127,9 @@ function sumit(collegeform) {
 				</tbody>
 			</table>
 		</div>
+		<div style="margin-top: 5%; height: 35px">
+			<%@include file="../common/footer.jsp"%>
+		</div>
 	</div>
 
 	<script type="text/javascript"
@@ -211,10 +214,7 @@ function sumit(collegeform) {
 						success : function(data) {
 							if (data.success) {
 								//删除成功，刷新页面
-								layer.msg('删除成功', {
-									icon : 6,
-									time : 4000
-								});	
+								alert("删除成功！");
 							} else {
 								alert(data.msg);	
 							}

@@ -1,64 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.gzhmc.report4gzhmc.mapper.TeacherGradeMapper" >
-  <resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.TeacherGrade" >
-    <id column="cId" property="cId" />
-    <result column="cTeacherId" property="cTeacherId"  />
-    <result column="cGradeId" property="cGradeId" />
-    <result column="cCreateTime" property="cCreateTime"  />
-    <result column="cStatus" property="cStatus" />   
-  </resultMap>
-  
-  <select id="getAllTeaGraByTeaIdAndStatu" resultMap="BaseResultMap" parameterType="int">
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.TeacherGradeMapper">
+	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.TeacherGrade">
+		<id column="cId" property="cId" />
+		<result column="cTeacherId" property="cTeacherId" />
+		<result column="cGradeId" property="cGradeId" />
+		<result column="cCreateTime" property="cCreateTime" />
+		<result column="cStatus" property="cStatus" />
+	</resultMap>
+
+	<select id="getAllTeaGraByTeaIdAndStatu" resultMap="BaseResultMap"
+		parameterType="int">
 		select * from gy_report_teacher_grade
-		where cStatus=1 and cTeacherId=#{cTeacherId}
+		where cStatus=1 and
+		cTeacherId=#{cTeacherId}
 	</select>
-  
-  <select id="getAll" resultMap="BaseResultMap">
-		select * from gy_report_teacher_grade
+	<select id="getByTeaIdAndGradeId" resultType="int">
+		select COUNT(*)
+		from gy_report_teacher_grade where cTeacherId=#{0} and cGradeId=#{1}
+	</select>
+	<select id="getCountByGradeId" resultType="int">
+		select COUNT(*) from
+		gy_report_teacher_grade where cGradeId=#{1}
+	</select>
+	<select id="getAll" resultMap="BaseResultMap">
+		select * from
+		gy_report_teacher_grade
 		order by cId desc
 	</select>
-  <select id="getById" resultMap="BaseResultMap" parameterType="int" >
-    select 
-    *
-    from gy_report_teacher_grade
-    where cId = #{cId }
-  </select>
-  <delete id="delete" parameterType="int" >
-    delete from gy_report_teacher_grade
-    where cId = #{cId }
-  </delete>
-  <insert id="add" parameterType="org.gzhmc.report4gzhmc.model.TeacherGrade" >
-    insert into gy_report_teacher_grade (cTeacherId, cGradeId, 
-      cCreateTime,cStatus)
-    values ( #{cTeacherId }, #{cGradeId }, 
-      #{cCreateTime },#{cStatus})
-  </insert>
- 
-  <update id="updateByPrimaryKeySelective" parameterType="org.gzhmc.report4gzhmc.model.TeacherGrade" >
-    update gy_report_teacher_grade
-    <set >
-      <if test="cTeacherId != null" >
-        cTeacherId = #{cTeacherId },
-      </if>
-      <if test="cGradeId != null" >
-        cGradeId = #{cGradeId },
-      </if>
-      <if test="cCreateTime != null" >
-        cCreateTime = #{cCreateTime },
-      </if>
-      <if test="cStatus != null" >
-        cStatus = #{cStatus },
-      </if>
-    </set>
-    where cId = #{cId }
-  </update>
-  <update id="update" parameterType="org.gzhmc.report4gzhmc.model.TeacherGrade" >
-    update gy_report_teacher_grade
-    set cTeacherId = #{cTeacherId },
-      cGradeId = #{cGradeId },
-      cStatus = #{cStatus },
-      cCreateTime = #{cCreateTime }
-    where cId = #{cId }
-  </update>
+	<select id="getById" resultMap="BaseResultMap" parameterType="int">
+		select
+		*
+		from gy_report_teacher_grade
+		where cId = #{cId }
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from gy_report_teacher_grade
+		where cId = #{cId }
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.TeacherGrade">
+		insert into gy_report_teacher_grade (cTeacherId, cGradeId,
+		cCreateTime,cStatus)
+		values ( #{cTeacherId }, #{cGradeId },
+		#{cCreateTime },#{cStatus})
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="org.gzhmc.report4gzhmc.model.TeacherGrade">
+		update gy_report_teacher_grade
+		<set>
+			<if test="cTeacherId != null">
+				cTeacherId = #{cTeacherId },
+			</if>
+			<if test="cGradeId != null">
+				cGradeId = #{cGradeId },
+			</if>
+			<if test="cCreateTime != null">
+				cCreateTime = #{cCreateTime },
+			</if>
+			<if test="cStatus != null">
+				cStatus = #{cStatus },
+			</if>
+		</set>
+		where cId = #{cId }
+	</update>
+	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.TeacherGrade">
+		update gy_report_teacher_grade
+		set cTeacherId = #{cTeacherId },
+		cGradeId = #{cGradeId },
+		cStatus = #{cStatus },
+		cCreateTime = #{cCreateTime }
+		where cId = #{cId }
+	</update>
 </mapper>

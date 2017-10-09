@@ -5,7 +5,7 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,7 +18,7 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
+<%@ include file="../common/userslib.jsp"%>
 
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
@@ -32,10 +32,12 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>实验报告管理系统</title>
-	<script type="text/javascript">
-		function showAddInput(){
-			 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
-		/*添加*/
+<script type="text/javascript">
+	function showAddInput() {
+		$("#addinfo").css('display', 'block');
+		$("#addinfo").css('text-align', 'center');
+	}
+	   /*添加*/
 		function sumit(majorform) {
 			$.ajax({
 				type : 'get',
@@ -65,7 +67,7 @@
 				
 		}
 		</script>
-		
+
 </head>
 <body>
 	<nav class="breadcrumb"> <i class="Hui-iconfont">&#xe67f;</i> 首页
@@ -75,15 +77,12 @@
 		href="javascript:location.replace(location.href);" title="刷新"><i
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="pd-20">
-			<div class="cl pd-5 bg-1 bk-gray mt-20">
-			<span class="l">
-			 <a href="javascript:;" onclick="deleteFunc()"
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;" onclick="deleteFunc()"
 				class="btn btn-danger radius"> <i class="Hui-iconfont">&#xe6e2;</i>批量删除
-			</a> 
-			<!-- article_add('专业添加','<%=basePath%>manage/addMajor','450','200','200') -->
-			<a class="btn btn-success radius"
-				onclick="showAddInput()" href="javascript:;"><i
-					class="Hui-iconfont">&#xe600;</i>单个添加</a>
+			</a> <!-- article_add('专业添加','<%=basePath%>manage/addMajor','450','200','200') -->
+				<a class="btn btn-success radius" onclick="showAddInput()"
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>单个添加</a>
 			</span> <span class="r">共有数据：<strong>${majorList.size() }</strong>条
 			</span>
 		</div>
@@ -104,7 +103,8 @@
 				class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"></th>
+						<th width="25"><input type="checkbox"
+							id="title-table-checkbox" name="title-table-checkbox"></th>
 						<th width="80">ID</th>
 						<th width="75%">专业列表</th>
 						<th width="20px">编辑</th>
@@ -118,16 +118,19 @@
 								value="${ item.cId}" /></td>
 							<td id="cId">${item.cId }</td>
 							<td id="cMajorName">${item.cMajorName }</td>
-							<td class="f-14 td-manage">
-							<a style="text-decoration: none" class="ml-5" id="edit"
-								href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a></td>
-								<td><a style="text-decoration: none" class="ml-5"
+							<td class="f-14 td-manage"><a style="text-decoration: none"
+								class="ml-5" id="edit" href="javascript:;" title="编辑"><i
+									class="Hui-iconfont">&#xe6df;</i></a></td>
+							<td><a style="text-decoration: none" class="ml-5"
 								onClick="article_del(this,'${ item.cId}')" href="javascript:;"
 								title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+		</div>
+		<div style="margin-top: 5%; height: 35px">
+			<%@include file="../common/footer.jsp"%>
 		</div>
 	</div>
 
@@ -207,13 +210,9 @@
 						success : function(data) {
 							if (data.success) {
 								//删除成功，刷新页面
-								layer.msg('删除成功', {
-									icon : 6,
-									time : 4000
-								});	
+								alert("删除成功！");
 							} else {
 								alert(data.msg);
-									
 							}
 							//刷新页面
 							location.reload();

@@ -179,7 +179,7 @@ function outFunc() {
 						</div>
 					</div>
 				</form>
-					<!-- Separator -->
+				<!-- Separator -->
 				<hr
 					style="height: 1px; border: none; border-top: 1px dashed #DDDDDD;" />
 				<form action="<%=basePath%>teacher/queryPdf">
@@ -210,7 +210,7 @@ function outFunc() {
 						</div>
 					</div>
 				</form>
-				
+
 				<!-- Column Checker -->
 				<div class="g_12">
 					<div class="widget_header wwOptions">

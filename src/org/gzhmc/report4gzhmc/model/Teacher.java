@@ -1,6 +1,8 @@
 package org.gzhmc.report4gzhmc.model;
+
 /**
  * 教师表
+ * 
  * @author stShen
  *
  */
@@ -9,7 +11,6 @@ public class Teacher {
 	private String cName;
 	private String cTeacherId;
 	private int cCollegeId;
-
 
 	public int getcUserId() {
 		return cUserId;

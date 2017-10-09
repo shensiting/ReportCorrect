@@ -2,6 +2,7 @@ package org.gzhmc.report4gzhmc.model;
 
 /**
  * 学院年级班级信息
+ * 
  * @author stShen
  */
 public class GradeMajorCollege {

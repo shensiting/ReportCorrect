@@ -6,9 +6,18 @@ public class StudentGrade {
 	private String cStudentNumber;
 	private int cGradeId;
 	private String cPicturePath;
+	private String cPhoneNum;
 	private Grade grade;
 	private Major major;
 	private College college;
+
+	public String getcPhoneNum() {
+		return cPhoneNum;
+	}
+
+	public void setcPhoneNum(String cPhoneNum) {
+		this.cPhoneNum = cPhoneNum;
+	}
 
 	public int getcUserId() {
 		return cUserId;

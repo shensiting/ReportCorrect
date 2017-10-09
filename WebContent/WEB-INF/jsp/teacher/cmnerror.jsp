@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -35,15 +35,23 @@ function showTime(){
   
 //执行showTime()  
 //showTime();
-</script>  
+</script>
 <body>
- <div style="width: 50%;height: 50%;margin: auto;padding-top: 10%" align="center">
- <h1 style="font-size: 60px;color: red;"><img src="<%=basePath %>images/smiley_004.png" alt="icon" style="width: 150px;height: 120px;"></h1>
-	<h2>糟糕！${message}</h2>
-	<img src="<%=basePath %>user/Images/Icons/Preview/house_home_building.png" alt="icon" style="width: 60px;height: 50px">
-	<br/>
-	<div><a href="<%=basePath %>${showpath}" style="text-decoration: underline;">点击返回</a></div>
-	</div> 
+	<div style="width: 50%; height: 50%; margin: auto; padding-top: 10%"
+		align="center">
+		<h1 style="font-size: 60px; color: red;">
+			<img src="<%=basePath %>images/smiley_004.png" alt="icon"
+				style="width: 150px; height: 120px;">
+		</h1>
+		<h2>糟糕！${message}</h2>
+		<img
+			src="<%=basePath %>user/Images/Icons/Preview/house_home_building.png"
+			alt="icon" style="width: 60px; height: 50px"> <br />
+		<div>
+			<a href="<%=basePath %>${showpath}"
+				style="text-decoration: underline;">点击返回</a>
+		</div>
+	</div>
 
 </body>
 </html>

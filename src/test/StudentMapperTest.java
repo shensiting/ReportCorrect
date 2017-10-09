@@ -25,14 +25,10 @@ public class StudentMapperTest {
 
 	@Test
 	public void testAdd() {
-		Student student = new Student();
-		student.setcUserId(3);
+		Student student = new Student();		
 		student.setcName("张三");
 		student.setcStudentNumber("1234567890");
-		student.setcGradeId(2);
-		student.setcPicturePath("c:/text/jpl.word");
-		
-
+		student.setcGradeId(2);				
 		int result = studentMapper.add(student);
 		System.out.println("add result :" + result);
 	}

@@ -1,107 +1,193 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.gzhmc.report4gzhmc.mapper.TopicThemeMapper" >
-  <resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.TopicTheme" >
-    <id column="cId" property="cId" jdbcType="INTEGER" />
-    <result column="cTitle" property="cTitle" jdbcType="VARCHAR" />
-    <result column="cLaunchId" property="cLaunchId" jdbcType="INTEGER" />
-    <result column="cCreateTime" property="cCreateTime" jdbcType="DATE" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="org.gzhmc.report4gzhmc.model.TopicTheme" extends="BaseResultMap" >
-    <result column="cContent" property="cContent" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    cId, cTitle, cLaunchId, cCreateTime
-  </sql>
-  <sql id="Blob_Column_List" >
-    cContent
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from gy_report_topictheme
-    where cId = #{cId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from gy_report_topictheme
-    where cId = #{cId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
-    insert into gy_report_topictheme (cId, cTitle, cLaunchId, 
-      cCreateTime, cContent)
-    values (#{cId,jdbcType=INTEGER}, #{cTitle,jdbcType=VARCHAR}, #{cLaunchId,jdbcType=INTEGER}, 
-      #{cCreateTime,jdbcType=DATE}, #{cContent,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
-    insert into gy_report_topictheme
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="cId != null" >
-        cId,
-      </if>
-      <if test="cTitle != null" >
-        cTitle,
-      </if>
-      <if test="cLaunchId != null" >
-        cLaunchId,
-      </if>
-      <if test="cCreateTime != null" >
-        cCreateTime,
-      </if>
-      <if test="cContent != null" >
-        cContent,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="cId != null" >
-        #{cId,jdbcType=INTEGER},
-      </if>
-      <if test="cTitle != null" >
-        #{cTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="cLaunchId != null" >
-        #{cLaunchId,jdbcType=INTEGER},
-      </if>
-      <if test="cCreateTime != null" >
-        #{cCreateTime,jdbcType=DATE},
-      </if>
-      <if test="cContent != null" >
-        #{cContent,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
-    update gy_report_topictheme
-    <set >
-      <if test="cTitle != null" >
-        cTitle = #{cTitle,jdbcType=VARCHAR},
-      </if>
-      <if test="cLaunchId != null" >
-        cLaunchId = #{cLaunchId,jdbcType=INTEGER},
-      </if>
-      <if test="cCreateTime != null" >
-        cCreateTime = #{cCreateTime,jdbcType=DATE},
-      </if>
-      <if test="cContent != null" >
-        cContent = #{cContent,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where cId = #{cId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
-    update gy_report_topictheme
-    set cTitle = #{cTitle,jdbcType=VARCHAR},
-      cLaunchId = #{cLaunchId,jdbcType=INTEGER},
-      cCreateTime = #{cCreateTime,jdbcType=DATE},
-      cContent = #{cContent,jdbcType=LONGVARCHAR}
-    where cId = #{cId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme" >
-    update gy_report_topictheme
-    set cTitle = #{cTitle,jdbcType=VARCHAR},
-      cLaunchId = #{cLaunchId,jdbcType=INTEGER},
-      cCreateTime = #{cCreateTime,jdbcType=DATE}
-    where cId = #{cId,jdbcType=INTEGER}
-  </update>
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.TopicThemeMapper">
+	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.TopicTheme">
+		<id column="cId" property="cId" jdbcType="INTEGER" />
+		<result column="cTitle" property="cTitle" />
+		<result column="cLaunchId" property="cLaunchId" />
+		<result column="cCreateTime" property="cCreateTime" />
+		<result column="cExperimentId" property="cExperimentId" />
+		<result column="cTopicStatus" property="cTopicStatus" />
+		<result column="cContent" property="cContent" />
+		<result column="cCommentNum" property="cCommentNum" />
+	</resultMap>
+
+	<select id="getByUserIdAndExamIdAndDate" resultMap="BaseResultMap">
+		select DISTINCT
+		tt.cCommentNum,tt.cCreateTime,tt.cId,tt.cTitle,tt.cTopicStatus
+		from
+		gy_report_user u,gy_report_experimental_test
+		et,gy_report_topictheme tt
+		where tt.cLaunchId=u.cId and tt.cExperimentId=et.cId
+		and
+		tt.cExperimentId=#{cExperimentId} and
+		u.cUserName=#{cUserName}
+		<if test="beginDate != null and beginDate != ''">AND
+			tt.cCreateTime <![CDATA[>=]]>
+			#{beginDate }
+		</if>
+		<if test="endDate != null and endDate != ''">AND
+			tt.cCreateTime <![CDATA[<=]]>#{endDate}
+		</if>
+	</select>
+	<select id="getCountMes" resultType="int">
+		select count(*) from
+		gy_report_topictheme tt,gy_report_topic_response tr
+		where tr.cTopicId=tt.cId and tr.cResponseStatus=0 and
+		tt.cLaunchId=#{cLaunchId}
+	</select>
+
+	<select id="getManageAll" resultMap="BaseResultMap">
+		select
+		cId,cTitle,cCreateTime,cTopicStatus,cLaunchId,cCommentNum
+		from
+		gy_report_topictheme
+		ORDER BY cId DESC LIMIT 0,400
+	</select>
+	<select id="getAll" resultMap="BaseResultMap" parameterType="int">
+		select
+		*
+		from gy_report_topictheme
+		where cTopicStatus = #{cTopicStatus} ORDER BY cId DESC
+	</select>
+	<select id="getCountAll" resultType="int">
+		select
+		count(*)
+		from gy_report_topictheme
+		where cTopicStatus = 1
+	</select>
+	<select id="getCountAllByExamId" resultType="int">
+		select
+		count(*)
+		from gy_report_topictheme
+		where cTopicStatus = 1 and cExperimentId=#{cExperimentId}
+	</select>
+	<select id="getCountAllByMes" resultType="int">
+		select
+		count(*)
+		from gy_report_topictheme
+		where cTopicStatus = 1 and cTitle like CONCAT(CONCAT('%', #{mes}), '%')
+	</select>
+	<select id="getPageAll" resultMap="BaseResultMap">
+		select
+		*
+		from gy_report_topictheme
+		where cTopicStatus = 1 ORDER BY cId DESC LIMIT #{0},#{1}
+	</select>
+	<select id="getPageAllByExamId" resultMap="BaseResultMap">
+		select
+		*
+		from gy_report_topictheme
+		where cTopicStatus = 1 and cExperimentId=#{0} ORDER BY cId DESC LIMIT
+		#{1},#{2}
+	</select>
+	<select id="getPageAllByMes" resultMap="BaseResultMap">
+		select
+		*
+		from gy_report_topictheme
+		where cTopicStatus = 1 and cTitle like CONCAT(CONCAT('%', #{0}), '%') ORDER
+		BY cId DESC LIMIT #{1},#{2}
+	</select>
+	<select id="getByLaunchId" resultMap="BaseResultMap"
+		parameterType="int">
+		select
+		cId, cTitle,cCreateTime, cTopicStatus,cCommentNum
+		from gy_report_topictheme
+		where cLaunchId = #{cLaunchId} ORDER BY cId DESC
+	</select>
+
+	<select id="getByLaunchIdAndExamId" resultMap="BaseResultMap"
+		parameterType="int">
+		select
+		cId, cTitle,cCreateTime, cTopicStatus,cCommentNum
+		from gy_report_topictheme
+		where cLaunchId = #{0} and cExperimentId=#{1} ORDER BY cCreateTime DESC
+	</select>
+	<select id="getByExamId" resultMap="BaseResultMap"
+		parameterType="int">
+		select
+		cId, cTitle,cCreateTime, cTopicStatus,cCommentNum
+		from gy_report_topictheme
+		where cTopicStatus = 0 and cExperimentId=#{cExperimentId} ORDER BY cId DESC
+	</select>
+	<select id="getByExamIdExceptStatus" resultMap="BaseResultMap"
+		parameterType="int">
+		select
+		cId, cTitle,cCreateTime, cTopicStatus,cCommentNum
+		from gy_report_topictheme
+		where cExperimentId=#{cExperimentId} ORDER BY cId DESC
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="int">
+		select
+		*
+		from gy_report_topictheme
+		where cId = #{cId}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="int">
+		delete from gy_report_topictheme
+		where cId = #{cId}
+	</delete>
+	<insert id="insert" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme">
+		insert into gy_report_topictheme (cTitle, cLaunchId,
+		cCreateTime, cExperimentId, cTopicStatus,
+		cContent)
+		values (#{cTitle}, #{cLaunchId},
+		#{cCreateTime}, #{cExperimentId}, #{cTopicStatus},
+		#{cContent})
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme">
+		update gy_report_topictheme
+		<set>
+			<if test="cTitle != null">
+				cTitle = #{cTitle},
+			</if>
+			<if test="cLaunchId != null">
+				cLaunchId = #{cLaunchId},
+			</if>
+			<if test="cCreateTime != null">
+				cCreateTime = #{cCreateTime},
+			</if>
+			<if test="cExperimentId != null">
+				cExperimentId = #{cExperimentId},
+			</if>
+			<if test="cTopicStatus != null">
+				cTopicStatus = #{cTopicStatus},
+			</if>
+			<if test="cContent != null">
+				cContent = #{cContent},
+			</if>
+			<if test="cCommentNum != null">
+				cCommentNum=#{cCommentNum},
+			</if>
+		</set>
+		where cId = #{cId}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.gzhmc.report4gzhmc.model.TopicTheme">
+		update gy_report_topictheme
+		set cTitle = #{cTitle},
+		cLaunchId = #{cLaunchId},
+		cCreateTime = #{cCreateTime},
+		cExperimentId = #{cExperimentId},
+		cTopicStatus = #{cTopicStatus},
+		cCommentNum=#{cCommentNum},
+		cContent = #{cContent}
+		where cId = #{cId}
+	</update>
+	<update id="addComment">
+		update gy_report_topictheme set cCommentNum=cCommentNum+1
+		where cId = #{cId}
+	</update>
+	<update id="subComment">
+		update gy_report_topictheme set cCommentNum=cCommentNum-1
+		where cId = #{cId}
+	</update>
+	<update id="updateStatus">
+		update gy_report_topictheme
+		set
+		cTopicStatus = #{0},
+		cCommentNum=#{1}
+		where cId = #{2}
+	</update>
 </mapper>

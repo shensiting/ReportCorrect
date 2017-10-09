@@ -12,10 +12,9 @@
 
 </head>
 <body>
-	<div class="row-fluid">
-		<div id="footer" class="span12">
-			2016 &copy; Design By <a> Crazy Code </a>
-		</div> 
-	</div>
+
+	<footer class="footer"> Copyright &copy; 2017, Crazy Code, All
+		Rights Reserved </footer>
+
 </body>
 </html>

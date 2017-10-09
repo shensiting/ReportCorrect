@@ -1,8 +1,10 @@
 package org.gzhmc.report4gzhmc.model;
 
 import java.util.Date;
+
 /**
  * 成绩表
+ * 
  * @author stShen
  *
  */
@@ -16,13 +18,13 @@ public class ScoreSheet {
 	private Double cSum;
 	private String cComment;
 	private Date cCreateTime;
-	private Double cConclution;
+	private String cConclution;
 
-	public Double getcConclution() {
+	public String getcConclution() {
 		return cConclution;
 	}
 
-	public void setcConclution(Double cConclution) {
+	public void setcConclution(String cConclution) {
 		this.cConclution = cConclution;
 	}
 

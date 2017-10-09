@@ -6,7 +6,8 @@
 		<result column="cName" property="cName" />
 		<result column="cStudentNumber" property="cStudentNumber" />
 		<result column="cGradeId" property="cGradeId" />
-		<result column="cPicturePath" property="cPicturePath" />	
+		<result column="cPicturePath" property="cPicturePath" />
+		<result column="cPhoneNum" property="cPhoneNum" />
 		<association property="grade" javaType="org.gzhmc.report4gzhmc.model.Grade">
 			<id column="cId" property="cId" />
 			<result column="cYearClass" property="cYearClass" />
@@ -22,22 +23,24 @@
 
 	<select id="getAll" resultMap="BaseResultMap">
 		select
-		student.cUserId,student.cName,student.cStudentNumber,student.cGradeId,student.cPicturePath,
+		student.cUserId,student.cName,student.cStudentNumber,student.cGradeId,student.cPicturePath,student.cPhoneNum,
 		grade.cId,grade.cYearClass,grade.cClass,major.cMajorName,college.cCollegeName
 		from gy_report_grade grade,gy_report_major major,gy_report_college
 		college,gy_report_student student
 		where
-		major.cId=grade.cMajorId and college.cId=grade.cCollegeId and student.cGradeId=grade.cId
+		major.cId=grade.cMajorId and
+		college.cId=grade.cCollegeId and student.cGradeId=grade.cId
 	</select>
 
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select
-		student.cUserId,student.cName,student.cStudentNumber,student.cGradeId,student.cPicturePath,
+		student.cUserId,student.cName,student.cStudentNumber,student.cGradeId,student.cPicturePath,student.cPhoneNum,
 		grade.cId,grade.cYearClass,grade.cClass,major.cMajorName,college.cCollegeName
 		from gy_report_grade grade,gy_report_major major,gy_report_college
 		college,gy_report_student student
 		where
-		major.cId=grade.cMajorId and college.cId=grade.cCollegeId and student.cGradeId=grade.cId and
+		major.cId=grade.cMajorId and
+		college.cId=grade.cCollegeId and student.cGradeId=grade.cId and
 		student.cUserId=#{cId}
 	</select>
 </mapper>

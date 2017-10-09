@@ -1,8 +1,9 @@
 package org.gzhmc.report4gzhmc.model;
+
 /**
  * @author stshen
  *
- * 2017年9月23日
+ *         2017年9月23日
  */
 public class Experiment {
 	private int cId;
@@ -12,9 +13,8 @@ public class Experiment {
 	private String cExperimentTime;
 
 	private String cExperimentEnglishName;
-	
-	private int cClassify;
 
+	private int cClassify;
 
 	public int getcClassify() {
 		return cClassify;

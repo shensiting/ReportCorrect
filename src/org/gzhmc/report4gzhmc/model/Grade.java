@@ -1,6 +1,8 @@
 package org.gzhmc.report4gzhmc.model;
+
 /**
  * 班级表
+ * 
  * @author stShen
  *
  */

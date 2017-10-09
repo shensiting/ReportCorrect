@@ -8,10 +8,19 @@ public class GradeExam {
 	private int cExperimentId;
 	private int cStatus;
 	private Date cCreateTime;
+	private int cSubmitForm;
 	private Grade grade;
 	private Major major;
 	private College college;
 	private ExperimentalTest experiment;
+
+	public int getcSubmitForm() {
+		return cSubmitForm;
+	}
+
+	public void setcSubmitForm(int cSubmitForm) {
+		this.cSubmitForm = cSubmitForm;
+	}
 
 	public int getcStatus() {
 		return cStatus;

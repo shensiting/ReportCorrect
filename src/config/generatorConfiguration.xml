@@ -6,7 +6,7 @@
 	<!-- 数据库驱动 -->
 	<!-- 路径是当前项目目录中的数据库驱动路径 -->
 	<classPathEntry
-		location="D:/github/ReportCorrect/WebContent/WEB-INF/lib/mysql-connector-java-5.1.13-bin.jar" />		
+		location="C:/Users/lenovo/git/ReportCorrect/WebContent/WEB-INF/lib/mysql-connector-java-5.1.13-bin.jar" />
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
@@ -38,12 +38,12 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成哪个表和生成实体的类名 -->
-		<table tableName="gy_report_experimental_test" domainObjectName="TeacherGrade"
+		<table tableName="gy_report_topic_response" domainObjectName="TopicResponse"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
-			 <!-- 关闭驼峰式命名 与数据库字段名称一致 -->
-			<property name="useActualColumnNames" value="true" /> 
+			<!-- 关闭驼峰式命名 与数据库字段名称一致 -->
+			<property name="useActualColumnNames" value="true" />
 		</table>
 
 	</context>

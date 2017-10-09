@@ -5,21 +5,19 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8">
-
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta name="renderer" content="webkit|ie-comp|ie-stand" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-
+<%@ include file="../common/userslib.jsp"%>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
 <script type="text/javascript" src="<%=basePath%>users/lib/respond.min.js"></script>
@@ -32,35 +30,42 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>教师班级管理</title>
+<style type="text/css">
+.editor td {
+	text-align: center;
+}
+</style>
 <script type="text/javascript">
 //修改函数
 
-function showAddInput(){
-	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
-	 
-
+	function showAddInput() {
+		$("#addinfo").css('display', 'block');
+		$("#addinfo").css('text-align', 'center');
+	}
 /*添加*/
-function sumit(teacherform) {
-	var cGradeId = teacherform.cGradeId.value;	 
-	$.ajax({
-		type : 'get',
-		dataType : 'json',
-		async: false,
-		url : '<%=basePath%>teacher/addTeacherGrade?cGradeId=' + cGradeId+ '',
-			success : function(data) {
-				if (data.success) {
-					alert("关联成功！");
-
-				} else {
-					alert("操作失败，请重新操作");
-					
-				}
-
-			},
-			error : function() {
-				alert("服务器异常，请稍候再试！");
-			}
-		});
+function sumit() {
+	var cGradeId = $("#cGradeId").val(); 
+	if(cGradeId==""){
+		alert("班级不能为空！");
+	}else{
+		$.ajax({
+			type : 'get',
+			dataType : 'json',
+			async: false,
+			url : '<%=basePath%>teacher/addTeacherGrade?cGradeId='+ cGradeId + '',
+					success : function(data) {
+						if (data.success) {
+							alert(data.msg);
+							location.reload();
+						} else {
+							alert(data.msg);
+						}
+					},
+					error : function() {
+						alert("服务器异常，请稍候再试！");
+					}
+				});
+		}
 
 	}
 	//一级引起二级的变化  
@@ -83,7 +88,10 @@ function sumit(teacherform) {
 							$.each(data, function(index, item) {
 								//填充内容  
 								$("#cGradeId").append(
-										"<option value='"+item.cId+"'>"+ item.cYearClass + ""+ item.cMajorName + ""+ item.cClass + "</option>");
+										"<option value='"+item.cId+"'>"
+												+ item.cYearClass + ""
+												+ item.cMajorName + ""
+												+ item.cClass + "</option>");
 							});
 						}
 					});
@@ -92,13 +100,12 @@ function sumit(teacherform) {
 </script>
 </head>
 <body>
-	<nav class="breadcrumb">教师班级关联管理
-	<a
+	<nav class="breadcrumb">教师班级关联管理 <a
 		class="btn btn-success radius r mr-20"
 		style="line-height: 1.6em; margin-top: 3px"
 		href="javascript:location.replace(location.href);" title="刷新"><i
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
-		
+
 	<div class="pd-20">
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l"> <a class="btn btn-success radius"
@@ -107,7 +114,7 @@ function sumit(teacherform) {
 			</span> <span class="r">共有数据：<strong>${teacherGrades.size() }</strong>条
 			</span>
 		</div>
-		
+
 		<div style="display: none;" id="addinfo" class="pd-20">
 			<form class="form-horizontal" method="post" action=""
 				name="basic_validate" id="basic_validate">
@@ -117,7 +124,7 @@ function sumit(teacherform) {
 						<span class="select-box"> <select name="cCollege"
 							id="cCollege" class="select" size="1" datatype="*"
 							nullmsg="请选择学院！">
-							<option>----请选择学院----</option>	
+								<option value="">----请选择学院----</option>
 								<c:forEach var="Collegeitem" items="${colleges}">
 									<option value="${Collegeitem.cId }">${Collegeitem.cCollegeName}</option>
 								</c:forEach>
@@ -128,13 +135,13 @@ function sumit(teacherform) {
 					<div class="formControls col-3">
 						<span class="select-box"> <select name="cGradeId"
 							id="cGradeId" class="select" size="1" datatype="*"
-							nullmsg="请选择隶属班级！">		
-							<option>----请选择班级----</option>						
+							nullmsg="请选择隶属班级！">
+								<option value="">----请选择班级----</option>
 						</select></span>
 					</div>
-					<button style="width: 100px; padding-right: 20px" type="submit"
-						class="btn btn-primary radius" onclick="sumit(this.form)" id=""
-						name="">关联</button>
+					<a style="width: 100px; padding-right: 20px" type="submit"
+						class="btn btn-primary radius" onclick="sumit()" id="" name=""
+						href="javascript:;">关联</a>
 				</div>
 
 			</form>
@@ -148,7 +155,7 @@ function sumit(teacherform) {
 						<th>教师工号</th>
 						<th>教师姓名</th>
 						<th>关联班级</th>
-						<th>关联班级ID</th>
+						<th width="50px">关联班级ID</th>
 						<th>状态</th>
 						<th width="35px">删除</th>
 					</tr>
@@ -180,6 +187,9 @@ function sumit(teacherform) {
 					</c:forEach>
 				</tbody>
 			</table>
+		</div>
+		<div style="margin-top: 5%; height: 35px">
+			<%@include file="../common/footer.jsp"%>
 		</div>
 	</div>
 
@@ -248,8 +258,7 @@ function sumit(teacherform) {
 					}
 						});
 				});
-		}
-		
+		}		
 	</script>
 </body>
 </html>

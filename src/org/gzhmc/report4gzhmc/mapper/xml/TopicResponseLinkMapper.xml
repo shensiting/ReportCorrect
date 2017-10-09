@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.gzhmc.report4gzhmc.mapper.TopicResponseLinkMapper">
+	<resultMap id="BaseResultMap"
+		type="org.gzhmc.report4gzhmc.model.TopicResponseLink">
+		<id column="cId" property="cId" />
+		<result column="cTopicId" property="cTopicId" />
+		<result column="cCreateTime" property="cCreateTime" />
+		<result column="cLaunchId" property="cLaunchId" />
+		<result column="cContent" property="cContent" />
+		<result column="cResponseStatus" property="cResponseStatus" />
+		<association property="user" javaType="org.gzhmc.report4gzhmc.model.User">
+			<result column="cUserName" property="cUserName" />
+		</association>
+		<collection property="experiment"
+			javaType="org.gzhmc.report4gzhmc.model.Experiment">
+			<result column="cExperimentName" property="cExperimentName" />
+		</collection>
+		<collection property="topicTheme"
+			javaType="org.gzhmc.report4gzhmc.model.TopicTheme">
+			<result column="cTitle" property="cTitle" />
+		</collection>
+	</resultMap>
+	<select id="getByUserIdAndExamIdAndDate" resultMap="BaseResultMap">
+		select DISTINCT
+		tr.cId,tr.cContent,tr.cCreateTime,tr.cId,u.cUserName,u.cRole,et.cExperimentName
+		from
+		gy_report_topic_response tr,gy_report_user
+		u,gy_report_experimental_test
+		et,gy_report_topictheme tt
+		where
+		tr.cLaunchId=u.cId and tt.cId=tr.cTopicId and tt.cExperimentId=et.cId
+		and tt.cExperimentId=#{cExperimentId} and
+		u.cUserName=#{cUserName}
+		<if test="beginDate != null and beginDate != ''">AND
+			tr.cCreateTime <![CDATA[>=]]>
+			#{beginDate }
+		</if>
+		<if test="endDate != null and endDate != ''">AND
+			tr.cCreateTime <![CDATA[<=]]>#{endDate}
+		</if>
+	</select>
+	<select id="getByUserId" resultMap="BaseResultMap">
+		select DISTINCT
+		tr.cTopicId,tr.cId,tr.cCreateTime,tt.cTitle
+		from
+		gy_report_topic_response tr,gy_report_topictheme tt
+		where
+		tt.cId=tr.cTopicId and tr.cLaunchId=#{cLaunchId}
+		ORDER BY tr.cId DESC
+	</select>
+	<select id="getAllByUserId" resultMap="BaseResultMap">
+		select DISTINCT
+		tr.cTopicId,tr.cId,tr.cCreateTime,tt.cTitle,tr.cResponseStatus
+		from
+		gy_report_topic_response tr,gy_report_topictheme tt
+		where
+		tt.cId=tr.cTopicId and tt.cLaunchId=#{cLaunchId}
+		ORDER BY tr.cId DESC
+	</select>
+	<select id="getAllByUserIdAndExamId" resultMap="BaseResultMap">
+		select DISTINCT
+		tr.cTopicId,tr.cId,tr.cCreateTime,tt.cTitle,tt.cExperimentId,tr.cResponseStatus
+		from
+		gy_report_topic_response tr,gy_report_topictheme
+		tt,gy_report_experimental_test et
+		where tt.cId=tr.cTopicId and
+		et.cId=tt.cExperimentId and tt.cLaunchId=#{0} and
+		tt.cExperimentId=#{1}
+		ORDER BY tr.cId DESC
+	</select>
+	<select id="getByUserIdAndExamId" resultMap="BaseResultMap">
+		select DISTINCT
+		tr.cTopicId,tr.cId,tr.cCreateTime,tt.cTitle
+		from
+		gy_report_topic_response tr,gy_report_experimental_test
+		et,gy_report_topictheme tt
+		where tt.cId=tr.cTopicId and
+		tt.cExperimentId=et.cId and tr.cLaunchId=#{0} and
+		tt.cExperimentId=#{1}
+		ORDER BY tr.cId DESC
+	</select>
+
+
+</mapper>

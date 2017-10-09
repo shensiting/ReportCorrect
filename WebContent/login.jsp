@@ -20,9 +20,9 @@
 <script type="text/javascript" src="<%=basePath%>users/lib/respond.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>users/lib/PIE_IE678.js"></script>
 <![endif]-->
-<script src="<%=basePath%>manage/js/jquery.min.js"></script>
+<script src="<%=basePath%>users/js/jquery.min.js"></script>
 
-<script src="<%=basePath%>manage/js/md5.js"></script>
+<script src="<%=basePath%>users/js/md5.js"></script>
 <link href="<%=basePath%>users/css/H-ui.min.css" rel="stylesheet" />
 <link href="<%=basePath%>users/css/H-ui.login.css" rel="stylesheet" />
 <link href="<%=basePath%>users/css/style.css" rel="stylesheet" />
@@ -33,33 +33,108 @@
 <![endif]-->
 <title>学生实验报告登录</title>
 <script type="text/javascript">
-function login(loginform){//传入表单参数  
-	var number=loginform.number.value;
-	var password=md5(loginform.password.value);
-	var code=loginform.code.value;	
-	//var password=md5(md5(loginform.password.value));
-    if(number!=""&&password!=""&&code!=""){  
-    $.ajax({
-    	type : 'get',
-		dataType : 'json',	
-		async: false,
-		url:'<%=basePath%>manage/check.action?number='+number+'&password='+password+'&code='+code+'',
-		success:function(data){
-            if(data.success){    
-            	var path='<%=basePath%>' + data.msg;
-						document.forms[0].action = path;
-						
-						document.forms[0].submit();
-					} else {
-						alert(data.msg);						
+
+	$(function() {
+		var flag1 = false;
+		var flag2 = false;
+		var flag3 = false;
+		$("#number").blur(
+		function() {
+			var number = $("#number").val();
+			if ($.trim(number) == ''
+					|| $.trim(number).length < 4
+					|| $.trim(number).length > 15) {
+				$("#userspan").html("<font color='red'>用户名不能为空，且用户名长度为5-15</font>");
+				flag1 = false;
+			} else{
+				$.ajax({
+					type : 'POST',
+					dataType : 'json',
+					async : false,
+					url : '<%=basePath%>manage/checkUser?number='+number,
+					success:function(data){
+			            if(data.success){    
+			            	  flag2 = true;		
+			            	  $("#userspan").html("");
+			            }else{
+			            	flag2=false;
+			            	$("#userspan").html("<font color='red'>用户名不存在</font>");
+			            }
+					 },
+					error : function() {
+						 flag2 = false;
+						alert("服务器异常，请稍候再试！");				
 					}
-				},
-				error : function() {
-					alert("服务器异常，请稍候再试！");				
-				}
-			});
-		}
+						
+				});
+			}
+	    });
+  
+		
+function checkPwd(number,password) {	
+		password=md5(password);	
+		var flag=0;
+		$.ajax({
+			type : 'POST',
+			dataType : 'json',
+			async : false,
+			url : '<%=basePath%>manage/checkPassword?number='+number+'&password='+password+'',
+			success:function(data){
+	            if(data.success){    	            	 	            	            	  
+	            	 flag=1;
+	            }else{	            	
+	            	$("#pswspan").html("<font color='red'>密码错误</font>");
+	            	
+	            }
+			 },
+			error : function() {				
+				alert("服务器异常，请稍候再试！");					
+			}				
+		});
+    return flag;
 	}
+
+				
+
+		$("#formButton").click(function() {
+			var code = $("#code").val();
+			var number = $("#number").val();
+			var password = $("#password").val();
+			if ($.trim(password) == "") {
+				$("#pswspan").html("<font color='red'>密码不能为空</font>");
+				flag2 = false;
+			}
+			else if ($.trim(code) == "") {
+				$("#codespan").html("<font color='red'>验证码不能为空</font>");				
+			} else {											
+				$.ajax({
+					type : 'POST',
+					dataType : 'json',
+					async: false,
+					url : '<%=basePath%>student/codeCheck?code='+code+'',
+						success : function(data) {
+							if (data.success) {									
+								if (checkPwd(number,password)=='1') {
+									document.forms[0].submit();
+									//$("#codespan").html("<font color='red'>登录成功</font>");	
+								}
+							}else{	
+								var url = '<%=basePath%>manage/check?number='+Math.random()+'';  
+							    $("#img").attr("src",url);  
+								$("#codespan").html("<font color='red'>验证码填写错误</font>");	
+							}
+						},
+						error : function() {
+							 flag3= false;
+							alert("服务器异常，请稍候再试！");
+						}
+					});			
+			}			
+			
+		})
+
+	});
+
 
 
 $(function(){
@@ -75,43 +150,53 @@ $(function(){
 	<div class="header"></div>
 	<div class="loginWraper">
 		<div id="loginform" class="loginBox">
-			<form id="loginform" class="form form-horizontal" action=""
-				method="post">
+			<form id="loginform" class="form form-horizontal"
+				action="<%=basePath %>manage/login.action" method="post">
 				<div class="row cl">
 					<label class="form-label col-3"><i class="Hui-iconfont">&#xe60d;</i></label>
-					<div class="formControls col-8">
+					<div class="formControls col-6">
 						<input id="number" name="number" value="${ScId }" placeholder="账户"
-							required="required" class="input-text size-L">
+							required="required" class="input-text size-L"> <span
+							id="userspan"></span>
 					</div>
+
 				</div>
+
 				<div class="row cl">
 					<label class="form-label col-3"><i class="Hui-iconfont">&#xe60e;</i></label>
-					<div class="formControls col-8">
+					<div class="formControls col-6">
 						<input id="password" name="password" type="password"
 							value="${ScPasswordd }" required="required" placeholder="密码"
-							class="input-text size-L">
+							class="input-text size-L"><span id="pswspan"></span>
 					</div>
 				</div>
 				<div class="row cl">
-        <div class="formControls col-8 col-offset-3">
-          <input name="code" class="input-text size-L" required="required" type="text" placeholder="请输入验证码"  style="width:150px;">
-       <img  id="img" src="<%=basePath%>manage/check" > <a id="take">看不清，换一个</a></div>
-      </div> 
-       <!--  <div class="row">
+					<div class="formControls col-8 col-offset-3">
+						<input name="code" id="code" class="input-text size-L"
+							required="required" type="text" placeholder="请输入验证码"
+							style="width: 150px;"> <img id="img"
+							src="<%=basePath%>manage/check"> <a id="take">看不清，换一个
+							&nbsp;&nbsp;&nbsp;</a> <span id="codespan"></span>
+					</div>
+
+				</div>
+
+				<!--  <div class="row">
     <div class="formControls col-8 col-offset-3">
           <label for="online">
             <input type="checkbox" name="online" id="online" value="">
             使我保持登录状态</label>
         </div>  
-      </div>--> 
+      </div>-->
 				<div style="margin-top: 40px" class="row">
 					<div class="formControls col-8 col-offset-3">
-						<input name="" type="submit" class="btn btn-success radius size-L"
-							value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;"
-							onclick="login(this.form)"> &nbsp;&nbsp; &nbsp;&nbsp;
-						&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; <input
-							name="" type="reset" class="btn btn-default radius size-L"
+						<input name="formButton" id="formButton" type="button"
+							class="btn btn-success radius size-L"
+							value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
+						&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+						&nbsp;&nbsp; &nbsp;&nbsp; <input name="" type="reset"
+							class="btn btn-default radius size-L"
 							value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
 					</div>
 				</div>

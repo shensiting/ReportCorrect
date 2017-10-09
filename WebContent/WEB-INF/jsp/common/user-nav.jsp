@@ -19,14 +19,16 @@
 </script>
 </head>
 <body>
-	<div id="user-nav" class="navbar navbar-inverse" >
+	<div id="user-nav" class="navbar navbar-inverse">
 		<ul class="nav btn-group">
 			<li class="btn btn-inverse dropdown"><a href="#"
 				data-toggle="dropdown" data-target="#menu-messages"
-				class="dropdown-toggle"  style="width:80px"><i class="icon icon-user"></i> <span
-					class="text">Hello</span> <b class="caret"></b></a>
+				class="dropdown-toggle" style="width: 80px"><i
+					class="icon icon-user"></i> <span class="text">Hello</span> <b
+					class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a class="sAdd" title="" href="<%=basePath_nav%>manage/exit">退出</a></li>
+					<li><a class="sAdd" title=""
+						href="<%=basePath_nav%>manage/exit">退出</a></li>
 					<!-- <li><a class="sInbox" title="" href="#">inbox</a></li>
 					<li><a class="sOutbox" title="" href="#">outbox</a></li>
 					<li><a class="sAdd" title="" href="#">Logout</a></li> -->

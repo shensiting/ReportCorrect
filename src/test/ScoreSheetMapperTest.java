@@ -20,7 +20,7 @@ public class ScoreSheetMapperTest {
 	public void testAdd() {
 		ScoreSheet scoreSheet=new ScoreSheet();
 		scoreSheet.setcComment("很好，表现良好");
-		scoreSheet.setcConclution(2.3);
+		
 		scoreSheet.setcCreateTime(new Date());
 		scoreSheet.setcExperiment(2.4);
 		scoreSheet.setcId(423);

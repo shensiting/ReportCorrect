@@ -5,7 +5,6 @@ public class TeacherCollege {
 	private String cName;
 	private String cTeacherId;
 	private int cCollegeId;
-	
 
 	private College college;
 

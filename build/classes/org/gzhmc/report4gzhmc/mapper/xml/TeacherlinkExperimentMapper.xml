@@ -8,7 +8,7 @@
 		<result column="cExperimentalTestId" property="cExperimentalTestId" />
 		<association property="teacher"
 			javaType="org.gzhmc.report4gzhmc.model.Teacher">
-			<result column="TcTeacherId" property="cTeacherId" />
+			<result column="cTeacherId" property="cTeacherId" />
 			<result column="cName" property="cName" />
 		</association>
 		<collection property="experimentalTest"

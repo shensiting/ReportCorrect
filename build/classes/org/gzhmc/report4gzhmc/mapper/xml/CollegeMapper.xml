@@ -5,19 +5,21 @@
 		<id column="cId" property="cId" />
 		<result column="cCollegeName" property="cCollegeName" />
 	</resultMap>
-	
+
 	<select id="getByGradeCollegeId" resultType="int" parameterType="int">
 		select
 		count(*)
 		from gy_report_grade
 		where cCollegeId = #{cCollegeId}
 	</select>
-	
-	 <select id="getByTeacherCollegeId" resultType="int" parameterType="int">
+
+	<select id="getByTeacherCollegeId" resultType="int"
+		parameterType="int">
 		select
 		count(*)
 		from gy_report_teacher
-		where cCollegeId = #{cCollegeId}
+		where cCollegeId =
+		#{cCollegeId}
 	</select>
 	<select id="getAll" resultMap="BaseResultMap">
 		select * from gy_report_college

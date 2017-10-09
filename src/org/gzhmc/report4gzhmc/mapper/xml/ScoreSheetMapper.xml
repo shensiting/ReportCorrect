@@ -3,14 +3,14 @@
 <mapper namespace="org.gzhmc.report4gzhmc.mapper.ScoreSheetMapper">
 	<resultMap id="BaseResultMap" type="org.gzhmc.report4gzhmc.model.ScoreSheet">
 		<id column="cId" property="cId" />
-		<result column="cTherory" property="cTherory"  />
-		<result column="cReagen" property="cReagen"  />
-		<result column="cInserument" property="cInserument"  />
-		<result column="cExperiment" property="cExperiment"  />
-		<result column="cLabresult" property="cLabresult"  />
-		<result column="cSum" property="cSum"  />
+		<result column="cTherory" property="cTherory" />
+		<result column="cReagen" property="cReagen" />
+		<result column="cInserument" property="cInserument" />
+		<result column="cExperiment" property="cExperiment" />
+		<result column="cLabresult" property="cLabresult" />
+		<result column="cSum" property="cSum" />
 		<result column="cComment" property="cComment" />
-		<result column="cCreateTime" property="cCreateTime"  />
+		<result column="cCreateTime" property="cCreateTime" />
 		<result column="cConclution" property="cConclution" />
 	</resultMap>
 	<select id="getAll" resultMap="BaseResultMap">
@@ -19,30 +19,37 @@
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select
 		cId, cTherory, cReagen, cInserument, cExperiment,
-		cLabresult, cSum, cCreateTime,cConclution
+		cLabresult,
+		cSum, cCreateTime,cConclution
 		from gy_report_scoresheet
-		where cId = #{cId}
+		where cId =
+		#{cId}
 	</select>
 	<delete id="delete" parameterType="int">
-		delete from gy_report_scoresheet
+		delete from
+		gy_report_scoresheet
 		where cId = #{cId}
 	</delete>
-	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.ScoreSheet" useGeneratedKeys="true" keyProperty="cId">
-		insert into gy_report_scoresheet ( cTherory,
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.ScoreSheet"
+		useGeneratedKeys="true" keyProperty="cId">
+		insert into gy_report_scoresheet (
+		cTherory,
 		cReagen, cInserument, cExperiment,
 		cLabresult, cSum, cComment,
 		cCreateTime,cConclution)
 		values (
 		#{cTherory },
-		#{cReagen }, #{cInserument }, #{cExperiment },
-		#{cLabresult }, #{cSum }, #{cComment},
+		#{cReagen },
+		#{cInserument }, #{cExperiment },
+		#{cLabresult }, #{cSum },
+		#{cComment},
 		#{cCreateTime }, #{cConclution})
 	</insert>
 
 	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.ScoreSheet">
 		update gy_report_scoresheet
 		<set>
-			
+
 			<if test="cTherory != null">
 				cTherory = #{cTherory },
 			</if>
@@ -66,8 +73,8 @@
 			</if>
 			<if test="cCreateTime != null">
 				cCreateTime = #{cCreateTime },
-			</if>				
-				<if test="cConclution != null">
+			</if>
+			<if test="cConclution != null">
 				cConclution = #{cConclution },
 			</if>
 		</set>
@@ -75,15 +82,16 @@
 	</update>
 	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.ScoreSheet">
 		update gy_report_scoresheet
-		set 
+		set
 		cTherory = #{cTherory },
 		cReagen = #{cReagen },
 		cInserument = #{cInserument },
 		cExperiment = #{cExperiment },
 		cLabresult = #{cLabresult },
-		cSum = #{cSum },
+		cSum =
+		#{cSum },
 		cComment = #{cComment},
-		cCreateTime = #{cCreateTime},		
+		cCreateTime = #{cCreateTime},
 		cConclution = #{cConclution}
 		where cId = #{cId}
 	</update>

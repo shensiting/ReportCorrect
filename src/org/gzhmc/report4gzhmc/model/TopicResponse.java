@@ -3,53 +3,73 @@ package org.gzhmc.report4gzhmc.model;
 import java.util.Date;
 
 public class TopicResponse {
-    private Long cId;
+	private Long cId;
 
-    private Long cTopicId;
+	private int cTopicId;
 
-    private Date cCreateTime;
+	private Date cCreateTime;
 
-    private Integer cLaunchId;
+	private int cLaunchId;
 
-    private String cContent;
+	private String cContent;
 
-    public Long getcId() {
-        return cId;
-    }
+	private int cResponseStatus;
 
-    public void setcId(Long cId) {
-        this.cId = cId;
-    }
+	private User user;
 
-    public Long getcTopicId() {
-        return cTopicId;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setcTopicId(Long cTopicId) {
-        this.cTopicId = cTopicId;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public Date getcCreateTime() {
-        return cCreateTime;
-    }
+	public int getcResponseStatus() {
+		return cResponseStatus;
+	}
 
-    public void setcCreateTime(Date cCreateTime) {
-        this.cCreateTime = cCreateTime;
-    }
+	public void setcResponseStatus(int cResponseStatus) {
+		this.cResponseStatus = cResponseStatus;
+	}
 
-    public Integer getcLaunchId() {
-        return cLaunchId;
-    }
+	public Long getcId() {
+		return cId;
+	}
 
-    public void setcLaunchId(Integer cLaunchId) {
-        this.cLaunchId = cLaunchId;
-    }
+	public void setcId(Long cId) {
+		this.cId = cId;
+	}
 
-    public String getcContent() {
-        return cContent;
-    }
+	public int getcTopicId() {
+		return cTopicId;
+	}
 
-    public void setcContent(String cContent) {
-        this.cContent = cContent == null ? null : cContent.trim();
-    }
+	public void setcTopicId(int cTopicId) {
+		this.cTopicId = cTopicId;
+	}
+
+	public Date getcCreateTime() {
+		return cCreateTime;
+	}
+
+	public void setcCreateTime(Date cCreateTime) {
+		this.cCreateTime = cCreateTime;
+	}
+
+	public int getcLaunchId() {
+		return cLaunchId;
+	}
+
+	public void setcLaunchId(int cLaunchId) {
+		this.cLaunchId = cLaunchId;
+	}
+
+	public String getcContent() {
+		return cContent;
+	}
+
+	public void setcContent(String cContent) {
+		this.cContent = cContent == null ? null : cContent.trim();
+	}
 }

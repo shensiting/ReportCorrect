@@ -1,6 +1,8 @@
 package org.gzhmc.report4gzhmc.model;
+
 /**
  * 实验表
+ * 
  * @author stShen
  *
  */
@@ -13,9 +15,9 @@ public class ExperimentalTest {
 	private String cExperimentTime;
 
 	private String cExperimentEnglishName;
-	
+
 	private int cClassify;
-	
+
 	private Test test;
 
 	public Test getTest() {
@@ -66,5 +68,4 @@ public class ExperimentalTest {
 		this.cExperimentEnglishName = cExperimentEnglishName == null ? null : cExperimentEnglishName.trim();
 	}
 
-	
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../common/userslib.jsp"%>
+
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -16,14 +16,15 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+<%@ include file="../common/userslib.jsp"%>
 <!--[if lt IE 9]>
-<script type="text/javascript" src="<%=basePath_userslib%>users/lib/html5.js"></script>
-<script type="text/javascript" src="<%=basePath_userslib%>users/lib/respond.min.js"></script>
-<script type="text/javascript" src="<%=basePath_userslib%>users/lib/PIE_IE678.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/respond.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/PIE_IE678.js"></script>
 <![endif]-->
 
 <!--[if IE 6]>
-<script type="text/javascript" src="<%=basePath_userslib%>users/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script type="text/javascript" src="<%=basePath%>users/lib/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 
@@ -63,17 +64,17 @@ function sumit(Gradeform) {
 </script>
 </head>
 <body>
-	
-		<div style="margin-left: 80px;margin-top: 40px;text-align: center;">
-		<form action="" method="post" class="form form-horizontal" id="Gradeform">
+
+	<div style="margin-left: 80px; margin-top: 40px; text-align: center;">
+		<form action="" method="post" class="form form-horizontal"
+			id="Gradeform">
 			<div class="row cl">
-				<label class="form-label col-2">学院：</label>
-				 <input type="hidden" name="id" value="${gradeMajorCollege.cId }" />
+				<label class="form-label col-2">学院：</label> <input type="hidden"
+					name="id" value="${gradeMajorCollege.cId }" />
 				<div class="formControls col-6">
-					<span class="select-box">
-					 <select name="cCollege"
-						id="cCollege" class="select" size="1"
-						 datatype="*" nullmsg="请选择学院！">
+					<span class="select-box"> <select name="cCollege"
+						id="cCollege" class="select" size="1" datatype="*"
+						nullmsg="请选择学院！">
 							<c:forEach var="Collegeitem" items="${colleges}">
 								<option value="${Collegeitem.cId }">${Collegeitem.cCollegeName}</option>
 							</c:forEach>
@@ -88,13 +89,12 @@ function sumit(Gradeform) {
 					</script>
 				</div>
 			</div>
-			<div class="col-4"> </div>
+			<div class="col-4"></div>
 			<div class="row cl">
 				<label class="form-label col-2">年级：</label>
 				<div class="formControls col-6">
 					<span class="select-box"> <select class="select" size="1"
-						 datatype="*" nullmsg="请选择年级！" name="cYearClass"
-						id="cYearClass" >
+						datatype="*" nullmsg="请选择年级！" name="cYearClass" id="cYearClass">
 							<c:forEach var="i" begin="2011" end="2018">
 								<option><c:out value="${i}" />级
 								</option>
@@ -117,12 +117,12 @@ function sumit(Gradeform) {
 					</script>
 				</div>
 			</div>
-			<div class="col-4"> </div>
+			<div class="col-4"></div>
 			<div class="row cl">
 				<label class="form-label col-2">专业：</label>
 				<div class="formControls col-6">
 					<span class="select-box"> <select class="select" size="1"
-						 datatype="*" nullmsg="请选择专业！" name="cMajor" id="cMajor">
+						datatype="*" nullmsg="请选择专业！" name="cMajor" id="cMajor">
 							<c:forEach var="Majoritem" items="${majorList}">
 								<option value="${Majoritem.cId }">${Majoritem.cMajorName}</option>
 							</c:forEach>
@@ -138,15 +138,13 @@ function sumit(Gradeform) {
 					</script>
 				</div>
 			</div>
-			
-			<div class="col-4">
-			
-			</div>
+
+			<div class="col-4"></div>
 			<div class="row cr">
 				<label class="form-label col-2">班别：</label>
 				<div class="formControls col-6">
 					<span class="select-box"> <select class="select" size="1"
-						 datatype="*" nullmsg="请选择班别！" name="cClass" id="cClass">
+						datatype="*" nullmsg="请选择班别！" name="cClass" id="cClass">
 							<c:forEach var="i" begin="1" end="10">
 								<option><c:out value="${i}" />班
 								</option>
@@ -168,12 +166,16 @@ function sumit(Gradeform) {
 					</script>
 				</div>
 			</div>
-			<div class="col-8" id="show" style="display: none;"><label class="form-label" style="color: red">操作成功！请返回原来页面刷新。</label> </div>
+			<div class="col-8" id="show" style="display: none;">
+				<label class="form-label" style="color: red">操作成功！请返回原来页面刷新。</label>
+			</div>
 			<div class="row cl" style="margin-left: -70px;">
-				<button style="width: 150px" type="submit" class="btn btn-success radius"
-					onclick="sumit(this.form)" id="" name="">提交</button>
+				<button style="width: 150px" type="submit"
+					class="btn btn-success radius" onclick="sumit(this.form)" id=""
+					name="">提交</button>
 			</div>
 		</form>
-</div>
+
+	</div>
 </body>
 </html>

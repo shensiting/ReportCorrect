@@ -1,8 +1,10 @@
 package org.gzhmc.report4gzhmc.model;
 
 import java.util.Date;
+
 /**
  * 用户表
+ * 
  * @author stShen
  *
  */

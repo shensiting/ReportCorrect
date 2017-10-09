@@ -5,20 +5,19 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<%@ include file="../common/userslib.jsp"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="utf-8">
-
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-
+<%@ include file="../common/userslib.jsp"%>
 
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<%=basePath%>users/lib/html5.js"></script>
@@ -32,12 +31,17 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>实验分类管理</title>
+<style type="text/css">
+.editor td {
+	text-align: center;
+}
+</style>
 <script type="text/javascript">
 //修改函数
-
-function showAddInput(){
-	 document.getElementById('addinfo').style="display:block-inline;text-align: center;" ;}	
-//获取地址栏参数方法	 
+	function showAddInput() {
+		$("#addinfo").css('display', 'block');
+		$("#addinfo").css('text-align', 'center');
+	}//获取地址栏参数方法	 
 /*添加*/
 function sumit(experimentform) {
 	$.ajax({
@@ -81,22 +85,17 @@ function sumit(experimentform) {
 		href="javascript:location.replace(location.href);" title="刷新"><i
 		class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="pd-20">
-			<div class="cl pd-5 bg-1 bk-gray mt-20">
-			<span class="l">
-			 <a href="javascript:;" onclick="deleteFunc()"
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l"> <a href="javascript:;" onclick="deleteFunc()"
 				class="btn btn-danger radius"> <i class="Hui-iconfont">&#xe6e2;</i>批量删除
-			</a> 
-			
-			<a
-				class="btn btn-success radius"
-				onclick="showAddInput()" href="javascript:;"><i
-					class="Hui-iconfont">&#xe600;</i>单个添加</a>
+			</a> <a class="btn btn-success radius" onclick="showAddInput()"
+				href="javascript:;"><i class="Hui-iconfont">&#xe600;</i>单个添加</a>
 			</span> <span class="r">共有数据：<strong>${experimentalTests.size() }</strong>条
 			</span>
 		</div>
-		
+
 		<!-- 对数据的编辑 -->
-		<div  style="display: none;" id="addinfo" class="pd-20">
+		<div style="display: none;" id="addinfo" class="pd-20">
 			<form class="form-horizontal" method="post" action=""
 				name="basic_validate" id="basic_validate">
 				<div class="row cl">
@@ -112,37 +111,37 @@ function sumit(experimentform) {
 					<label class="form-label col-2">实验英文名称：</label>
 					<div class="formControls col-2">
 
-						 <input
-							type="text" class="input-text" value="" style="width: 250px"
-							placeholder="输入实验英文名称" required="required" id="testEngName"
-							name="testEngName">
+						<input type="text" class="input-text" value=""
+							style="width: 250px" placeholder="输入实验英文名称" required="required"
+							id="testEngName" name="testEngName">
 					</div>
 				</div>
-				<div class="col-4" style="margin-top: 20px"> </div>
+				<div class="col-4" style="margin-top: 20px"></div>
 				<div class="row cl">
 					<label class="form-label col-2">实验考核时间：</label>
 					<div class="formControls col-2">
 
-						 <input
-							type="text" class="input-text" value="" style="width: 250px"
-							placeholder="输入实验考核时间" required="required" id="testTime"
-							name="testTime">
+						<input type="text" class="input-text" value=""
+							style="width: 250px" placeholder="输入实验考核时间" required="required"
+							id="testTime" name="testTime">
 					</div>
 
-					<label class="form-label col-2">实验所属分类：</label> 
+					<label class="form-label col-2">实验所属分类：</label>
 					<div class="formControls col-2">
 						<span class="select-box"> <select name="experiment"
-							id="experiment" class="select" size="1" datatype="*" nullmsg="请选择实验所属分类！">
+							id="experiment" class="select" size="1" datatype="*"
+							nullmsg="请选择实验所属分类！">
 								<c:forEach var="item" items="${tests}">
-								<option value="${item.cId }">${item.cTestName}</option>
-							</c:forEach>
-							</select></span>
+									<option value="${item.cId }">${item.cTestName}</option>
+								</c:forEach>
+						</select></span>
 					</div>
 				</div>
-				<div class="row cl" style="text-align: right;padding-right: 20%">
-				<button style="width: 100px"  type="submit" class="btn btn-primary radius" onclick="sumit(this.form)"
-					id="" name="">提交</button>
-					</div>
+				<div class="row cl" style="text-align: right; padding-right: 20%">
+					<button style="width: 100px" type="submit"
+						class="btn btn-primary radius" onclick="sumit(this.form)" id=""
+						name="">提交</button>
+				</div>
 			</form>
 		</div>
 		<!-- 对数据的编辑结束 -->
@@ -151,38 +150,43 @@ function sumit(experimentform) {
 				class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="25"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"></th>						
+						<th width="25"><input type="checkbox"
+							id="title-table-checkbox" name="title-table-checkbox"></th>
 						<th>ID</th>
 						<th>实验名称</th>
 						<th>实验英文名称</th>
 						<th>实验考核时间</th>
-						<th>实验所属分类</th>	
-						<th>实验所属分类编号</th>					
+						<th>实验所属分类</th>
+						<th width="50px">实验所属分类编号</th>
 						<th width="40px">编辑</th>
 						<th width="40px">删除</th>
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach var="item" items="${experimentalTests}">
-										<tr class="editor">
-											<td style="text-align: center"><input name="checkboxid" type="checkbox"
-												value="${item.getcId()}" /></td>	
-												<td id="cId" >${item.getcId()}</td>											
-											<td id="cExperimentName">${item.getcExperimentName()}</td>
-											<td id="cExperimentEnglishName">${item.getcExperimentEnglishName()}</td>
-											<td id="cExperimentTime">${item.getcExperimentTime()}</td>
-											<td id="cTestName">${item.getTest().getcTestName()}</td>
-											<td id="cClassify">${item.getcClassify()}</td>
-											<td class="f-14 td-manage"><a style="text-decoration: none" class="ml-5" id="edit"
-								href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a></td>
-								<td><a style="text-decoration: none" class="ml-5"
+					<c:forEach var="item" items="${experimentalTests}">
+						<tr class="editor">
+							<td style="text-align: center"><input name="checkboxid"
+								type="checkbox" value="${item.getcId()}" /></td>
+							<td id="cId">${item.getcId()}</td>
+							<td id="cExperimentName">${item.getcExperimentName()}</td>
+							<td id="cExperimentEnglishName">${item.getcExperimentEnglishName()}</td>
+							<td id="cExperimentTime">${item.getcExperimentTime()}</td>
+							<td id="cTestName">${item.getTest().getcTestName()}</td>
+							<td id="cClassify">${item.getcClassify()}</td>
+							<td class="f-14 td-manage"><a style="text-decoration: none"
+								class="ml-5" id="edit" href="javascript:;" title="编辑"><i
+									class="Hui-iconfont">&#xe6df;</i></a></td>
+							<td><a style="text-decoration: none" class="ml-5"
 								onClick="article_del(this,'${ item.cId}')" href="javascript:;"
 								title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-										</tr>
-									</c:forEach>
-					
+						</tr>
+					</c:forEach>
+
 				</tbody>
 			</table>
+		</div>
+		<div style="margin-top: 5%; height: 35px">
+			<%@include file="../common/footer.jsp"%>
 		</div>
 	</div>
 
@@ -264,16 +268,9 @@ function sumit(experimentform) {
 						success : function(data) {
 							if (data.success) {
 								//删除成功，刷新页面
-								layer.msg('删除成功', {
-									icon : 6,
-									time : 4000
-								});	
+								alert("删除成功！");
 							} else {
-								var str=data.msg;
-								layer.msg(str, {
-									icon : 6,
-									time : 1000
-								});		
+								alert(data.msg);
 							}
 							//刷新页面
 							location.reload();
@@ -299,7 +296,7 @@ function sumit(experimentform) {
 					url : '<%=basePath%>manage/delExperiment.action?ids=' + id,
 					success : function(data) {
 						if (data.success) {
-							
+							alert("删除成功！");
 						} else {
 							var str=data.msg;
 							layer.msg(str, {

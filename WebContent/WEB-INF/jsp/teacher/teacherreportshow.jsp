@@ -81,7 +81,7 @@ function passwordChange(registeform){
 		<span id="pattern2"></span>
 	</div>
 	<!-- Top Panel -->
-		<div class="top_panel">
+	<div class="top_panel">
 		<div class="wrapper" style="background-color: #3a3a3a">
 			<div class="user">
 				<img src="<%=basePath%>user/Images/user_avatar.png"
@@ -97,9 +97,9 @@ function passwordChange(registeform){
 	</div>
 	<header class="main_header">
 		<div class="wrapper">
-				<!-- logo -->
-		 <%@include file="../common/logo.jsp"%>		
-           <%@include file="../common/nav.jsp"%>	
+			<!-- logo -->
+			<%@include file="../common/logo.jsp"%>
+			<%@include file="../common/nav.jsp"%>
 		</div>
 	</header>
 
@@ -107,9 +107,10 @@ function passwordChange(registeform){
 		<ul class="menu_small_buttons">
 			<li><a title="Your Messages" class="i_22_inbox"
 				href="<%=basePath %>teacher/teacherIndex"></a></li>
-				<li><a title="Visual Data" class="i_22_charts"
+			<li><a title="Visual Data" class="i_22_charts"
 				href="<%=basePath%>teacher/downloadreport"></a></li>
-			<li><a title="Kit elements" class="i_22_ui" href="<%=basePath %>teacher/tpasswordChange"></a></li>
+			<li><a title="Kit elements" class="i_22_ui"
+				href="<%=basePath %>teacher/tpasswordChange"></a></li>
 		</ul>
 	</div>
 
@@ -117,15 +118,16 @@ function passwordChange(registeform){
 	<div class="wrapper contents_wrapper">
 		<aside class="sidebar">
 			<ul class="tab_nav">
-				<li class="active_tab i_22_forms"><a href="<%=basePath %>teacher/teacherIndex"
-					title="Your Messages"> <span class="tab_label">报告审阅</span> <span
-						class="tab_info">报告批改或审查</span>
+				<li class="active_tab i_22_forms"><a
+					href="<%=basePath %>teacher/teacherIndex" title="Your Messages">
+						<span class="tab_label">报告审阅</span> <span class="tab_info">报告批改或审查</span>
 				</a></li>
 				<li class="i_22_pages"><a
 					href="<%=basePath%>teacher/downloadpdf" title="Visual Data"> <span
-							class="tab_label">证书管理</span> <span class="tab_info">证书下载等</span>
-				</a></li>			
-				<li class="i_32_ui"><a href="<%=basePath %>teacher/tpasswordChange" title="Kit elements">
+						class="tab_label">证书管理</span> <span class="tab_info">证书下载等</span>
+				</a></li>
+				<li class="i_32_ui"><a
+					href="<%=basePath %>teacher/tpasswordChange" title="Kit elements">
 						<span class="tab_label">修改密码</span> <span class="tab_info">身份信息</span>
 				</a></li>
 			</ul>
@@ -155,7 +157,7 @@ function passwordChange(registeform){
 					<div class="line_grid" style="float: right">
 						<div class="g_12">
 							<input type="button" value="返回" class="simple_buttons"
-								style="height: 40px; width: 100px;background: #FF5511;color: #FFFFFF"
+								style="height: 40px; width: 100px; background: #FF5511; color: #FFFFFF"
 								onclick="location.href='<%=basePath%>teacher/teacherIndex'">
 						</div>
 					</div>
@@ -164,16 +166,16 @@ function passwordChange(registeform){
 				<div class="g_12 separator">
 					<span></span>
 				</div>
-	
-	    </div></div>
-	<!-- footer -->
-	<footer>
-		<div class="wrapper">
-			<span class="copyright"> <%@include
-					file="../common/footer.jsp"%>
-			</span>
-		</div>
-	</footer>
 
+			</div>
+		</div>
+		<!-- footer -->
+		<footer>
+			<div class="wrapper">
+				<span class="copyright"> <%@include
+						file="../common/footer.jsp"%>
+				</span>
+			</div>
+		</footer>
 </body>
 </html>

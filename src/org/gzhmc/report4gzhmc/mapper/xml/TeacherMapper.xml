@@ -5,32 +5,37 @@
 		<id column="cUserId" property="cUserId" />
 		<result column="cName" property="cName" />
 		<result column="cTeacherId" property="cTeacherId" />
-		<result column="cCollegeId" property="cCollegeId" />	
+		<result column="cCollegeId" property="cCollegeId" />
 	</resultMap>
-  
+
 	<select id="getAll" resultMap="BaseResultMap">
-		select * from gy_report_teacher order by cUserId desc
+		select * from gy_report_teacher
+		order by cUserId desc
 	</select>
 	<select id="getById" resultMap="BaseResultMap" parameterType="int">
 		select
 		cUserId, cName, cTeacherId, cCollegeId
 		from gy_report_teacher
 		where cUserId = #{cId }
-	</select>	
-	<select id="getByTeacherId" resultMap="BaseResultMap" parameterType="String">
+	</select>
+	<select id="getByTeacherId" resultMap="BaseResultMap"
+		parameterType="String">
 		select
 		cUserId, cName, cTeacherId, cCollegeId
-		from gy_report_teacher
+		from
+		gy_report_teacher
 		where cTeacherId = #{teacherId}
 	</select>
 	<delete id="delete" parameterType="int">
 		delete from gy_report_teacher
 		where cUserId = #{cId }
-	</delete>	
-	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Teacher" useGeneratedKeys="true" keyProperty="cUserId">
-		insert into gy_report_teacher (cUserId, cName, cTeacherId,
+	</delete>
+	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Teacher"
+		useGeneratedKeys="true" keyProperty="cUserId">
+		insert into gy_report_teacher
+		(cName, cTeacherId,
 		cCollegeId)
-		values (#{cUserId }, #{cName }, #{cTeacherId },
+		values (#{cName }, #{cTeacherId },
 		#{cCollegeId })
 	</insert>
 	<update id="updateSelective" parameterType="org.gzhmc.report4gzhmc.model.Teacher">
@@ -45,15 +50,17 @@
 			<if test="cCollegeId != null">
 				cCollegeId = #{cCollegeId },
 			</if>
-			
+
 		</set>
 		where cUserId = #{cUserId }
 	</update>
 	<update id="update" parameterType="org.gzhmc.report4gzhmc.model.Teacher">
 		update gy_report_teacher
-		set cName = #{cName },
+		set
+		cName = #{cName },
 		cTeacherId = #{cTeacherId },
-		cCollegeId = #{cCollegeId },		
+		cCollegeId =
+		#{cCollegeId },
 		where cUserId = #{cUserId }
 	</update>
 </mapper>

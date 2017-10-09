@@ -16,11 +16,11 @@
 <meta name="keywords" content="">
 
 </head>
-<body>	
-			<div class="logo" >
-				<a href="#" title="广州医科大学"> <img
-					src="<%=basePath_logo%>images/GZHMU_logo.png" alt="kanrisha_logo" />
-				</a>
-			</div>
+<body>
+	<div class="logo">
+		<a href="#" title="广州医科大学"> <img
+			src="<%=basePath_logo%>images/GZHMU_logo.png" alt="kanrisha_logo" />
+		</a>
+	</div>
 </body>
 </html>

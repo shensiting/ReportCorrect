@@ -1,6 +1,8 @@
 package org.gzhmc.report4gzhmc.model;
+
 /**
  * 专业表
+ * 
  * @author stShen
  *
  */
