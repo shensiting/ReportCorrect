@@ -32,6 +32,9 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>实验分类管理</title>
+<style type="text/css">
+.editor td{ text-align: center;}
+</style>
 <script type="text/javascript">
 //修改函数
 
@@ -157,7 +160,7 @@ function sumit(experimentform) {
 						<th>实验英文名称</th>
 						<th>实验考核时间</th>
 						<th>实验所属分类</th>	
-						<th>实验所属分类编号</th>					
+						<th width="50px">实验所属分类编号</th>					
 						<th width="40px">编辑</th>
 						<th width="40px">删除</th>
 					</tr>

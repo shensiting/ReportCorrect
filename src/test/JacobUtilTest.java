@@ -7,8 +7,8 @@ public class JacobUtilTest {
 
 	    @Test
 	    public void testwordToHtml() {	      
-	       String docfile = "C:\\Users\\lenovo\\Desktop\\广医论坛.doc";
-	       String htmlfile = "C:\\Users\\lenovo\\Desktop\\广医论坛.html";
+	       String docfile = "C:\\Users\\lenovo\\Desktop\\人力资源课后习题(1).docx";
+	       String htmlfile = "C:\\Users\\lenovo\\Desktop\\人力资源课后习题(1).html";
 	       JacobUtil.wordToHtml(docfile, htmlfile);
 	       
 	    }

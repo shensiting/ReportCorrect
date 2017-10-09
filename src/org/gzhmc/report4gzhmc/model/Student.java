@@ -1,6 +1,8 @@
 package org.gzhmc.report4gzhmc.model;
+
 /**
  * 学生表
+ * 
  * @author stShen
  *
  */
@@ -9,9 +11,17 @@ public class Student {
 	private String cName;
 	private String cStudentNumber;
 	private int cGradeId;
-	
 	private String cPicturePath;
-	
+	private String cPhoneNum;
+
+	public String getcPhoneNum() {
+		return cPhoneNum;
+	}
+
+	public void setcPhoneNum(String cPhoneNum) {
+		this.cPhoneNum = cPhoneNum;
+	}
+
 	public void setcGradeId(int cGradeId) {
 		this.cGradeId = cGradeId;
 	}

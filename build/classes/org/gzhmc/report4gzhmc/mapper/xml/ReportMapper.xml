@@ -6,7 +6,7 @@
 		<result column="cReportNum" property="cReportNum" />
 		<result column="cScoreId" property="cScoreId" />
 		<result column="cStudentId" property="cStudentId" />
-		<result column="cStatus" property="cStatus" />
+		<result column="cStatu" property="cStatu" />
 		<result column="cPath" property="cPath" />
 		<result column="cCreateTime" property="cCreateTime" />
 		<result column="cPdfPath" property="cPdfPath" />
@@ -51,11 +51,11 @@
 	</delete>
 	<insert id="add" parameterType="org.gzhmc.report4gzhmc.model.Report" useGeneratedKeys="true" keyProperty="cId">
 		insert into gy_report_report
-		(cReportNum,cScoreId,cStudentId,cStatus,
+		(cReportNum,cScoreId,cStudentId,cStatu,
 		cPath,cCreateTime,cPdfPath,cProcess,cQRcode,cTeacherId,cExperimentTextId)
 		values ( #{cReportNum }, #{cScoreId },
 		#{cStudentId },
-		#{cStatus }, #{cPath }, #{cCreateTime
+		#{cStatu }, #{cPath }, #{cCreateTime
 		}, #{cPdfPath }, #{cProcess },
 		#{cQRcode }, #{cTeacherId }, #{cExperimentTextId })
 	</insert>
@@ -77,8 +77,8 @@
 			<if test="cStudentId != null">
 				cStudentId = #{cStudentId },
 			</if>
-			<if test="cStatus != null">
-				cStatus = #{cStatus },
+			<if test="cStatu != null">
+				cStatu = #{cStatu },
 			</if>
 			<if test="cPath != null">
 				cPath = #{cPath },
@@ -109,7 +109,7 @@
 		cScoreId = #{cScoreId },
 		cStudentId =
 		#{cStudentId },
-		cStatus = #{cStatus },
+		cStatu = #{cStatu },
 		cPath = #{cPath },
 		cCreateTime =
 		#{cCreateTime },

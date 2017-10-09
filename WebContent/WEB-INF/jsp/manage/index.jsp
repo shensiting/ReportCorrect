@@ -101,7 +101,7 @@
 			<dd>
 				<ul>
 					<li><a _href="<%=basePath%>manage/indexTest" href="javascript:void(0)">实验分类管理</a></li>
-					<li><a _href="<%=basePath%>manage/indexExperiment" href="javascript:void(0)">实验管理</a></li>				
+					<li><a _href="<%=basePath%>manage/indexExperiment" href="javascript:void(0)">实验项目管理</a></li>				
 					<li><a _href="<%=basePath%>manage/indexTeacherGrade" href="javascript:void(0)">教师班级管理</a></li>
 					<li><a _href="<%=basePath%>manage/indexGradeExam" href="javascript:void(0)">实验班级管理</a></li>				
 				</ul>

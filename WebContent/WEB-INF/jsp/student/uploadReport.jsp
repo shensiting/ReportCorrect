@@ -88,7 +88,7 @@
 					</p>
 				</div>
 			</div>
-			<div class="row cl"><label class="form-label col-1">注意事项：</label>需要使用表格时请选中表格，右键表格，选择设置表格属性，设置颜色，否则表格边线默认为透明。若提交失败数据清空，刷新本页面就可以重新出来</div>
+			<div class="row cl"><label class="form-label col-1">注意事项：</label>若提交失败数据清空，刷新本页面就可以重新出来</div>
 			<div class="row cl">
 				<label class="form-label col-1">报告内容：</label>
 				<div class="formControls col-10">
@@ -96,16 +96,17 @@
     </textarea>
 				</div>
 			</div>
+			
 			<div class="row cl">
-				<div class="col-10 col-offset-2">
+				<div class="col-10 col-offset-2"  style="margin-left: 80%">
 					<button 
 						class="btn btn-primary radius" type="submit">
 						<i class="Hui-iconfont">&#xe632;</i> 保存并提交审核
 					</button>
-					<button onClick="article_save();" class="btn btn-secondary radius"
+					<!--  <button onClick="article_save();" class="btn btn-secondary radius"
 						type="button">
 						<i class="Hui-iconfont">&#xe632;</i> 保存草稿
-					</button>
+					</button>-->
 					
 				</div>
 			</div>
@@ -114,7 +115,7 @@
 	<!-- 配置文件 -->
 	<script type="text/javascript" src="<%=basePath%>ueditor/ueditor.config.js"></script>
 	<!-- 编辑器源码文件 -->
-	<script type="text/javascript" src="<%=basePath%>ueditor/ueditor.all.js"></script>
+	<script type="text/javascript" src="<%=basePath%>ueditor/ueditor.all.min.js"></script>
 
 	<!-- 实例化编辑器 -->
 	<script type="text/javascript">

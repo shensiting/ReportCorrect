@@ -95,7 +95,7 @@ function passwordChange(registeform){
 		if(isNum(score)){
 			if(islength(comment)){
 
-				document.forms[0].action = '<%=basePath%>teacher/reportcorrect.action';
+				document.forms[0].action = '<%=basePath%>teacher/reportCorrect.action';
 				document.forms[0].submit();
 
 				} else {

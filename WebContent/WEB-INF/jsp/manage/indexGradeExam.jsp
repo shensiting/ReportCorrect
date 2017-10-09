@@ -32,6 +32,9 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>教师班级管理</title>
+<style type="text/css">
+.editor td{ text-align: center;}
+</style>
 <script type="text/javascript">
 //修改函数
 
@@ -77,8 +80,6 @@ function showAddInput(){
 								type="checkbox" value="${item.getcId()}" /></td>
 								<td>${item.getcId()}</td>
 							<td id="cUserId">${item.getExperiment().getcExperimentName()}</td>
-						
-							
 							<td>${item.getCollege().getcCollegeName()} ${item.getGrade().getcYearClass()}
 								 ${item.getMajor().getcMajorName()} ${item.getGrade().getcClass()}</td>
 						

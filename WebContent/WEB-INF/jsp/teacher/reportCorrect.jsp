@@ -36,49 +36,54 @@
 <![endif]-->
 <title>报告编辑</title>
 <script type="text/javascript">
-function sumit(reportform) {
-	var content = reportform.content.value;
-	 var process =reportform.process.value;
-	 var test = reportform.test.value;
-	 
-	 if (process.length> 50||process.length<=10) {
-			alert('报告过程字数不合格，请修改后上传');
-		}
-	 else{			
-		
-			$.ajax({
-				type : 'GET',
-				dataType : 'json',
-				async: false,
-				url : '<%=basePath%>student/updateExperiment.action?content='+content+'&process='+process+'&test='+test+'',				
-				success : function(data) {
-					if (data.success) {
-						alert("修改成功！");							
-					} else {	
-						alert("操作失败，请重新操作!");							
-					}
-					
-				},error : function() {
-					alert("操作失败，请重新操作!");							
-				}
-			});
-			
-	 }
-		
-}
+//一级引起二级的变化  
+  $(function(){  
+        //触发的下拉框chang事件  
+        $("#test").change(function(){  
+            var test = $("#test").val();  
+            $.ajax({  
+                type:"POST",  
+                url :"../student/getRelevance",  
+                data:{                    
+                    id:test  
+                },  
+                dataType:"json",  
+                success:function(data){  
+                    $("#experiment").empty();  
+                    $("#experiment").append("<option value=''>----请选择实验----</option>");  
+                    $.each(data,function(index,item){                        
+                        //填充内容  
+                        $("#experiment").append( "<option value='"+item.cId+"'>"+item.cExperimentName+"</option>");  
+                    });  
+                }  
+            });  
+        });                                       
+    });  
 </script>
 </head>
 <body>
 
 	<div class="pd-20">
-		<form action="" method="post" class="form form-horizontal"
+		<form action="<%=basePath %>student/uploadExperiment.action" method="post" class="form form-horizontal"
 			id="form-article-add">
-			<div class="row cl" style="text-align: left;">
-				<label class="form-label col-1">实验：</label>
-				
-					<label class="form-label col-1">${experimentName}</label>
-				<input name="test" id="test" type="hidden" value="${test}" />
-
+			<div class="row cl">
+				<label class="form-label col-1">选择实验：</label>
+				<div class="formControls col-5">
+					<span class="select-box"> <select id="test" name="test" class="select">
+					       
+							<c:forEach var="item" items="${tests}">
+								<option value="${item. getcExperimentId()}">${item.getExperiment().getcExperimentName()}</option>
+							</c:forEach>
+					</select>
+					</span>
+				</div>
+				<script>
+						var cExperimentTextId = "${report.getcExperimentTextId()}";						
+						if (cExperimentTextId != "") {
+							var test = document.getElementById("test");
+							test.value = cExperimentTextId;
+						}
+					</script>
 			</div>
 			<div class="row cl">
 				<label class="form-label col-1">报告过程：</label>
@@ -102,7 +107,8 @@ function sumit(reportform) {
 			</div>
 			<div class="row cl">
 				<div class="col-10 col-offset-2" style="margin-left: 80%">
-					<button class="btn btn-primary radius" type="submit" onclick="sumit(this.form)">
+					<button 
+						class="btn btn-primary radius" type="submit">
 						<i class="Hui-iconfont">&#xe632;</i> 保存并提交审核
 					</button>
 					<!--  <button onClick="article_save();" class="btn btn-secondary radius"

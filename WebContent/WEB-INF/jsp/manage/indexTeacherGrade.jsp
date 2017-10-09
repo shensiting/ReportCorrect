@@ -32,6 +32,9 @@
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
 <title>教师班级管理</title>
+<style type="text/css">
+.editor td{ text-align: center;}
+</style>
 <script type="text/javascript">
 //修改函数
 

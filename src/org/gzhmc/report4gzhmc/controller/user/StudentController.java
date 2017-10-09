@@ -90,6 +90,10 @@ public class StudentController extends BaseController {
 	// 表示批改为1，未批改为0
 	public static int CHECKED = 1;
 	public static int NOCHECK = 0;
+	//表示报告不及格，允许修改
+	public static int RECHECK = 2;
+	//表示不及格，不允许修改
+	public static int FAIL = 3;
 	
 	/**
 	 * 报告编辑
@@ -105,9 +109,9 @@ public class StudentController extends BaseController {
 		ModelAndView modelAndView = new ModelAndView("student/reportEdit");
 		String userid = request.getSession().getAttribute("userid").toString().trim();
 		Student student = studentMapper.getById(Integer.parseInt(userid));
-		List<GradeExam> gradeExams=gradeExamMapper.getByGradeId(student.getcGradeId());
-		//List<Test> tests=testMapper.getAll();
-	    modelAndView.addObject("tests",gradeExams);
+		Experiment experiment=experimentMapper.getById(report.getcExperimentTextId());
+	    modelAndView.addObject("experimentName",experiment.getcExperimentName());
+	    modelAndView.addObject("test", report.getcExperimentTextId());
 		modelAndView.addObject("report", report);
 		return modelAndView;
 	}
@@ -294,21 +298,63 @@ public class StudentController extends BaseController {
 		return modelAndView;
 
 	}
-
-	// 返回补考的数据
-	private Report getReport(List<Report> reports) {
-		for (Report r : reports) {
-			if (r.getcStatu() == NOCHECK) {
-				return r;
+	
+	/**
+	 * 修改实验报告action
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = { "/updateExperiment", "/updateExperiment.action" })
+	public void updateExperiment(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String experiment = request.getParameter("content");
+		String process = request.getParameter("process");
+		int eId = Integer.parseInt(request.getParameter("test"));
+		int userid = Integer.parseInt(request.getSession().getAttribute("userid").toString().trim());
+		ResultJson json = new ResultJson();
+		Report reportMes = new Report();
+		reportMes.setcExperimentTextId(eId);
+		reportMes.setcStudentId(userid);
+		Report report2 = null;
+		int count1 = reportMapper.getCountByexperimrntAndstudent(reportMes);
+		List<Report> reports = reportMapper.getByexperimrntAndstudentId(reportMes);
+		int result = 0;
+		// 判断表格中是否存在数据
+		if (count1 != 0) {
+			// 判断是补考还是第一次考试
+			report2 = getReport(reports);
+			// 表中存在插入的数据则更新数据
+			if (report2 != null) {
+				report2.setcCreateTime(new Date());
+				report2.setcProcess(process);
+				// 存储上传的文档数据
+				report2.setcPath(experiment);
+				result = reportMapper.update(report2);
 			}
 		}
-		return null;
+		if (result != 0) {
+			json.setSuccess(true);				
+		}
+
+		writeResultJson(response, json);
 	}
+
+	// 返回补考的数据
+		private Report getReport(List<Report> reports) {
+			for (Report r : reports) {
+				//判断是否允许批改
+				if (r.getcStatu() == NOCHECK||r.getcStatu()==RECHECK) {
+					return r;
+				}
+			}
+			return null;
+		}
 
 	// 判断学生是否已经考核通过
 	public boolean isAllowUpload(List<Report> reports) {
 		for (Report r : reports) {			
-			if (null!=r.getcPdfPath()) {				
+			if (null!=r.getcPdfPath()||r.getcStatu()==RECHECK) {				
 				return false;
 			}
 		}
@@ -479,9 +525,7 @@ public class StudentController extends BaseController {
 	 */
 	@RequestMapping(value = { "/passwordChange", "passwordChange.html" })
 	public ModelAndView passwordChange(HttpServletRequest request, HttpServletResponse response) {
-		String userid = request.getSession().getAttribute("userid").toString().trim();
-		
-
+		String userid = request.getSession().getAttribute("userid").toString().trim();		
 		return new ModelAndView("student/passwordChange");
 	}
 
@@ -505,7 +549,6 @@ public class StudentController extends BaseController {
 		StudentGrade student = studentGradeMapper.getById(StringUtils.string2int(userid));
 		ModelAndView modelAndView = new ModelAndView("student/uploadPicture");
 		modelAndView.addObject("student", student);
-
 		return modelAndView;
 	}
 

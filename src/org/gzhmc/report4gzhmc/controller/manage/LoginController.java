@@ -136,9 +136,11 @@ public class LoginController extends BaseController {
 		String code=request.getParameter("code").trim();
 		String number = request.getParameter("number").trim();
 		String password = request.getParameter("password").trim();
-		//System.out.println(password);
+		
 		ResultJson json = new ResultJson();
 		User user = userMapper.getByUserName(number);
+		code=code.toLowerCase();	
+		codeSession=codeSession.toLowerCase();	
 		//判断验证码是否正确
 		if (code.equals(codeSession)) {
 			if (null != user) {

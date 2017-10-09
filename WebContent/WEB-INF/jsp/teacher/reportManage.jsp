@@ -224,6 +224,7 @@ $(function(){
 		src="<%=basePath%>users/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>users/lib/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="<%=basePath%>ueditor/ueditor.parse.js"></script>
 	<script type="text/javascript">
 		$('.table-sort').dataTable({
 			"aaSorting" : [ [ 1, "desc" ] ],//默认第几个排序

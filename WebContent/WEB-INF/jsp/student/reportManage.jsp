@@ -62,13 +62,9 @@ function sumit(userform) {
 			layer.msg('操作失败，请重新操作', {
 				icon : 6,
 				time : 4000
-			});	
-			layer.msg('服务器异常，请稍候再试！', {
-				icon : 6,
-				time : 4000
-			});	
+			});				
 		}
-			});
+	});
 		
 }
 
@@ -186,7 +182,7 @@ function sumit(userform) {
 		
 		//编辑报告
 		function editFunc(id){			
-				layer_show("查看报告","<%=basePath%>student/reportEdit?id="+id,'500','400')			
+				layer_show("编辑报告","<%=basePath%>student/reportEdit?id="+id,'500','400')			
 		}
 		
 		//编辑

@@ -541,8 +541,19 @@ public class TeacherCorrectController extends BaseController {
 	/*
 	 * 跳转教师批改页面
 	 */
-	@RequestMapping(value = { "reportcorrect", "reportcorrect.html" })
+	@RequestMapping(value = { "reportCorrect", "reportCorrect.html" })
 	public ModelAndView reportCorrect(HttpServletRequest request, HttpServletResponse response) {
+	
+//		int reportId=StringUtils.string2int(request.getParameter("id"));
+//		Report report=reportMapper.getById(reportId);	
+//		ModelAndView modelAndView = new ModelAndView("student/reportEdit");
+//		String userid = request.getSession().getAttribute("userid").toString().trim();
+//		Teacher teacher = teacherMapper.getById(StringUtils.string2int(userid));
+//		List<GradeExam> gradeExams=gradeExamMapper.getByGradeId(student.getcGradeId());
+//	    modelAndView.addObject("tests",gradeExams);
+//		modelAndView.addObject("report", report);
+		
+		
 		String rid = request.getParameter("rid");
 		String userid = request.getSession().getAttribute("userid").toString().trim();
 		Teacher teacher = teacherMapper.getById(StringUtils.string2int(userid));
@@ -556,7 +567,7 @@ public class TeacherCorrectController extends BaseController {
 			return modelAndView;
 		} else {
 			String path = report.getcPath();
-			ModelAndView modelAndView = new ModelAndView("teacher/reportcorrect");
+			ModelAndView modelAndView = new ModelAndView("teacher/reportCorrect");
 			modelAndView.addObject("teachername", teacher.getcName());
 			modelAndView.addObject("path", path);
 			modelAndView.addObject("rid", rid);
@@ -572,7 +583,7 @@ public class TeacherCorrectController extends BaseController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = { "reportcorrect.action" })
+	@RequestMapping(value = { "reportCorrect.action" })
 	@Transactional
 	public ModelAndView reportCorrectAction(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String rid = request.getParameter("rid");

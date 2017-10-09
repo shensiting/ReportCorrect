@@ -75,6 +75,9 @@ function sumit(studentform) {
 }
 
 </script>
+<style type="text/css">
+.editor td{ text-align: center;}
+</style>
 </head>
 <body>
 	<nav class="breadcrumb"> <i class="Hui-iconfont">&#xe67f;</i> 首页
@@ -148,7 +151,8 @@ function sumit(studentform) {
 						<th>学号</th>
 						<th>姓名</th>
 						<th>班级</th>
-						<th>班级ID</th>
+						<th width="50px">班级ID</th>
+						<th width="50px">手机号码</th>
 						<th width="35px">编辑</th>
 						<th width="35px">删除</th>			
 					</tr>
@@ -163,6 +167,7 @@ function sumit(studentform) {
 							<td>${item.getcName()}</td>
 							<td>${item.getGrade().getcYearClass()} ${item.getMajor().getcMajorName()} ${item.getGrade().getcClass()} ${item.getCollege().getcCollegeName()}</td>
 							<td> ${item.getcGradeId()}</td>
+							<td> ${item.getcPhoneNum()}</td>
 							<td class="f-14 td-manage"><a style="text-decoration: none" class="ml-5" id="edit"
 								href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 								</td><td>

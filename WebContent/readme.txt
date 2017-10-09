@@ -65,3 +65,7 @@ js            /WEB-INF/res/js/			  <%=basePath %>js/**
 	private int MANAGE_ROLE = 1;
 	// 判断教师账号是否已经被验证
 	private int TEACHER_VERIFY = 1;
+
+跟新版注意事项：
+在布置服务器时需要在server.xml文件添加       <Context docBase="ueditor" path="/ueditor" reloadable="true" source="org.eclipse.jst.jee.server:ueditor"/>
+其中source看具体情况更改配置，作用是ueditor访问项目外文件夹里面的图片
