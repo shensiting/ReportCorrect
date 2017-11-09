@@ -37,12 +37,22 @@ public class CollegeController extends BaseController {
 	 * @param request
 	 * @return
 	 */
+	@RequestMapping(value = { "/test" })
+	public ModelAndView test(HttpServletRequest request) {
+		
+		return new ModelAndView("common/error");
+	}
+	/**
+	 * 显示所有学院信息
+	 * 
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = { "/indexCollege", "/indexCollege.html" })
 	public ModelAndView index(HttpServletRequest request) {
 		List<College> colleges = collegeService.getAll();
 		return new ModelAndView("manage/indexCollege").addObject("colleges", colleges);
 	}
-
 	/**
 	 * 跳转到增加或修改信息的页面
 	 * 

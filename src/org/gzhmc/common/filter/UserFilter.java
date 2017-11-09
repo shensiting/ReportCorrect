@@ -28,13 +28,15 @@ public class UserFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		// 取得当前访问系统根本目录对应的绝对路径
+		response.setContentType("text/html;charset=utf-8");
+		HttpSession session;
+		// 取得当前访问系统根本目录对应的绝对路径		
 		String currentUrl = request.getRequestURI();
 		String targetUrl = currentUrl.substring(currentUrl.indexOf("/", 1), currentUrl.length());
-		
+		if(null==request.getSession().getAttribute("userid")){		
 			// 解决初次加载登陆界面时引用js，css错误
 			if (currentUrl.lastIndexOf(".") != -1) {
 				String checkUrl = currentUrl.substring(currentUrl.lastIndexOf("."), currentUrl.length());
@@ -45,19 +47,15 @@ public class UserFilter implements Filter {
 							&&!"/manage/check".equals(targetUrl)&&!"/manage/checkPassword".equals(targetUrl)
 							&&!"/student/codeCheck".equals(targetUrl)&&!"/manage/checkUser".equals(targetUrl)) {
 						// 判断当前页是否是重定向以后的登录页面页面，如果是就不做session的判断，防止出现死循环
-						HttpSession session = request.getSession(false);// false
-																		// 是获取不到session时不会重新new一个
+						 session = request.getSession(false);// false
+						// 是获取不到session时不会重新new一个
 						if (session == null || session.getAttribute("userid") == null) {
 							// 用户没有登录，跳到登录页面
-							/*
-							 * response.sendRedirect(request.getContextPath()+
-							 * "/WEB-INF/login.jsp");
-							 */
+							
 							response.setContentType("text/html; charset=utf8");
 							PrintWriter out = response.getWriter();
 							out.flush();
-							out.println(
-									"<script>alert('请登录后再访问。');window.location.href='../login.jsp';</script>");
+							out.println("<script>alert('请登录后再访问。');window.location.href='../login.jsp';</script>");
 							out.close();
 							return;
 						}
@@ -72,7 +70,7 @@ public class UserFilter implements Filter {
 						&& !"/manage/login.action".equals(targetUrl)&&!"/manage/checkPassword".equals(targetUrl)
 						&&!"/student/codeCheck".equals(targetUrl)&&!"/manage/checkUser".equals(targetUrl)) {
 					// 判断当前页是否是重定向以后的登录页面页面，如果是就不做session的判断，防止出现死循环
-					HttpSession session = request.getSession(false);// false
+					 session = request.getSession(false);// false
 																	// 是获取不到session时不会重新new一个
 					if (session == null || session.getAttribute("userid") == null) {
 						// 用户没有登录，跳到登录页面
@@ -83,14 +81,13 @@ public class UserFilter implements Filter {
 						response.setContentType("text/html; charset=utf8");
 						PrintWriter out = response.getWriter();
 						out.flush();
-						out.println(
-								"<script>alert('请登录后再访问。');window.location.href='../login.jsp';</script>");
+						out.println("<script>alert('请登录后再访问。');window.location.href='../login.jsp';</script>");
 						out.close();
 						return;
 					}
 				}
 			}
-		
+		}		
 		// 加入filter链继续向下执行
 		filterChain.doFilter(request, response);
 		/**

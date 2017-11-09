@@ -51,8 +51,7 @@
 				type : 'get',
 				dataType : 'json',
 				async : false,
-				url : '
-<%=basePath%>teacher/addGradeExam?cGradeId=' + cGradeId+ '&experiment='+experiment+'',
+				url : '<%=basePath%>teacher/addGradeExam?cGradeId=' + cGradeId+ '&experiment='+experiment+'',
 				success : function(data) {
 					if (data.success) {
 						alert(data.msg);
@@ -302,6 +301,7 @@ $(function(){
 			]
 		});
 
+	
 		//返回id数组
 		function getSelectedId() {
 			//获取所有name为checkboxid的 CheckBox

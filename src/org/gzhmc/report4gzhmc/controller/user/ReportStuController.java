@@ -557,7 +557,7 @@ public class ReportStuController extends BaseController {
 		String rid = request.getParameter("id");
 		Report report = reportService.getById(StringUtils.string2int(rid));
 		ModelAndView modelAndView = new ModelAndView("student/wordShow");
-		String classpath = "http://10.178.50.64:8080/ueditor/gzhmu/report";
+		String classpath = "http://localhost:8080/ueditor/gzhmu/report";		
 		// 修改word路径获取html路径
 		String htmlPath = report.getcPath().replaceFirst("word", "html");
 		htmlPath = htmlPath.substring(0, htmlPath.lastIndexOf(".")) + ".html";

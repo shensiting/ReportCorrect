@@ -53,7 +53,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public Teacher getByTeacherId(String teacherId) {
-		Teacher teacher=getByTeacherId(teacherId);
+		Teacher teacher=teacherMapper.getByTeacherId(teacherId);
 		return teacher;
 	}
 

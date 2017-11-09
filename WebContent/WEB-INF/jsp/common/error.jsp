@@ -10,22 +10,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>出错啦</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>404错误模板源码</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<meta name="Copyright" content="" />
+<link rel="stylesheet" type="text/css" href="<%=basePath %>users/error/css/style.css" />
 </head>
+
 <body>
-	<div style="width: 50%; height: 50%; margin: auto; padding-top: 10%"
-		align="center">
-		<h1 style="font-size: 60px; color: red;">
-			<img src="<%=basePath %>images/404_1.gif" alt="icon"
-				style="width: 100px; height: 90px;">出错啦!
-		</h1>
-		<h2>糟糕！${msg}</h2>
-		<img
-			src="<%=basePath %>user/Images/Icons/Preview/house_home_building.png"
-			alt="icon" style="width: 60px; height: 50px"> <br />
-		<div>
-			<a href="<%=basePath %>login.jsp" style="text-decoration: underline;">返回登陆</a>
+	<div class="error_404" style="margin-top: 8%">
+		<div class="inner">
+			<!-- <a href="<%=basePath %>login.jsp">返回首页</a> -->
 		</div>
 	</div>
 </body>

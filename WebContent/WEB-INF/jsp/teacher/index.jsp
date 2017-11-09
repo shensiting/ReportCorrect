@@ -164,14 +164,15 @@
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
 			<div style="display: none" class="loading"></div>
-			<iframe scrolling="yes" frameborder="0"
+			<iframe scrolling="yes"  frameborder="0" 
 				src="<%=basePath%>teacher/teacherGrade"></iframe>
 		</div>
 	</div>
 	</section>
+	<script type="text/javascript"
+		src="<%=basePath%>users/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript">
-	
-	
+
 	function member_edit(title,url,id,w,h){
 		layer_show(title,url,w,h);
 	}

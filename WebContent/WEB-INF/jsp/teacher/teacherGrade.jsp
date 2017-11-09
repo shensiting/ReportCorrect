@@ -210,6 +210,20 @@ function sumit() {
 			]
 		});
 
+		function name() {
+			$('.table-sort').dataTable({
+				"aaSorting" : [ [ 1, "desc" ] ],//默认第几个排序
+				"bStateSave" : true,//状态保存
+				"aoColumnDefs" : [
+				//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+				{
+					"orderable" : false,
+					"aTargets" : [ 0, 3 ]
+				} // 制定列不参与排序
+				]
+			});
+		}
+		
 		//返回id数组
 		function getSelectedId() {
 			//获取所有name为checkboxid的 CheckBox

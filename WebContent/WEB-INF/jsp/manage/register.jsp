@@ -114,16 +114,14 @@ function teacherRegister(registeform){
 		alert("工号只能为数字 ");	
 	}
 	else{
-		var statu=confirm( "填写信息为：\n工号：" + cId + "\n姓名："+cName+"\n密码："+
-				cPassword+"\n学院："+college+"\n提交后将不能修改！");		
+		var statu=confirm( "填写信息为：\n工号：" + cId + "\n姓名："+cName+"\n密码："+cPassword+"\n学院："+college+"\n提交后将不能修改！");		
 		if(statu){
 			cPassword=md5(cPassword);
 		$.ajax({
 			type:'get',	
 			dataType:'json',
 			async: false,
-			url:'<%=basePath%>manage/Teacherregister.action?cId='+cId+'&cPassword='+cPassword
-					+'&cCollege='+cCollege+'&cName='+cName,
+			url:'<%=basePath%>manage/Teacherregister.action?cId='+cId+'&cPassword='+cPassword+'&cCollege='+cCollege+'&cName='+cName,
 			success:function(data){
 			            if(data.success){   
 			                       alert("注册成功，请耐心等管理员验证身份之后登陆。\n时间一般为一天。");

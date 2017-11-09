@@ -60,11 +60,11 @@
 			            	flag2=false;
 			            	$("#userspan").html("<font color='red'>用户名不存在</font>");
 			            }
-					 },
-					error : function() {
-						 flag2 = false;
-						alert("服务器异常，请稍候再试！");				
-					}
+					 }//,
+					//error : function() {
+					//	 flag2 = false;
+					//	alert("服务器异常，请稍候再试！");				
+					//}
 						
 				});
 			}
@@ -86,10 +86,10 @@ function checkPwd(number,password) {
 	            	$("#pswspan").html("<font color='red'>密码错误</font>");
 	            	
 	            }
-			 },
-			error : function() {				
-				alert("服务器异常，请稍候再试！");					
-			}				
+			 }//,
+			//error : function() {				
+			//	alert("服务器异常，请稍候再试！");					
+			//}				
 		});
     return flag;
 	}
@@ -117,17 +117,19 @@ function checkPwd(number,password) {
 								if (checkPwd(number,password)=='1') {
 									document.forms[0].submit();
 									//$("#codespan").html("<font color='red'>登录成功</font>");	
+								}else{
+									$("#pswspan").html("<font color='red'>密码填写错误</font>");
 								}
 							}else{	
 								var url = '<%=basePath%>manage/check?number='+Math.random()+'';  
 							    $("#img").attr("src",url);  
 								$("#codespan").html("<font color='red'>验证码填写错误</font>");	
 							}
-						},
-						error : function() {
-							 flag3= false;
-							alert("服务器异常，请稍候再试！");
-						}
+						}//,
+						//error : function() {
+						//	 flag3= false;
+						//	alert("服务器异常，请稍候再试！");
+						//}
 					});			
 			}			
 			

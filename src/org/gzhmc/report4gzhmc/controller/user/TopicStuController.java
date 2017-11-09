@@ -529,6 +529,7 @@ public class TopicStuController extends BaseController {
 			modelAndView.addObject("content", content);
 			out.write("<script>alert('发表失败，请稍后再试。');</script>");
 		} else {
+			modelAndView.addObject("content", "");
 			out.write("<script>alert('发表成功。');</script>");
 		}
 		List<Test> tests = testService.getAll();

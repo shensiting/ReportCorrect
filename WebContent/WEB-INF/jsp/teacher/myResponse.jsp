@@ -64,6 +64,7 @@
 					</span>
 				</div>
 			</div>
+			<div id="tadiv">
 			<table class="table table-border table-bg table-sort">
 				<thead>
 					<tr class="text-c">
@@ -90,6 +91,7 @@
 
 				</tbody>
 			</table>
+			</div>
 		</div>
 		<div style="margin-top: 5%; height: 35px">
 			<%@include file="../common/footer.jsp"%>
@@ -138,12 +140,26 @@
 		            }
 		        });  
               }
-		
+		 function taReload(){
+				$('.table-sort').dataTable({
+					"aaSorting" : [ [ 1, "desc" ] ],//默认第几个排序
+					 "bLengthChange": true,                  //是否允许用户自定义每页显示条数。  
+		         
+					"bStateSave" : true,//状态保存
+					"aoColumnDefs" : [
+					//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+					{
+						"orderable" : false,
+						"aTargets" : [ 0,2 ]
+					} // 制定列不参与排序
+					]
+				});
+			}
+			
 		$(function(){  
 		    //触发的下拉框chang事件  
 		    $("#experiment").change(function(){  
-		        var experiment = $("#experiment").val();  
-		        var tbody=document.getElementById("tbody-result"); 
+		        var experiment = $("#experiment").val();  		       
 		        var str="";
 		        $.ajax({  
 		            type:"POST",  
@@ -153,20 +169,21 @@
 		            },  
 		            dataType:"json",  
 		            success:function(data){  
-		            	if(data=="")
-					    	  str="暂无数据";
-		                $("#tbody-result").empty();   		               
-		                $.each(data,function(index,item){                        		                	
-		                          str += "<tr  class='text-c'><td class='text-l'>RE: <a class='maincolor' href='javascript:;' onclick='article_add("+item.cTopicId+")'>"+item.cTitle+
-		                          "</a><span style='color: gray;'>（"+item.cCreateTime+" ）</span></td>" +  
-		                          
-		                          "<td>" + item.cId+ "</td>" +  
-		                          "<td> <a class='maincolor' onclick='getContent("+item.cId+
-		                        		  ")' href='javascript:;'>查看评论 </a></td>" +                             
-		                          "</tr>";  		                      
-		                    		                
-		                });  
-		                tbody.innerHTML = str;     
+		            	$("#tadiv").empty()
+		            	str="<table class='table table-border table-bg table-sort'><thead><tr class='text-c'><th class='text-l'>问答标题</th><th>ID</th><th width='100px'>操作</th></tr></thead><tbody id='tbody-result'>";
+		            	$.each(data,function(index,item){                        		                	
+	                          str += "<tr  class='text-c'><td class='text-l'>RE: <a class='maincolor' href='javascript:;' onclick='article_add("+item.cTopicId+")'>"+item.cTitle+
+	                          "</a><span style='color: gray;'>（"+item.cCreateTime+" ）</span></td>" +  
+	                          
+	                          "<td>" + item.cId+ "</td>" +  
+	                          "<td> <a class='maincolor' onclick='getContent("+item.cId+
+	                        		  ")' href='javascript:;'>查看评论 </a></td>" +                             
+	                          "</tr>";  		                      
+	                    		                
+	                    });  
+		            	str+="</tbody></table>";
+		            	$("#tadiv").html(str);  
+                        taReload();           
 		            }  
 		        });  
 		    });                                       

@@ -64,6 +64,7 @@
 					</span>
 				</div>
 			</div>
+			<div id="tadiv">
 			<table class="table table-border table-bg table-sort">
 				<thead>
 					<tr class="text-c">
@@ -103,6 +104,7 @@
 
 				</tbody>
 			</table>
+			</div>
 		</div>
 		<div style="margin-top: 5%; height: 35px">
 			<%@include file="../common/footer.jsp"%>
@@ -154,13 +156,26 @@
 		        });  
             }
 		                                         
-		 
+		  function taReload(){
+				$('.table-sort').dataTable({
+					"aaSorting" : [ [ 1, "desc" ] ],//默认第几个排序
+					 "bLengthChange": true,                  //是否允许用户自定义每页显示条数。  
+		         
+					"bStateSave" : true,//状态保存
+					"aoColumnDefs" : [
+					//{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+					{
+						"orderable" : false,
+						"aTargets" : [ 0,2 ]
+					} // 制定列不参与排序
+					]
+				});
+			}
 		
 		$(function(){  
 		    //触发的下拉框chang事件  
 		    $("#experiment").change(function(){  
-		        var experiment = $("#experiment").val();  
-		        var tbody=document.getElementById("tbody-result"); 
+		        var experiment = $("#experiment").val();  		        
 		        var str="";
 		        $.ajax({  
 		            type:"POST",  
@@ -170,18 +185,22 @@
 		            },  
 		            dataType:"json",  
 		            success:function(data){  
-		                $("#tbody-result").empty();   		               
-		                $.each(data,function(index,item){                        		                	
-		                          str += "<tr  class='text-c'><td class='text-l'><a class='maincolor' href='javascript:;' onclick='getContent("+item.cId+")>"+item.cTitle+"</a><span style='color: gray;'>（"+item.cCreateTime+" ）</span></td>" +  
-		                          "<td>" + item.status + "</td>" +  
-		                          "<td>" + item.cId+ "</td>" +  
-		                          "<td> <a class='maincolor' onclick='changeStatus("+item.cId+
-		                        		  ")' href='javascript:;'>通过 </a>|<a class='maincolor' onclick='article_del(this,"+item.cId+
-		                        				  ")' href='javascript:;'> 删除 </a>|<a class='maincolor' onclick='article_add("+item.cId+")' href='javascript:;'> 回复</a></td>" +                             
-		                          "</tr>";  		                      
-		                    		                
-		                });  
-		                tbody.innerHTML = str;     
+		            	$("#tadiv").empty()
+		            	str="<table class='table table-border table-bg table-sort'><thead><tr class='text-c'><th class='text-l'>标题</th><th>状态</th><th>评论</th><th width='100px'>操作</th></tr></thead><tbody id='tbody-result'>";		               	           
+		            	  $.each(data,function(index,item){                        		                	
+	                          str += "<tr class='text-c'><td class='text-l'><a class='maincolor' href='javascript:;' onclick='getContent("+item.cId+")'>"+item.cTitle+"</a><span style='color: gray;'>（"+item.cCreateTime+" ）</span></td>" +  
+	                          "<td>" + item.status + "</td>" +  
+	                          "<td>" + item.cId+ "</td>" +  
+	                          "<td> <a class='maincolor' onclick='changeStatus("+item.cId+
+	                          ")' href='javascript:;'>通过 </a>|<a class='maincolor' onclick='article_del(this,"+item.cId+
+	                          ")' href='javascript:;'> 删除 </a>|<a class='maincolor' onclick='article_add("+item.cId+")' href='javascript:;'> 回复</a></td>" +                             
+	                          "</tr>";  		                      
+	                    		                
+	                    });  
+		            	str+="</tbody></table>";
+		            	$("#tadiv").html(str);  
+                        taReload();  
+
 		            }  
 		        });  
 		    });                                       

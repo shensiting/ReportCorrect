@@ -66,6 +66,7 @@
 				<label class="form-label col-1">内容：</label>
 				<div class="formControls col-11">
 					<textarea id="container" name="content" style="width: 100%">
+					${content}
                     </textarea>
 				</div>
 			</div>

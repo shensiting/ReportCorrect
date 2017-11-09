@@ -1,315 +1,65 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<title>批注添加</title>
-<meta http-equiv=content-type content="text/html; charset=gbk">
-<link id="artDialogSkin" href="skin/facebook/facebook.css"
-	rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="artDialog.min.js"></script>
-<script type="text/javascript" src="jquery-1.6.4.min.js"></script>
-<style type="text/css">
-body {
-	font-size: 12px;
-}
-
-.content {
-	width: 400px;
-	height: 250px;
-	border: 1px #ddd solid;
-	padding: 5px;
-	margin-bottom: 5px;
-}
-
-.list {
-	border: 1px solid #ddd;
-	height: 350px;
-	width: 250px;
-}
-
-.list div {
-	border: 1px solid #ddd;
-	margin-bottom: 5px;
-	padding: 10px;
-	cursor: pointer;
-}
-/*css批注样式*/
-.postil, .postilFocus {
-	border-left: 1px solid red;
-	border-right: 1px solid red;
-	text-decoration: none;
-	cursor: default;
-}
-
-.postil {
-	background: yellow;
-}
-
-.postilFocus {
-	background: Tomato;
-}
-/*批注提示图标样式*/
-.tipsIcon {
-	opacity: 0.80;
-	z-index: 1;
-	filter: alpha(opacity = 80);
-}
-</style>
-<script type="text/javascript" src="postil.js"></script>
-</head>
-
-<body>
-	<div id="icon" style="display: none; position: absolute;" title="添加批注">
-		<img src="image/tips.png" class="tipsIcon">
-	</div>
+ <head>
+  <title> 批注添加 </title>
+  <meta http-equiv=content-type content="text/html; charset=gbk">
+  <link id="artDialogSkin" href="skin/facebook/facebook.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="artDialog.min.js"></script>
+  <script type="text/javascript" src="jquery-1.6.4.min.js"></script>
+  <style type="text/css">
+	body {
+		font-size: 12px;
+	}
+	.content{
+		width: 400px;
+		height: 250px;
+		border: 1px #ddd solid;
+		padding: 5px;
+		margin-bottom: 5px;
+	}
+	.list {
+		border: 1px solid #ddd;
+		height: 350px;
+		width: 250px;
+	}
+	.list div {
+		border: 1px solid #ddd;
+		margin-bottom: 5px;
+		padding: 10px;
+		cursor: pointer;
+	}
+	/*css批注样式*/
+	.postil, .postilFocus {
+		border-left: 1px solid red;
+		border-right: 1px solid red;
+		text-decoration: none;
+		cursor: default;
+	}
+	.postil {
+		background: yellow;
+	}
+	.postilFocus {
+		background: Tomato;
+	}
+	/*批注提示图标样式*/
+	.tipsIcon {
+		opacity: 0.80;
+		z-index: 1;
+		filter:alpha(opacity=80);
+	}
+  </style>
+  <script type="text/javascript" src="postil.js"></script>
+ </head>
+ 
+ <body>
+  <div id="icon" style="display: none; position: absolute;" title="添加批注"><img src="image/tips.png" class="tipsIcon"></div>
 
 	<div class="content" style="float: left;">
-		<table>
-			<tbody>
-				<tr class="firstRow">
-					<td
-						style="border: 1px solid rgb(204, 204, 204); word-break: break-all;"
-						width="343" valign="top">456</td>
-					<td style="border: 1px solid #ccc;" width="343" valign="top"><br /></td>
-					<td style="border: 1px solid #ccc;" width="343" valign="top"><br /></td>
-				</tr>
-				<tr>
-					<td
-						style="border: 1px solid rgb(204, 204, 204); word-break: break-all;"
-						width="343" valign="top">4564</td>
-					<td
-						style="border: 1px solid rgb(204, 204, 204); word-break: break-all;"
-						width="343" valign="top">4654</td>
-					<td style="border: 1px solid #ccc;" width="343" valign="top"><br /></td>
-				</tr>
-				<tr>
-					<td
-						style="border: 1px solid rgb(204, 204, 204); word-break: break-all;"
-						width="343" valign="top">5645</td>
-					<td style="border: 1px solid #ccc;" width="343" valign="top"><br /></td>
-					<td style="border: 1px solid #ccc;" width="343" valign="top"><br /></td>
-				</tr>
-				<tr>
-					<td
-						style="border: 1px solid rgb(204, 204, 204); word-break: break-all;"
-						width="343" valign="top">4</td>
-					<td style="border: 1px solid #ccc;" width="343" valign="top"><br /></td>
-					<td style="border: 1px solid #ccc;" width="343" valign="top"><br /></td>
-				</tr>
-				<tr>
-					<td
-						style="border: 1px solid rgb(204, 204, 204); word-break: break-all;"
-						width="343" valign="top">56454</td>
-					<td style="border: 1px solid #ccc;" width="343" valign="top"><br /></td>
-					<td style="border: 1px solid #ccc;" width="343" valign="top"><br /></td>
-				</tr>
-			</tbody>
-		</table>
-		<p>
-			<span style="font-family: 宋体">问题</span>1<span style="font-family: 宋体">、</span>
-		</p>
-		<p style="text-indent: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">根据企业发展的实际需要，可通过转岗培训，内部晋升，在企业内部实现人力的合理分流，并能满足某些岗位的实际新增人员需求；
-				削减培训计划，可通过“师傅带徒弟”或者“老员工带新员工”的模式，提高内部自我培训的能力，降低外部培训比重等；灵活的用工及组织方式，对某些不十分重要的岗位进行外包；优化招聘过程，提高招聘质量，在招聘过程中关注员工忠诚度，降低离职率，同时加强工时管理，降低无效成本。</span>
-		</p>
-		<p>
-			<strong><span style="font-family: 宋体">问题</span>2</strong><strong><span
-				style="font-family: 宋体">、</span></strong>
-		</p>
-		<p>
-			<strong><span style="font-family: 宋体"><img
-					src="/ReportCorrect/../ueditor/jsp/upload/image/20171008/1507464780225088722.png"
-					title="1507464780225088722.png" alt="1.png" style="float: left;" /></span></strong>
-		</p>
-		<p style="text-indent: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">可以借鉴。戴尔对于这种模式是通过一线销售积累的经验，有过直接体验，虽然是在销售方面，这种模式也是具有其自身的一线经验和实事求是的科学依据，并不是无中生有的架构。</span>
-		</p>
-		<p>
-			<strong><span style="font-family: 宋体">问题</span>3</strong><strong><span
-				style="font-family: 宋体">、<img
-					src="http://img.baidu.com/hi/jx2/j_0027.gif" /></span></strong>
-		</p>
-		<p style="text-indent: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">（1）引起的问题：</span>
-		</p>
-		<p style="text-indent: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">招聘时，人力资源部给出的薪资和福利待遇过低，吸引不了人才，使得企业招不到优秀的人，不利于企业人力资源的储备；减薪或是降低福利待遇等措施均会引起员工的负面情绪；且由于要降低成本，可能会缩减培训的支出或是出国进修等项目，使得员工满意度降低，对企业忠诚度下降，从而离职率上升。</span>
-		</p>
-		<p style="text-indent: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">（2）解决对策：在进行适当的减薪的时候，更应该提高对员工的精神奖励；在裁员的时候，要对于被解雇的员工给予下岗和再就业咨询等相应的福利，帮助其尽快找到新的工作，从而减少这些被解雇员工的负面情绪，同时也能让留在公司的员工体会到公司对员工的重视，提高员工的忠诚度。</span>
-		</p>
-		<p>
-			<strong><span style="font-family: 宋体">问题</span>4</strong><strong><span
-				style="font-family: 宋体">、</span></strong>
-		</p>
-		<p>
-			<strong><span style="font-family: 宋体">问题</span>5</strong><strong><span
-				style="font-family: 宋体">、</span></strong>
-		</p>
-		<p
-			style="margin-left: 0; text-indent: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">（1）</span><span style="font-family: 宋体">“</span><span
-				style="font-family: 宋体">重视客户胜于重视雇员”</span>
-		</p>
-		<p style="margin-left: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">原因：企业是一个营利性的组织，顾客是其最终的目的。贯彻这一概念，可以使得公司的整体架构依靠这个而建，为了能够得到更多的客户，能够做到与同类竞争对手相比最优。从现在的消费者来看，越来越注重自身对于产品的感受以及服务，对于公司是否对顾客尽心，其有着最直接的感受。</span>
-		</p>
-		<p style="text-indent: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">（2）“重视雇员胜于重视客户”</span>
-		</p>
-		<p style="text-indent: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">原因：一个企业最重要的使命之一就是培养雇员士气。成功的企业不仅需要重视客户，还必须首先重视雇员。如果员工感到受重视，得到尊重和赏识，那么他们也会同样地真诚对待客户。如果一个企业如果赢得了雇员得忠诚度，它同样也会促进客户的忠诚度。因此，“重视雇员胜于重视客户”。</span>
-		</p>
-		<p style="text-indent: 28px; line-height: 28px; background: #E6E6E6">
-			<span style="font-family: 宋体">如果雇员感到受重视他们就会以多种积极的方式对企业发展做出贡献，对雇员的重视有助于他们树立起自尊感，提高组织承诺度和工作满意度，形成和谐团结的企业文化。企业实力增强后能为雇员提供更具吸引力的薪资待遇和发展机遇，促使雇员更加努力地工作，从而形成企业发展的良性循环。这种观念已经远远超出了产品和工作方式的范畴，它为如何对待客户的问题确立了基础。当然，顾客可以是上帝，但是雇员才是关键！</span>
-		</p>
-		<p>
-			<strong><span style="font-family: 宋体">案例二：</span></strong>
-		</p>
-		<p>
-			<strong><span style="font-family: 宋体">问题</span>1</strong><strong><span
-				style="font-family: 宋体">、</span></strong>
-		</p>
-		<p>
-			<span style="font-family: 宋体; color: #333333; background: white">答：冯如生在编制人力资源计划时在考虑以下的情况和因素：（</span><span
-				style="font-family: &amp; #39; Arial &amp;#39; ,&amp;#39; sans-serif &amp;#39;; color: #333333; background: white">1</span><span
-				style="font-family: 宋体; color: #333333; background: white">）要从本公司现状出发，统计各阶层人数，了解本公司的基本情况。（</span><span
-				style="font-family: &amp; #39; Arial &amp;#39; ,&amp;#39; sans-serif &amp;#39;; color: #333333; background: white">2</span><span
-				style="font-family: 宋体; color: #333333; background: white">）公司的人事变动情况。（</span><span
-				style="font-family: &amp; #39; Arial &amp;#39; ,&amp;#39; sans-serif &amp;#39;; color: #333333; background: white">3</span><span
-				style="font-family: 宋体; color: #333333; background: white">）公司的生产计划对人力资源的要求。（</span><span
-				style="font-family: &amp; #39; Arial &amp;#39; ,&amp;#39; sans-serif &amp;#39;; color: #333333; background: white">4</span><span
-				style="font-family: 宋体; color: #333333; background: white">）密切留意政府政策的公布，留意公司外部信息。（</span><span
-				style="font-family: &amp; #39; Arial &amp;#39; ,&amp;#39; sans-serif &amp;#39;; color: #333333; background: white">5</span><span
-				style="font-family: 宋体; color: #333333; background: white">）技术的更新换代</span><span
-				style="font-family: &amp; #39; Arial &amp;#39; ,&amp;#39; sans-serif &amp;#39;; color: #333333; background: white">,</span><span
-				style="font-family: 宋体; color: #333333; background: white">公司的经营状况。（</span><span
-				style="font-family: &amp; #39; Arial &amp;#39; ,&amp;#39; sans-serif &amp;#39;; color: #333333; background: white">6</span><span
-				style="font-family: 宋体; color: #333333; background: white">）站在高瞻远瞩的位置上为公司未来的发展，提供适当的人力资源供给及培训。</span>
-		</p>
-		<p
-			style="margin-top: 0; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-indent: 28px; line-height: 25px; background: white">
-			<span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">问题</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">2</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">、冯如生将制订一项行之有效的招聘方案，其中包括：</span>
-		</p>
-		<p
-			style="margin-top: 0; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-indent: 28px; line-height: 25px; background: white">
-			<span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">1</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）增加一线销售员、技术员和白领职工的招聘，其中工作的重点放在白领职工与销售员的选拔招聘上。（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">2</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）他要在政府政策的指导下</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">,</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">在公平的原则下</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">,</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">优先照顾妇女和下岗职工。（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">3</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）结合公司未来的发展对各种人才的需求，招聘具有高创新思维的人，带领公司走在同行的前列。（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">4</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）为了应对公司的快速发展，应当进行适当的人才储备。</span>
-		</p>
-		<p
-			style="margin-top: 0; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-indent: 28px; line-height: 25px; background: white">
-			<span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">3</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">、答：在预测公司人力资源需求时，他能可以采用以下技术：</span>
-		</p>
-		<p
-			style="margin-top: 0; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-indent: 28px; line-height: 25px; background: white">
-			<span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">1</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）总体需求结构分析预测法。利用公式</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">NHR=P+C-T</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">。其中</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">NHR</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指未来一段时间内需要的人力资源；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">P</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指现有的人力资源；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">C</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指未来一段时间内需要增减的人力资源。</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">T</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指由于技术提高或设备改进后节省的人力资源。</span>
-		</p>
-		<p
-			style="margin-top: 0; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-indent: 28px; line-height: 25px; background: white">
-			<span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">2</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）人力资源成本分析预测法。</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">.</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">利用公式</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">NHR=TB/[</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">S+BN+W+O</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">*</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">1+a%.T</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）。其中</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">NHR</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指未来一段时间内需要的人力资源；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">S</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指目前每人的平均工资；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">BN</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指目前每人的平均奖金；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">W</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指目前每人的平均福利；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">O</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指目前每人的平均其他支出；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">a%</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指企业计划每年人力资源成本的增加的平均百分数；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">T</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指未来一段时间的年限。</span>
-		</p>
-		<p
-			style="margin-top: 0; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-indent: 28px; line-height: 25px; background: white">
-			<span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">3</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）人力资源发展趋势分析预测法。利用公式</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">NHR=a*[1+</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">b%-c%</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">*T]</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">。其中</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">NHR</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指未来一段时间内需要的人力资源；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">a</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指目前以有的人力资源。</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">B%</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指企业计划平均每年发展的百分比；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">c%</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指企业计划人力资源发展与企业发展的百分比差率；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">T</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指未来一段时间的年限。</span>
-		</p>
-		<p
-			style="margin-top: 0; margin-right: 0; margin-bottom: 10px; margin-left: 0; text-indent: 28px; line-height: 25px; background: white">
-			<span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">（</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">4</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">）人力资源学习曲线分析预测法。利用生产率预测法的公式：</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">NHR=TP/XP</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">。其中</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">TP</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指生产总量；</span><span
-				style="font-size: 14px; font-family: Arial, sans-serif; color: rgb(51, 51, 51)">XP</span><span
-				style="font-size: 14px; font-family: 宋体; color: rgb(51, 51, 51)">是指个体平均生产量。也可利用进步支书预测法。</span>
-		</p>
-		<p>
-			<span
-				style="font-family: &amp; #39; Arial &amp;#39; ,&amp;#39; sans-serif &amp;#39;; color: #333333; background: white">&nbsp;</span>
-		</p>
-		<p>
-			<br />
-		</p>
+	<table><tbody><tr class="firstRow"><td style="border: 1px solid rgb(204, 204, 204); word-break: break-all;" width="343" valign="top">456</td><td style="border:1px solid #ccc;" width="343" valign="top"><br/></td><td style="border:1px solid #ccc;" width="343" valign="top"><br/></td></tr><tr><td style="border: 1px solid rgb(204, 204, 204); word-break: break-all;" width="343" valign="top">4564</td><td style="border: 1px solid rgb(204, 204, 204); word-break: break-all;" width="343" valign="top">4654</td><td style="border:1px solid #ccc;" width="343" valign="top"><br/></td></tr><tr><td style="border: 1px solid rgb(204, 204, 204); word-break: break-all;" width="343" valign="top">5645</td><td style="border:1px solid #ccc;" width="343" valign="top"><br/></td><td style="border:1px solid #ccc;" width="343" valign="top"><br/></td></tr><tr><td style="border: 1px solid rgb(204, 204, 204); word-break: break-all;" width="343" valign="top">4</td><td style="border:1px solid #ccc;" width="343" valign="top"><br/></td><td style="border:1px solid #ccc;" width="343" valign="top"><br/></td></tr><tr><td style="border: 1px solid rgb(204, 204, 204); word-break: break-all;" width="343" valign="top">56454</td><td style="border:1px solid #ccc;" width="343" valign="top"><br/></td><td style="border:1px solid #ccc;" width="343" valign="top"><br/></td></tr></tbody></table><p><span style="font-family:宋体">问题</span>1<span style="font-family:宋体">、</span></p><p style="text-indent:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">根据企业发展的实际需要，可通过转岗培训，内部晋升，在企业内部实现人力的合理分流，并能满足某些岗位的实际新增人员需求； 削减培训计划，可通过“师傅带徒弟”或者“老员工带新员工”的模式，提高内部自我培训的能力，降低外部培训比重等；灵活的用工及组织方式，对某些不十分重要的岗位进行外包；优化招聘过程，提高招聘质量，在招聘过程中关注员工忠诚度，降低离职率，同时加强工时管理，降低无效成本。</span></p><p><strong><span style="font-family:宋体">问题</span>2</strong><strong><span style="font-family:宋体">、</span></strong></p><p><strong><span style="font-family:宋体"><img src="/ReportCorrect/../ueditor/jsp/upload/image/20171008/1507464780225088722.png" title="1507464780225088722.png" alt="1.png" style="float: left;"/></span></strong></p><p style="text-indent:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">可以借鉴。戴尔对于这种模式是通过一线销售积累的经验，有过直接体验，虽然是在销售方面，这种模式也是具有其自身的一线经验和实事求是的科学依据，并不是无中生有的架构。</span></p><p><strong><span style="font-family:宋体">问题</span>3</strong><strong><span style="font-family:宋体">、<img src="http://img.baidu.com/hi/jx2/j_0027.gif"/></span></strong></p><p style="text-indent:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">（1）引起的问题：</span></p><p style="text-indent:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">招聘时，人力资源部给出的薪资和福利待遇过低，吸引不了人才，使得企业招不到优秀的人，不利于企业人力资源的储备；减薪或是降低福利待遇等措施均会引起员工的负面情绪；且由于要降低成本，可能会缩减培训的支出或是出国进修等项目，使得员工满意度降低，对企业忠诚度下降，从而离职率上升。</span></p><p style="text-indent:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">（2）解决对策：在进行适当的减薪的时候，更应该提高对员工的精神奖励；在裁员的时候，要对于被解雇的员工给予下岗和再就业咨询等相应的福利，帮助其尽快找到新的工作，从而减少这些被解雇员工的负面情绪，同时也能让留在公司的员工体会到公司对员工的重视，提高员工的忠诚度。</span></p><p><strong><span style="font-family:宋体">问题</span>4</strong><strong><span style="font-family:宋体">、</span></strong></p><p><strong><span style="font-family:宋体">问题</span>5</strong><strong><span style="font-family:宋体">、</span></strong></p><p style="margin-left:0;text-indent:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">（1）</span><span style="font-family: 宋体">“</span><span style="font-family: 宋体">重视客户胜于重视雇员”</span></p><p style="margin-left:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">原因：企业是一个营利性的组织，顾客是其最终的目的。贯彻这一概念，可以使得公司的整体架构依靠这个而建，为了能够得到更多的客户，能够做到与同类竞争对手相比最优。从现在的消费者来看，越来越注重自身对于产品的感受以及服务，对于公司是否对顾客尽心，其有着最直接的感受。</span></p><p style="text-indent:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">（2）“重视雇员胜于重视客户”</span></p><p style="text-indent:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">原因：一个企业最重要的使命之一就是培养雇员士气。成功的企业不仅需要重视客户，还必须首先重视雇员。如果员工感到受重视，得到尊重和赏识，那么他们也会同样地真诚对待客户。如果一个企业如果赢得了雇员得忠诚度，它同样也会促进客户的忠诚度。因此，“重视雇员胜于重视客户”。</span></p><p style="text-indent:28px;line-height:28px;background:#E6E6E6"><span style="font-family: 宋体">如果雇员感到受重视他们就会以多种积极的方式对企业发展做出贡献，对雇员的重视有助于他们树立起自尊感，提高组织承诺度和工作满意度，形成和谐团结的企业文化。企业实力增强后能为雇员提供更具吸引力的薪资待遇和发展机遇，促使雇员更加努力地工作，从而形成企业发展的良性循环。这种观念已经远远超出了产品和工作方式的范畴，它为如何对待客户的问题确立了基础。当然，顾客可以是上帝，但是雇员才是关键！</span></p><p><strong><span style="font-family:宋体">案例二：</span></strong></p><p><strong><span style="font-family:宋体">问题</span>1</strong><strong><span style="font-family:宋体">、</span></strong></p><p><span style=";font-family:宋体;color:#333333;background:white">答：冯如生在编制人力资源计划时在考虑以下的情况和因素：（</span><span style=";font-family:&#39;Arial&#39;,&#39;sans-serif&#39;;color:#333333;background:white">1</span><span style=";font-family:宋体;color:#333333;background:white">）要从本公司现状出发，统计各阶层人数，了解本公司的基本情况。（</span><span style=";font-family:&#39;Arial&#39;,&#39;sans-serif&#39;;color:#333333;background:white">2</span><span style=";font-family:宋体;color:#333333;background:white">）公司的人事变动情况。（</span><span style=";font-family:&#39;Arial&#39;,&#39;sans-serif&#39;;color:#333333;background:white">3</span><span style=";font-family:宋体;color:#333333;background:white">）公司的生产计划对人力资源的要求。（</span><span style=";font-family:&#39;Arial&#39;,&#39;sans-serif&#39;;color:#333333;background:white">4</span><span style=";font-family:宋体;color:#333333;background:white">）密切留意政府政策的公布，留意公司外部信息。（</span><span style=";font-family:&#39;Arial&#39;,&#39;sans-serif&#39;;color:#333333;background:white">5</span><span style=";font-family:宋体;color:#333333;background:white">）技术的更新换代</span><span style=";font-family:&#39;Arial&#39;,&#39;sans-serif&#39;;color:#333333;background:white">,</span><span style=";font-family:宋体;color:#333333;background:white">公司的经营状况。（</span><span style=";font-family:&#39;Arial&#39;,&#39;sans-serif&#39;;color:#333333;background:white">6</span><span style=";font-family:宋体;color:#333333;background:white">）站在高瞻远瞩的位置上为公司未来的发展，提供适当的人力资源供给及培训。</span></p><p style="margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;text-indent:28px;line-height:25px;background: white"><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">问题</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">2</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">、冯如生将制订一项行之有效的招聘方案，其中包括：</span></p><p style="margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;text-indent:28px;line-height:25px;background: white"><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">1</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）增加一线销售员、技术员和白领职工的招聘，其中工作的重点放在白领职工与销售员的选拔招聘上。（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">2</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）他要在政府政策的指导下</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">,</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">在公平的原则下</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">,</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">优先照顾妇女和下岗职工。（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">3</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）结合公司未来的发展对各种人才的需求，招聘具有高创新思维的人，带领公司走在同行的前列。（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">4</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）为了应对公司的快速发展，应当进行适当的人才储备。</span></p><p style="margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;text-indent:28px;line-height:25px;background: white"><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">3</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">、答：在预测公司人力资源需求时，他能可以采用以下技术：</span></p><p style="margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;text-indent:28px;line-height:25px;background: white"><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">1</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）总体需求结构分析预测法。利用公式</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">NHR=P+C-T</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">。其中</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">NHR</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指未来一段时间内需要的人力资源；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">P</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指现有的人力资源；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">C</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指未来一段时间内需要增减的人力资源。</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">T</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指由于技术提高或设备改进后节省的人力资源。</span></p><p style="margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;text-indent:28px;line-height:25px;background: white"><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">2</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）人力资源成本分析预测法。</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">.</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">利用公式</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">NHR=TB/[</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">S+BN+W+O</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">*</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">1+a%.T</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）。其中</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">NHR</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指未来一段时间内需要的人力资源；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">S</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指目前每人的平均工资；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">BN</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指目前每人的平均奖金；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">W</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指目前每人的平均福利；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">O</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指目前每人的平均其他支出；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">a%</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指企业计划每年人力资源成本的增加的平均百分数；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">T</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指未来一段时间的年限。</span></p><p style="margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;text-indent:28px;line-height:25px;background: white"><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">3</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）人力资源发展趋势分析预测法。利用公式</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">NHR=a*[1+</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">b%-c%</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">*T]</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">。其中</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">NHR</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指未来一段时间内需要的人力资源；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">a</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指目前以有的人力资源。</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">B%</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指企业计划平均每年发展的百分比；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">c%</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指企业计划人力资源发展与企业发展的百分比差率；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">T</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指未来一段时间的年限。</span></p><p style="margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;text-indent:28px;line-height:25px;background: white"><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">（</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">4</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">）人力资源学习曲线分析预测法。利用生产率预测法的公式：</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">NHR=TP/XP</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">。其中</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">TP</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指生产总量；</span><span style="font-size: 14px;font-family: Arial, sans-serif;color: rgb(51, 51, 51)">XP</span><span style="font-size: 14px;font-family: 宋体;color: rgb(51, 51, 51)">是指个体平均生产量。也可利用进步支书预测法。</span></p><p><span style=";font-family:&#39;Arial&#39;,&#39;sans-serif&#39;;color:#333333;background:white">&nbsp;</span></p><p><br/></p>
 		<span style="font-family: 宋体;"><span
-			style="font-size: 12.0000pt;">由结果可知道：</span></span><br> <span
-			style="font-family: 宋体;"><span style="font-size: 12.0000pt;">&nbsp;（关键词：</span></span><span
+			style="font-size: 12.0000pt;">由结果可知道：</span></span><br>
+		<span style="font-family: 宋体;"><span
+			style="font-size: 12.0000pt;">&nbsp;（关键词：</span></span><span
 			style="font-family: 宋体;"><span style="font-size: 12.0000pt;"><span
 				style="color: rgb(255, 0, 0);">稳定、整洁、有序</span></span></span><span
 			style="font-family: 宋体;"><span style="font-size: 12.0000pt;">）</span></span><br>&nbsp;&nbsp;<span
@@ -337,6 +87,6 @@ body {
 	</div>
 	<div class="list" style="float: right;"></div>
 
-	<input type="button" value="加载批注" onclick="loader()" />
-</body>
+  <input type="button" value="加载批注" onclick="loader()" />
+ </body>
 </html>

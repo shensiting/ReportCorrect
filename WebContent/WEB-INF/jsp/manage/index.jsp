@@ -70,9 +70,9 @@
 					style="text-decoration: none">修改密码</a></li>
 				<li><a href="<%=basePath%>manage/exit">退出</a></li>
 			</ul></li>
-		<li id="Hui-msg"><a href="#" title="消息"><span
+		<!--<li id="Hui-msg"><a href="#" title="消息"><span
 				class="badge badge-danger">1</span><i class="Hui-iconfont"
-				style="font-size: 18px">&#xe68a;</i></a></li>
+				style="font-size: 18px">&#xe68a;</i></a></li>  -->
 
 	</ul>
 	<a aria-hidden="false" class="Hui-nav-toggle" href="#"></a> </header>
